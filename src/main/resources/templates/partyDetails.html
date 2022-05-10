@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<!--2022-03-28 강경민
+    파티 상세 페이지 작성-->
+<!--하단부에 (다른 파티 추천 기능) 추가 요망 -->
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 text-center" style="height: 500px">
+        <img src="/img/baeminLogo.PNG" alt="사진" height="100%">
+      </div>
+      <div class="col-lg-6 py-2">
+        <h3 class="mt-1">6:30분에 안동역 4번 출구 BBQ 치킨 시키실분 구합니다~</h3>
+        <hr>
+        <div>
+          <strong><div class="my-2 text-muted">소개글</div></strong>
+          <span>6:30분에 안동역 4번 출구 BBQ 치킨 시키실분 구합니다~6:30분에 안동역 4번 출구 BBQ 치킨 시키실분 구합니다~6:30분에 안동역 4번 출구 BBQ 치킨 시키실분 구합니다~6:30분에 안동역 4번 출구 BBQ 치킨 시키실분 구합니다~</span>
+        </div>
+        <div class="bg-light mt-5">
+          <strong><div class="my-2 text-muted">수령 장소</div></strong>
+          <div class="d-inline-block">경기 안양시 동안구 학의로 390</div><div class="d-inline-block" th:id="locationDetail" style="margin-left: 0.5em">109동 앞 놀이터</div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-6">
+            <strong><div class="my-2 text-muted">주문한 점포명</div></strong>
+            <hr>
+            <div>교촌치킨 평촌점</div>
+          </div>
+          <div class="col-6">
+            <strong><div class="my-2 text-muted">배달 매체</div></strong>
+            <hr>
+            <div>배달의 민족</div>
+          </div>
+        </div>
+        <div class="row mt-5 bg-light">
+          <div class="col-4">
+            <strong><div class="my-2 text-muted">총 배달비</div></strong>
+            <hr>
+            <div>5000원</div>
+            <div>(4인 모집 시 인당 <div class="text-danger d-inline-block" style="font-weight: bold">1250원</div>)</div>
+          </div>
+          <div class="col-4">
+            <strong><div class="my-2 text-muted">모집인원</div></strong>
+            <hr>
+            <div>4명</div>
+          </div>
+          <div class="col-4">
+            <strong><div class="my-2 text-muted">모집시간</div></strong>
+            <hr>
+            <div>2022-03-24 오후 06:30까지</div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-primary btn-lg mt-5" type="button" data-bs-toggle="modal" data-bs-target="#joinModal">가입하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="joinModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="joinModalLabel">가입하기</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form>
+        <div class="modal-body">
+<!--          <span class="d-inline-block">주문할 메뉴를 작성해주세요.</span>-->
+<!--          <span class="d-inline-block">파티장은 작성한 메뉴를 바탕으로 주문합니다.</span>-->
+          <textarea type="text" class="form-control mt-1" style="height: 10em" id="orderMenu" placeholder="주문할 메뉴를 작성해주세요.&#13;&#10;파티장이 작성한 메뉴를 바탕으로 주문합니다."></textarea>
+          <input type="text" class="form-control mt-1 d-inline-block" style="width: 85%" id="payment" placeholder="주문한 서비스의 금액을 입력하세요. ex): 18000"><span style="margin-left: 10px"><strong>원</strong></span>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">제출 및 결제</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
+</body>
+</html>

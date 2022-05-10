@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <style>
+      .field-error {
+          border-color: #dc3545;
+          color: #dc3545;
+      }
+      .field-success {
+          border-color: #218838;
+          color: #218838;
+      }
+  </style>
+
+</head>
+
+<!--2022-03-22 강경민
+    회원가입 페이지 제작-->
+
+<body class="bg-light">
+<!--    <form id="idDupCheckForm" action="/signUp/dupCheckId2" method="post" onsubmit="idDupCheckAndValidate();"></form>-->
+
+    <div class="container">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="/img/deliveryIcon.png" alt="아이콘" width="72" height="57">
+            <h2>회원 가입</h2>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <form class="needs-validation" novalidate="novalidate" id="saveForm" th:object="${member}" th:action="signUp" method="post">
+                    <div id="globalErr" th:if="${#fields.hasGlobalErrors()}" style="display: block">
+                        <p class="offset-3 col-6 alert alert-danger field-error text-center" th:each="err : ${#fields.globalErrors()}"
+                           th:text="${err}">글로벌 오류 메시지</p>
+                    </div>
+                    <div class="offset-3 col-6 alert alert-danger field-error text-center" id="idDupCheckFail" style="display:none;">이미 존재하는 아이디입니다.</div>
+                    <div class="offset-3 col-6 alert alert-success field-success text-center" id="idDupCheckSuccess" style="display:none;">사용 가능한 아이디입니다.</div>
+                    <div class="row g-3">
+                        <div class="offset-4 col-4">
+                            <label for="memberId" class="form-label">아이디</label>
+                            <div class="input-group has-validation">
+                                <input type="text" class="form-control" id="memberId" th:field="*{memberId}" th:errorclass="field-error" form="saveForm" placeholder="아이디를 입력하세요.">
+<!--                                <input type="text" class="form-control" id="memberId2" name="memberId" value="memberId" form="idDupCheckForm" style="display: none">-->
+                                <button type="button" class="input-group-text" id="idDupCheck">중복 확인</button>
+<!--                                <button type="submit" class="input-group-text" id="idDupCheck2" form="idDupCheckForm">중복 확인</button>-->
+                                <div class="field-error col-12" th:errors="*{memberId}">
+                                    아이디 에러
+                                </div>
+                                <div class="field-error col-12" id="idBlankErr" style="display: none">
+                                    값을 입력해주세요.
+                                </div>
+                                <div class="field-error col-12" id="idFormErr" style="display: none">
+                                    아이디는 영어 대소문자와 숫자만 사용 가능하며 8~20자리 사이로 입력해주세요.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="offset-4 col-4">
+                            <label for="memberEmail" class="form-label">이메일</label>
+                            <input type="email" class="form-control" id="memberEmail" th:field="*{memberEmail}" th:errorclass="field-error" form="saveForm" placeholder="이메일을 입력하세요.">
+                            <div class="field-error" th:errors="*{memberEmail}">
+                                이메일 에러
+                            </div>
+                        </div>
+
+                        <div class="offset-4 col-4">
+                            <label for="phoneCertification" class="form-label">휴대폰 인증</label>
+                            <div class="input-group has-validation">
+                                <input type="text" class="form-control" id="phoneCertification" th:field="*{memberPhoneNum}" th:errorclass="field-error" form="saveForm" placeholder="휴대폰 번호를 입력하세요.">
+                                <button type="button" class="input-group-text" id="sendSMS">문자전송</button>
+                                <div class="field-error col-12" th:errors="*{memberPhoneNum}">
+                                    휴대폰번호 에러
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="offset-4 col-4">
+                            <label for="phoneCertificationNum" class="form-label">휴대폰 인증번호</label>
+                            <div class="input-group has-validation">
+                                <input type="text" class="form-control" id="phoneCertificationNum" placeholder="인증번호를 입력하세요." value="" required="">
+                                <button type="button" class="input-group-text" th:onclick="">인증하기</button>
+                            </div>
+                        </div>
+
+                        <div class="offset-4 col-4">
+                            <label for="memberPassword" class="form-label">비밀번호</label>
+                            <input type="password" class="form-control" id="memberPassword"  th:field="*{memberPassword}" th:errorclass="field-error" form="saveForm" placeholder="비밀번호를 입력하세요.">
+                            <div class="field-error" th:errors="*{memberPassword}">
+                                password 에러
+                            </div>
+                        </div>
+
+                        <div class="offset-4 col-4">
+                            <label for="memberPassword2" class="form-label">비밀번호 확인</label>
+                            <input type="password" class="form-control" id="memberPassword2" th:field="*{memberPassword2}" th:errorclass="field-error" form="saveForm" placeholder="비밀번호를 다시 입력하세요.">
+                            <div class="field-error" th:errors="*{memberPassword2}">
+                                password2 에러
+                            </div>
+                        </div>
+                    </div>
+                    <button class="offset-4 col-4 btn btn-primary btn-lg justify-content-center mt-5 mb-5" type="submit" form="saveForm">등록하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        window.onload = function() {
+
+            //2022-0423 강경민
+            //서버 글로벌 에러 3초만 출력되게 변경
+            setTimeout(function (){
+                document.getElementById("globalErr").style.display = "none";
+            }, 3000);
+
+
+
+
+
+
+
+
+            //2022-0422 강경민
+            //문자 전송 버튼 작동되게 작업
+            var httpRequest;
+
+            document.getElementById("sendSMS").addEventListener('click', () => {
+
+                var memberPhoneNum = document.getElementById("phoneCertification").value;
+                var reqJson = new Object();
+                reqJson.getPhoneNum = memberPhoneNum;
+                httpRequest = new XMLHttpRequest();
+
+
+
+
+                //2022-0424 강경민
+                //문자 전송 대기 시간 함수 작업
+                function checkRemainSendMessageTime(){
+                    if (num > 0){
+                        num--;
+                        document.getElementById("sendSMS").textContent = num + "초 후 사용가능";
+                    } else{
+                        clearInterval(tid);
+                    }
+                }
+
+                document.getElementById("sendSMS").disabled = true;
+
+                var num = 10;
+                document.getElementById("sendSMS").textContent = num + "초 후 사용가능";
+
+                tid = setInterval(function() {
+                    document.getElementById("sendSMS").textContent = num + "초 후 사용가능";
+                    checkRemainSendMessageTime();
+                }, 1000);
+
+
+                httpRequest.onreadystatechange = () => {
+                    //readyState가 Done이고 응답 값이 200일 때
+                    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+
+                        setTimeout(function (){
+                            document.getElementById("sendSMS").disabled = false;
+                            clearInterval(tid);
+                            document.getElementById("sendSMS").textContent = "문자전송";
+                        }, 10000);
+
+                        if (httpRequest.status === 200) {
+                            var result = httpRequest.response;
+                            document.getElementById("phoneCertificationNum").value = result.authenticationNum; // jwt 완성 후에 제거할 것
+
+                        } else {
+                            alert('ajax Request Error!');
+                        }
+                    }
+                };
+                //Post 방식, 응답은 json, 요청헤더 json
+                httpRequest.open('POST', 'signUp/sendAuthenticationNum', true);
+                httpRequest.responseType = "json";
+                httpRequest.setRequestHeader('Content-Type', 'application/json');
+                httpRequest.send(JSON.stringify(reqJson));
+            });
+
+
+
+
+
+
+
+
+
+
+            // 2022-0423 강경민
+            // 아이디 중복 검사 버튼 작동되게 작업
+            // 프론트 1차 검증 추가 및 에러 3초만 뜨도록 설정
+            var httpRequest2;
+
+            document.getElementById("idDupCheck").addEventListener('click', () => {
+
+                var memberId = document.getElementById("memberId").value;
+                var reqJson = new Object();
+                reqJson.getMemberId = memberId;
+                httpRequest2 = new XMLHttpRequest();
+
+                httpRequest2.onreadystatechange = () => {
+                    //readyState가 Done이고 응답 값이 200일 때
+                    if (httpRequest2.readyState === XMLHttpRequest.DONE) {
+                        if (httpRequest2.status === 200) {
+                            var result = httpRequest2.response;
+
+                            // 아이디 형식 검증 및 중복 검증
+                            var regExp = /^([A-Z|a-z|0-9]){4,20}$/;
+
+                            if(result.beforeMemberId.length == 0){
+                                document.getElementById("idFormErr").style.display = "none";
+                                document.getElementById("idBlankErr").style.display = "block";
+
+                                setTimeout(function (){
+                                    document.getElementById("idBlankErr").style.display = "none";
+                                }, 3000);
+
+                            } else if(!regExp.test(result.beforeMemberId)){
+                                document.getElementById("idBlankErr").style.display = "none";
+                                document.getElementById("idFormErr").style.display = "block";
+
+                                setTimeout(function (){
+                                    document.getElementById("idFormErr").style.display = "none";
+                                }, 3000);
+
+                            }else{
+                                document.getElementById("idBlankErr").style.display = "none";
+                                document.getElementById("idFormErr").style.display = "none";
+
+                                if (result.dupCheckId == "false"){
+                                    document.getElementById("idDupCheckFail").style.display = "block";
+                                    document.getElementById("idDupCheckSuccess").style.display = "none";
+
+                                    setTimeout(function (){
+                                        document.getElementById("idDupCheckFail").style.display = "none";
+                                    }, 3000);
+                                } else{
+                                    document.getElementById("idDupCheckFail").style.display = "none";
+                                    document.getElementById("idDupCheckSuccess").style.display = "block";
+
+                                    setTimeout(function (){
+                                        document.getElementById("idDupCheckSuccess").style.display = "none";
+                                    }, 3000);
+                                }
+                            }
+                        } else {
+                            alert('ajax Request Error!');
+                        }
+                    }
+                };
+                //Post 방식, 응답은 json, 요청헤더 json
+                httpRequest2.open('POST', 'signUp/dupCheckId', true);
+                httpRequest2.responseType = "json";
+                httpRequest2.setRequestHeader('Content-Type', 'application/json');
+                httpRequest2.send(JSON.stringify(reqJson));
+            });
+        }
+    </script>
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        function idDupCheckAndValidate(){
+            var copyMemberId = document.getElementById("memberId").value;
+
+            document.getElementById("memberId2").value = copyMemberId;
+        }
+    </script>
+
+
+
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+</script>
+</body>
+</html>
