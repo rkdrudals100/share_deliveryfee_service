@@ -17,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -110,12 +112,23 @@ public class MemberController {
     //2022-04-21 강경민
     //멤버 저장 시 검증 작성
     @PostMapping("/signUp")
-    public String registerMember(@Validated @ModelAttribute("member") MemberRegisterDto memberRegisterDto, BindingResult bindingResult) {
+    public String registerMember(@Validated @ModelAttribute("member") MemberRegisterDto memberRegisterDto, BindingResult bindingResult, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
 
         memberRegisterValidator.validate(memberRegisterDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
+
+            return "signUp";
+        }
+
+        String phoneNumPlusAuthNum = memberRegisterDto.getMemberPhoneNum() + "_" + memberRegisterDto.getPhoneCertificationNum();
+
+        if(!bCryptPasswordEncoder.matches(phoneNumPlusAuthNum , String.valueOf(session.getAttribute("authNum")))){
+            bindingResult.reject("certificationFail");
+            log.info("인증번호오류");
 
             return "signUp";
         }
@@ -191,7 +204,7 @@ public class MemberController {
     //문자 전송 버튼 작동 작업 및 검증 작성
     @PostMapping("/signUp/sendAuthenticationNum")
     @ResponseBody
-    public Map<String, String> sendAuthenticationNum(@RequestBody Map<String, Object> inputMap){
+    public Map<String, String> sendAuthenticationNum(@RequestBody Map<String, Object> inputMap, HttpSession session){
         log.info("'{}' 로 인증번호 전송 시도", inputMap.get("getPhoneNum"));
 
         int authNum = SendSMSTwilio.sendSMS("82", (String) inputMap.get("getPhoneNum"));
@@ -201,6 +214,37 @@ public class MemberController {
         jwtToken.put("putPhoneNum", (String) inputMap.get("getPhoneNum"));
         jwtToken.put("authenticationNum", String.valueOf(authNum));
 
+        String phoneNumPlusAuthNum = (String)inputMap.get("getPhoneNum") + "_" + authNum;
+        log.info(bCryptPasswordEncoder.encode(phoneNumPlusAuthNum));
+        session.setAttribute("authNum", bCryptPasswordEncoder.encode(phoneNumPlusAuthNum));
+//        session.setMaxInactiveInterval(60*3);
+
         return jwtToken;
+    }
+
+
+
+
+    //2022-0513 강경민
+    //인증하기 버튼 작업
+    @PostMapping("/signUp/authNumCorrect")
+    @ResponseBody
+    public  Map<String, String> certificationNum(@RequestBody Map<String, Object> inputMap, HttpServletRequest request){
+
+        Map<String, String> returnMap = new HashMap<>();
+        HttpSession session = request.getSession();
+
+        String phoneNumPlusAuthNum = (String)inputMap.get("getPhoneNum") + "_" + inputMap.get("getphoneCertificationNum");
+
+        log.info("암호화된 인증번호: " + session.getAttribute("authNum"));
+        log.info("인증번호 일치여부: " + bCryptPasswordEncoder.matches(phoneNumPlusAuthNum , String.valueOf(session.getAttribute("authNum"))));
+
+        if (bCryptPasswordEncoder.matches(phoneNumPlusAuthNum , String.valueOf(session.getAttribute("authNum")))){
+            returnMap.put("isCertificationNumMatch", "true");
+        } else{
+            returnMap.put("isCertificationNumMatch", "false");
+        }
+
+        return returnMap;
     }
 }

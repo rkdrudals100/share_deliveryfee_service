@@ -41,6 +41,8 @@
                     </div>
                     <div class="offset-3 col-6 alert alert-danger field-error text-center" id="idDupCheckFail" style="display:none;">이미 존재하는 아이디입니다.</div>
                     <div class="offset-3 col-6 alert alert-success field-success text-center" id="idDupCheckSuccess" style="display:none;">사용 가능한 아이디입니다.</div>
+                    <div class="offset-3 col-6 alert alert-danger field-error text-center" id="CertificationNumUnMatch" style="display:none;">인증번호가 일치하지 않습니다.</div>
+                    <div class="offset-3 col-6 alert alert-success field-success text-center" id="CertificationNumMatch" style="display:none;">인증번호가 일치합니다.</div>
                     <div class="row g-3">
                         <div class="offset-4 col-4">
                             <label for="memberId" class="form-label">아이디</label>
@@ -83,8 +85,8 @@
                         <div class="offset-4 col-4">
                             <label for="phoneCertificationNum" class="form-label">휴대폰 인증번호</label>
                             <div class="input-group has-validation">
-                                <input type="text" class="form-control" id="phoneCertificationNum" placeholder="인증번호를 입력하세요." value="" required="">
-                                <button type="button" class="input-group-text" th:onclick="">인증하기</button>
+                                <input type="text" class="form-control" id="phoneCertificationNum" th:field="*{phoneCertificationNum}" placeholder="인증번호를 입력하세요." value="" required="">
+                                <button type="button" class="input-group-text" id="authNumCorrect">인증하기</button>
                             </div>
                         </div>
 
@@ -265,6 +267,58 @@
                 httpRequest2.responseType = "json";
                 httpRequest2.setRequestHeader('Content-Type', 'application/json');
                 httpRequest2.send(JSON.stringify(reqJson));
+            });
+
+
+
+
+
+
+
+            // 2022-0513 강경민
+            // 인증하기 버튼 작동되게 작업
+            var httpRequest3;
+
+            document.getElementById("authNumCorrect").addEventListener('click', () => {
+
+                var memberPhoneNum = document.getElementById("phoneCertification").value;
+                var phoneCertificationNum = document.getElementById("phoneCertificationNum").value;
+                var reqJson = new Object();
+                reqJson.getPhoneNum = memberPhoneNum;
+                reqJson.getphoneCertificationNum = phoneCertificationNum;
+                httpRequest3 = new XMLHttpRequest();
+
+                httpRequest3.onreadystatechange = () => {
+                    //readyState가 Done이고 응답 값이 200일 때
+                    if (httpRequest3.readyState === XMLHttpRequest.DONE) {
+                        if (httpRequest3.status === 200) {
+                            var result = httpRequest3.response;
+
+                            if(result.isCertificationNumMatch == "true") {
+                                document.getElementById("CertificationNumUnMatch").style.display = "none";
+                                document.getElementById("CertificationNumMatch").style.display = "block";
+
+                                setTimeout(function () {
+                                    document.getElementById("CertificationNumMatch").style.display = "none";
+                                }, 3000);
+                            } else {
+                                document.getElementById("CertificationNumMatch").style.display = "none";
+                                document.getElementById("CertificationNumUnMatch").style.display = "block";
+
+                                setTimeout(function () {
+                                    document.getElementById("CertificationNumUnMatch").style.display = "none";
+                                }, 3000);
+                            }
+                        } else {
+                            alert('ajax Request Error!');
+                        }
+                    }
+                };
+                //Post 방식, 응답은 json, 요청헤더 json
+                httpRequest3.open('POST', 'signUp/authNumCorrect', true);
+                httpRequest3.responseType = "json";
+                httpRequest3.setRequestHeader('Content-Type', 'application/json');
+                httpRequest3.send(JSON.stringify(reqJson));
             });
         }
     </script>

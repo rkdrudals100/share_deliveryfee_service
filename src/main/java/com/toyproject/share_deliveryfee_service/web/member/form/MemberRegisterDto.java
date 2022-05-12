@@ -20,6 +20,8 @@ public class MemberRegisterDto {
 
     private String memberPhoneNum;
 
+    private String phoneCertificationNum;
+
     private String memberPassword;
 
     private String memberPassword2;
