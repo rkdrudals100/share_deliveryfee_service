@@ -3,15 +3,20 @@ package com.toyproject.share_deliveryfee_service.web.sms;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import lombok.extern.slf4j.Slf4j;
 
 //2022-04-20 강경민
 //SMS 전송 구현
+@Slf4j
 public class SendSMSTwilio {
+
+    public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
+    public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
 
     // 전송 함수
     public static int sendSMS (String countryNum, String phoneNum) {
         // ACCOUNT_SID, AUTH_TOKEN 정보
-        Twilio.init("ACbf84baf38b774e9b37daae56eb91c1f1", "36a8511c3579191d2d3ce1011c31eed9");
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
         // 휴대폰 인증번호 생성
         int authNum = randomRange(100000, 999999);
