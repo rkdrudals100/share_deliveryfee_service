@@ -1,8 +1,13 @@
 package com.toyproject.share_deliveryfee_service.web.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +15,9 @@ import java.util.List;
 //  도메인 설계
 @Entity
 @Data @Table(name = "parties")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Party extends BaseEntity{
 
     @Id @GeneratedValue
@@ -30,7 +38,8 @@ public class Party extends BaseEntity{
 
     private int membersNum;
 
-    private String limitTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime limitTime;
 
     @Enumerated(EnumType.STRING)
     private DeliveryPlatform deliveryPlatform;
@@ -47,7 +56,7 @@ public class Party extends BaseEntity{
     @OneToMany(mappedBy = "party", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FoodCategory> foodCategories = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member organizer;
 
@@ -56,9 +65,9 @@ public class Party extends BaseEntity{
 
 
     // 연관관계 편의 메소드
-    public void changeMember(Member member){
+    public void changeOrganizer(Member member){
         this.organizer = member;
-        member.setParty(this);
+        member.getHostedparties().add(this);
     }
 
     public void addPartyMessage(PartyMessage partyMessage){

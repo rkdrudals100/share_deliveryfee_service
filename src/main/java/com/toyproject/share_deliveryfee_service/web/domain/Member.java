@@ -42,8 +42,8 @@ public class Member extends BaseEntity{
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberParty> memberParties = new ArrayList<>();
 
-    @OneToOne(mappedBy = "organizer", fetch = FetchType.LAZY)
-    private Party party;
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Party> hostedparties = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PartyMessage> messages = new ArrayList<>();
@@ -65,6 +65,11 @@ public class Member extends BaseEntity{
     public void addMessages(PartyMessage partyMessage){
         partyMessage.setMember(this);
         this.getMessages().add(partyMessage);
+    }
+
+    public void addMemberParties(MemberParty memberParty){
+        memberParty.setMember(this);
+        this.getMemberParties().add(memberParty);
     }
 
 }

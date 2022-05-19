@@ -132,6 +132,7 @@ public class MemberController {
 
             return "signUp";
         }
+        session.removeAttribute(phoneNumPlusAuthNum);
 
         Member saveMember = Member.builder()
                 .username(memberRegisterDto.getMemberId())
@@ -217,7 +218,7 @@ public class MemberController {
         String phoneNumPlusAuthNum = (String)inputMap.get("getPhoneNum") + "_" + authNum;
         log.info(bCryptPasswordEncoder.encode(phoneNumPlusAuthNum));
         session.setAttribute("authNum", bCryptPasswordEncoder.encode(phoneNumPlusAuthNum));
-//        session.setMaxInactiveInterval(60*3);
+        session.setMaxInactiveInterval(60*3);
 
         return jwtToken;
     }

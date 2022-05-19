@@ -170,8 +170,9 @@
   </script>
 
   <script>
-    document.getElementById("endTime").value = new Date().toISOString().slice(0, 16);
-    // console.log(document.getElementById("endTime").value)
+    window.onload = function () {
+        document.getElementById("limitTime").value = "2022-03-19T15:30";
+    }
   </script>
 
   <!--다음 주소 api-->

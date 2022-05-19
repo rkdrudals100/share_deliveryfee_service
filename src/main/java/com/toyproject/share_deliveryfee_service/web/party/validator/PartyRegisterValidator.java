@@ -9,6 +9,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.time.format.DateTimeFormatter;
+
 @Component
 @RequiredArgsConstructor
 public class PartyRegisterValidator implements Validator {
@@ -57,7 +59,7 @@ public class PartyRegisterValidator implements Validator {
             errors.rejectValue("membersNum", "range", new Object[]{2, 4}, null);
         }
 
-        if (!StringUtils.hasText(partyRegisterDto.getLimitTime())) {
+        if (!StringUtils.hasText(partyRegisterDto.getLimitTime().format(DateTimeFormatter.ofPattern("yyyyMMdd")))) {
             errors.rejectValue("limitTime", "required");
         }
 

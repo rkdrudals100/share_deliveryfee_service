@@ -1,6 +1,9 @@
 package com.toyproject.share_deliveryfee_service.web.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -8,6 +11,9 @@ import javax.persistence.*;
 //  도메인 설계
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MemberParty extends BaseEntity{
 
     @Id @GeneratedValue
@@ -24,19 +30,21 @@ public class MemberParty extends BaseEntity{
 
 
     // 연관관계 편의 메소드
-    public void addMember(Party party){
-        party.getMemberParties().add(this);
-        this.setParty(party);
+    public void addMember(Member member){
+        this.setMember(member);
+        member.getMemberParties().add(this);
     }
 
-    public void addParty(Member member){
-        member.getMemberParties().add(this);
-        this.setMember(member);
+    public void addParty(Party party){
+        this.setParty(party);
+//        party.getMemberParties().add(this);
+//        party.getMemberParties().add(this);
     }
 
     public void addMemberParty(Party party, Member member){
-        addMember(party);
-        addParty(member);
+        addMember(member);
+        addParty(party);
     }
+
 
 }
