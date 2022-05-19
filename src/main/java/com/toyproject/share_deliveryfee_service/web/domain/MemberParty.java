@@ -37,8 +37,7 @@ public class MemberParty extends BaseEntity{
 
     public void addParty(Party party){
         this.setParty(party);
-//        party.getMemberParties().add(this);
-//        party.getMemberParties().add(this);
+        party.getMemberParties().add(this);
     }
 
     public void addMemberParty(Party party, Member member){

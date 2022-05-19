@@ -18,6 +18,9 @@ public class PartyService {
     private final MemberRepository memberRepository;
     private final MemberPartyRepository memberPartyRepository;
 
+    
+    // 2022-05-19 강경민
+    // 파티 저장 기능 구현
     public Party createParty(String username, PartyRegisterDto partyRegisterDto){
 
         Member member = memberRepository.findByUsername(username);
@@ -48,14 +51,16 @@ public class PartyService {
                 .build();
 
         saveParty.changeOrganizer(member);
-//        Party testdd = partyRepository.save(saveParty);
 
-        MemberParty saveMemberParty = new MemberParty();
-        MemberParty test = memberPartyRepository.save(saveMemberParty);
 
-        test.addParty(saveParty);
-        test.addMember(member);
+        MemberParty saveMemberParty = MemberParty.builder()
+                .member(member)
+                .party(saveParty)
+                .build();
+
+        memberPartyRepository.save(saveMemberParty);
 
         return partyRepository.save(saveParty);
     }
+
 }
