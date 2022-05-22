@@ -55,8 +55,8 @@ public class PartyRegisterValidator implements Validator {
             errors.rejectValue("totalPrice", "form");
         }
 
-        if (partyRegisterDto.getMembersNum() < 2 || partyRegisterDto.getMembersNum() > 4) {
-            errors.rejectValue("membersNum", "range", new Object[]{2, 4}, null);
+        if (partyRegisterDto.getMaxMemberNum() < 2 || partyRegisterDto.getMaxMemberNum() > 4) {
+            errors.rejectValue("maxMemberNum", "range", new Object[]{2, 4}, null);
         }
 
         if (!StringUtils.hasText(partyRegisterDto.getLimitTime().format(DateTimeFormatter.ofPattern("yyyyMMdd")))) {

@@ -92,14 +92,14 @@
             </div>
 
             <div class="col-3">
-              <label for="membersNum" class="form-label">모집인원</label>
-              <select class="form-select" id="membersNum" th:field="*{membersNum}" th:errorclass="field-error">
+              <label for="maxMemberNum" class="form-label">모집인원</label>
+              <select class="form-select" id="maxMemberNum" th:field="*{maxMemberNum}" th:errorclass="field-error">
                 <option value="2">2명</option>
                 <option value="3">3명</option>
                 <option value="4">4명</option>
 
               </select>
-              <div class="field-error col-12" th:errors="*{membersNum}">
+              <div class="field-error col-12" th:errors="*{maxMemberNum}">
                   모집 인원 에러
               </div>
             </div>

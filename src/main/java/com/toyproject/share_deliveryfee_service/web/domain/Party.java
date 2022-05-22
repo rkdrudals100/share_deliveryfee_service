@@ -38,6 +38,8 @@ public class Party extends BaseEntity{
 
     private int membersNum;
 
+    private int maxMemberNum;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime limitTime;
 

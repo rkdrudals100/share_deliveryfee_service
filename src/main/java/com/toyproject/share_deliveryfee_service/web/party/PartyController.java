@@ -6,6 +6,7 @@ import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;
 import com.toyproject.share_deliveryfee_service.web.party.validator.PartyRegisterValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,7 +31,11 @@ public class PartyController {
     private final PartyService partyService;
 
     @GetMapping("/searchParty")
-    public String searchParty(){
+    public String searchParty(Model model){
+
+        List<Party> parties = partyRepository.findByPartyStatus(PartyStatus.RECRUITING, Sort.by(Sort.Direction.ASC, "pickUpLocation"));
+
+        model.addAttribute("parties", parties);
 
         return "searchParty";
     }
