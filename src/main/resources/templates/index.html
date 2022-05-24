@@ -8,16 +8,22 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
   <style>
+    body{
+      margin: 0;
+    }
+
     .section1{
-      position: absolute;
-      top: 10vh;
-      left: calc(50vw - 600px);
+      width: 100vw;
+      height: 750px;
+      position: relative;
+      top: 8vh;
+      /*background-image: url('https://image.istarbucks.co.kr/upload/common/img/main/2022/2022_Summer1_main_bg.jpg');*/
     }
 
     .foodImages{
       position: absolute;
       top: 200px;
-      left: 0px;
+      left: calc(50vw - 650px);
       width: 600px;
       height: 500px;
       animation: appear 0.5s ease-out;
@@ -26,22 +32,22 @@
     .platformLogos{
       position: absolute;
       top: 230px;
-      left: 660px;
+      left: calc(50vw - 650px + 760px);
       width: 550px;
-      height: 180px;
+      height: 160px;
       opacity: 0;
       animation: appear 0.5s ease-out forwards;
       animation-delay: 0.5s;
     }
 
-    .word{
+    .title1{
       position: absolute;
       font-size: 3em;
       width: 410px;
       font-family: "맑은 고딕";
       font-weight: bolder;
       top: 470px;
-      left: 735px;
+      left: calc(50vw - 650px + 835px);
       opacity: 0;
       animation: appear 0.5s ease-out forwards;
       animation-delay: 1s;
@@ -49,12 +55,148 @@
 
     .serviceStartBtn{
       position: absolute;
-      top: 600px;
-      left: 850px;
+      top: 630px;
+      left: calc(50vw - 650px + 950px);
       width: 185px;
       opacity: 0;
       animation: appear 0.5s ease-out forwards;
       animation-delay: 1.5s;
+    }
+
+    .section2{
+      width: 100vw;
+      height: 700px;
+      position: relative;
+      top: 8vh;
+      /*background-image: url('https://image.istarbucks.co.kr/upload/common/img/main/2022/2022_Summer1_main_bg.jpg');*/
+      background-color: #9fcdff;
+    }
+
+    .section2 .shareImages{
+      position: relative;
+      left: calc(50vw - 400px);
+      top: 80px;
+      opacity: 0;
+    }
+
+    .money{
+      width: 160px;
+      height: 200px;
+      position: absolute;
+      top: 340px;
+      left: -10px;
+    }
+    .money1{
+      width: 72px;
+      height: 90px;
+      position: absolute;
+      left: -200px;
+      top: 100px;
+    }
+    .money2{
+      width: 72px;
+      height: 90px;
+      position: absolute;
+      left: -50px;
+      top: 100px;
+    }
+    .money3{
+      width: 72px;
+      height: 90px;
+      position: absolute;
+      left: 100px;
+      top: 100px;
+    }
+    .money4{
+      width: 72px;
+      height: 90px;
+      position: absolute;
+      left: 250px;
+      top: 100px;
+    }
+
+    .arrow1{
+      width: 100px;
+      height: 150px;
+      position: absolute;
+      left: -160px;
+      top: 185px;
+      transform: rotate(140deg);
+    }
+    .arrow2{
+      width: 100px;
+      height: 130px;
+      position: absolute;
+      left: -40px;
+      top: 195px;
+      transform: rotate(160deg);
+    }
+    .arrow3{
+      width: 100px;
+      height: 130px;
+      position: absolute;
+      left: 65px;
+      top: 195px;
+      transform: rotate(200deg);
+    }
+    .arrow4{
+      width: 100px;
+      height: 150px;
+      position: absolute;
+      left: 180px;
+      top: 185px;
+      transform: rotate(220deg);
+    }
+
+    .person1{
+      width: 130px;
+      height: 130px;
+      position: absolute;
+      left: -230px;
+      top: 0px;
+    }
+    .person2{
+      width: 130px;
+      height: 130px;
+      position: absolute;
+      left: -80px;
+      top: 0px;
+    }
+    .person3{
+       width: 130px;
+       height: 130px;
+       position: absolute;
+       left: 70px;
+       top: 0px;
+     }
+    .person4{
+        width: 130px;
+        height: 130px;
+        position: absolute;
+        left: 220px;
+        top: 0px;
+      }
+
+    .title2{
+      position: absolute;
+      font-size: 3em;
+      width: 700px;
+      font-family: "맑은 고딕";
+      font-weight: bolder;
+      top: 150px;
+      left: calc(50vw + 100px);
+      opacity: 0;
+    }
+
+    .title2Sub1{
+      position: absolute;
+      font-size: 2em;
+      width: 700px;
+      font-family: "맑은 고딕";
+      font-weight: bolder;
+      top: 315px;
+      left: calc(50vw + 100px);
+      opacity: 0;
     }
 
     @keyframes appear {
@@ -66,24 +208,55 @@
       }
     }
 
-    @keyframes slideAppear {
+    @keyframes disappear {
       from{
-        left:400px;
+        opacity: 1;
+      }
+      to{
+        opacity: 0;
+      }
+    }
+
+    @keyframes leftSlideAppear {
+      from{
+        left: calc(50vw - 800px);
         opacity: 0;
       }
       to{
-        left:800px;
+        left: calc(50vw - 400px);
         opacity: 1;
       }
     }
 
-    @keyframes slideDisappear {
+    @keyframes rightSlideAppear {
       from{
-        left:800px;
+        left: calc(50vw + 500px);
+        opacity: 0;
+      }
+      to{
+        left: calc(50vw + 100px);
+        opacity: 1;
+      }
+    }
+
+    @keyframes leftSlideDisappear {
+      from{
+        left: calc(50vw - 400px);
         opacity: 1;
       }
       to{
-        left:400px;
+        left: calc(50vw - 800px);
+        opacity: 0;
+      }
+    }
+
+    @keyframes rightSlideDisappear {
+      from{
+        left: calc(50vw + 100px);
+        opacity: 1;
+      }
+      to{
+        left: calc(50vw + 500px);
         opacity: 0;
       }
     }
@@ -97,12 +270,25 @@
     window.addEventListener('scroll', function (){
 
       let value = window.scrollY;
+      console.log(value);
 
-      // if (value > 300){
-      //   document.getElementById("word").style.animation = "slideDisappear 1s ease-out forwards";
-      // } else {
-      //   document.getElementById("word").style.animation = "slideAppear 1s ease-out forwards";
-      // }
+      if (value > 400){
+        document.getElementById("word").style.animation = "disappear 0.5s ease-out forwards";
+        document.getElementById("serviceStartBtn").style.animation = "disappear 0.5s ease-out forwards";
+      } else {
+        document.getElementById("word").style.animation = "appear 0.5s ease-out forwards";
+        document.getElementById("serviceStartBtn").style.animation = "appear 0.5s ease-out forwards";
+      }
+
+      if (value < 0 || value > 1150){
+        document.getElementById("shareImages").style.animation = "leftSlideDisappear 1s ease-out forwards";
+        document.getElementById("title2").style.animation = "rightSlideDisappear 1s ease-out forwards";
+        document.getElementById("title2Sub1").style.animation = "rightSlideDisappear 1s ease-out forwards";
+      } else {
+        document.getElementById("shareImages").style.animation = "leftSlideAppear 1s ease-out forwards";
+        document.getElementById("title2").style.animation = "rightSlideAppear 1s ease-out forwards";
+        document.getElementById("title2Sub1").style.animation = "rightSlideAppear 1s ease-out forwards";
+      }
     })
   </script>
 </head>
@@ -130,32 +316,41 @@
     </div>
   </nav>
 
-  <div style="height: 300px"></div>
-
-  <div class="container" style="padding-bottom: 250px">
-<!--    <div style="text-align: center">-->
-<!--      <img src="/img/intro2.PNG" alt="소개" width="1200" height="500">-->
-<!--    </div>-->
+  <div class="container" style="margin: 0px; padding: 0px">
     <section class="section1">
       <img class="foodImages" src="/img/foodImage.PNG" alt="foodImage">
       <img class="platformLogos" src="/img/platformlogosImage.PNG" alt="platformLogos">
-      <h1 class="word" id="word">부담스러운 배달비 이제 나눠서 내자!</h1>
-      <button class="btn btn-lg btn-primary serviceStartBtn" type="button">서비스 시작하기</button>
+      <div class="title1" id="word">부담스러운 배달비 이제 나눠서 내자!</div>
+      <button class="btn btn-lg btn-primary serviceStartBtn" id="serviceStartBtn" type="button">서비스 시작하기</button>
+    </section>
+
+    <section class="section2">
+      <div class="shareImages" id="shareImages" style="position: relative">
+        <img class="money" src="/img/money.png" alt="moneyImage">
+        <img class="money1" src="/img/money.png" alt="moneyImage1">
+        <img class="money2" src="/img/money.png" alt="moneyImage2">
+        <img class="money3" src="/img/money.png" alt="moneyImage3">
+        <img class="money4" src="/img/money.png" alt="moneyImage4">
+        <img class="arrow1" src="/img/arrow.png" alt="arrow">
+        <img class="arrow2" src="/img/arrow.png" alt="arrow">
+        <img class="arrow3" src="/img/arrow.png" alt="arrow">
+        <img class="arrow4" src="/img/arrow.png" alt="arrow">
+        <img class="person1" src="/img/person1.png" alt="person1">
+        <img class="person2" src="/img/person2.png" alt="person2">
+        <img class="person3" src="/img/person3.png" alt="person3">
+        <img class="person4" src="/img/person4.png" alt="person4">
+      </div>
+      <div class="title2" id="title2">
+        최대 4분의 1만큼
+        <br>
+        적은 배달비로 배달!
+      </div>
+      <h1 class="title2Sub1" id="title2Sub1">본 페이지는 배달의 민족, 요기요, 배달 특급 등의 플랫폼을 이용할 때 발생하는 배달비를 나눠서 분담하는 서비스입니다.</h1>
+
     </section>
   </div>
 
-  <div class="container" style="padding-bottom: 250px">
-    <h1><b>본 페이지는 배달의 민족, 요기요, 배달 특급 등의 플랫폼을 이용할 때 발생하는 배달비를 나눠서 분담하는 서비스입니다.</b></h1>
-    <div class="row">
-      <div class="col">
-        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-
-  <div class="container" style="padding-bottom: 250px">
+  <div class="container" style="padding-bottom: 250px; padding-top: 2000px">
     <h1 style="padding-bottom: 100px"><b>지역과 주문할 지점으로 검색해서 조건에 맞는 사람을 검색하세요.</b></h1>
     <div class="row">
       <div class="col-md-8">
