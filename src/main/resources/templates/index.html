@@ -10,6 +10,7 @@
   <style>
     body{
       margin: 0;
+      /*overflow-x: hidden;*/
     }
 
     .section1{
@@ -199,6 +200,112 @@
       opacity: 0;
     }
 
+    .section3{
+      width: 100vw;
+      height: 700px;
+      position: relative;
+      top: 8vh;
+      background-color: #8fd19e;
+    }
+
+    .searchPartyImage{
+      width: 700px;
+      height: 530px;
+      position: absolute;
+      left: 240px;
+      top: 0px;
+    }
+
+    .title3{
+      position: absolute;
+      font-size: 3em;
+      width: 700px;
+      font-family: "맑은 고딕";
+      font-weight: bolder;
+      top: 150px;
+      left: calc(50vw + 100px);
+    }
+
+    .title3Sub1{
+      position: absolute;
+      font-size: 2em;
+      width: 700px;
+      font-family: "맑은 고딕";
+      font-weight: bolder;
+      top: 315px;
+      left: calc(50vw + 100px);
+    }
+
+    .section4{
+      width: 100vw;
+      height: 700px;
+      position: relative;
+      top: 8vh;
+      background-color: #b9bbbe;
+    }
+
+    .sequenceCards{
+      width: 610px;
+      height: 485px;
+      top: 80px;
+      left: calc(50vw - 610px - 50px);
+      position: relative;
+    }
+
+    .sequenceCard{
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 180px;
+      height: 225px;
+      background-color: white;
+      box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
+      border: 1px solid #dee2e6;
+      /*border-color: #198754;*/
+      border-radius: 30px 30px 30px 30px;
+      padding-left: 25px;
+      padding-top: 10px;
+      opacity: 0;
+    }
+    .line{
+      position: absolute;
+      width: 175px;
+      height: 80px;
+      left: 0px;
+      top: 0px;
+      opacity: 0;
+    }
+
+    .title4{
+      position: absolute;
+      font-size: 3em;
+      width: 700px;
+      font-family: "맑은 고딕";
+      font-weight: bolder;
+      top: 150px;
+      left: calc(50vw + 100px);
+      opacity: 0;
+    }
+
+    .title4Sub1{
+      position: absolute;
+      font-size: 2em;
+      width: 700px;
+      font-family: "맑은 고딕";
+      font-weight: bolder;
+      top: 315px;
+      left: calc(50vw + 100px);
+      opacity: 0;
+    }
+
+    .makePartyBtn{
+      position: absolute;
+      top: 630px;
+      left: calc(50vw - 650px + 950px);
+      width: 185px;
+      opacity: 0;
+    }
+
     @keyframes appear {
       from{
         opacity: 0;
@@ -228,6 +335,17 @@
       }
     }
 
+    @keyframes leftSlideAppear2 {
+      from{
+        left: calc(50vw - 1040px);
+        opacity: 0;
+      }
+      to{
+        left: calc(50vw - 640px);
+        opacity: 1;
+      }
+    }
+
     @keyframes rightSlideAppear {
       from{
         left: calc(50vw + 500px);
@@ -246,6 +364,17 @@
       }
       to{
         left: calc(50vw - 800px);
+        opacity: 0;
+      }
+    }
+
+    @keyframes leftSlideDisappear2 {
+      from{
+        left: calc(50vw - 640px);
+        opacity: 1;
+      }
+      to{
+        left: calc(50vw - 1040px);
         opacity: 0;
       }
     }
@@ -289,6 +418,41 @@
         document.getElementById("title2").style.animation = "rightSlideAppear 1s ease-out forwards";
         document.getElementById("title2Sub1").style.animation = "rightSlideAppear 1s ease-out forwards";
       }
+
+      if (value < 800 || value > 1600){
+        document.getElementById("searchPartyImage").style.animation = "leftSlideDisappear2 1s ease-out forwards";
+        document.getElementById("title3").style.animation = "rightSlideDisappear 1s ease-out forwards";
+        document.getElementById("title3Sub1").style.animation = "rightSlideDisappear 1s ease-out forwards";
+        document.getElementById("serviceStartBtn2").style.animation = "disappear 1s ease-out forwards";
+      } else {
+        document.getElementById("searchPartyImage").style.animation = "leftSlideAppear2 1s ease-out forwards";
+        document.getElementById("title3").style.animation = "rightSlideAppear 1s ease-out forwards";
+        document.getElementById("title3Sub1").style.animation = "rightSlideAppear 1s ease-out forwards";
+        document.getElementById("serviceStartBtn2").style.animation = "appear 1s ease-out forwards";
+      }
+
+      if (value > 1750){
+        document.getElementById("sequenceCard1").style.animation = "appear 1s ease-out forwards";
+        document.getElementById("line1").style.animation = "appear 1s ease-out forwards";
+        document.getElementById("line1").style.animationDelay = "0.2s";
+        document.getElementById("sequenceCard2").style.animation = "appear 1s ease-out forwards";
+        document.getElementById("sequenceCard2").style.animationDelay = "0.2s";
+        document.getElementById("line2").style.animation = "appear 1s ease-out forwards";
+        document.getElementById("line2").style.animationDelay = "0.4s";
+        document.getElementById("sequenceCard3").style.animation = "appear 1s ease-out forwards";
+        document.getElementById("sequenceCard3").style.animationDelay = "0.4s";
+        document.getElementById("sequenceCard4").style.animation = "appear 1s ease-out forwards";
+        document.getElementById("sequenceCard4").style.animationDelay = "0.6s";
+
+        document.getElementById("title4").style.animation = "rightSlideAppear 1s ease-out forwards";
+        document.getElementById("title4").style.animationDelay = "0.8s";
+        document.getElementById("title4Sub1").style.animation = "rightSlideAppear 1s ease-out forwards";
+        document.getElementById("title4Sub1").style.animationDelay = "0.8s";
+
+        document.getElementById("makePartyBtn").style.animation = "appear 0.5s ease-out forwards";
+        document.getElementById("makePartyBtn").style.animationDelay = "1.5s";
+      }
+
     })
   </script>
 </head>
@@ -316,13 +480,22 @@
     </div>
   </nav>
 
-  <div class="container" style="margin: 0px; padding: 0px">
+  <div class="container" style="margin: 0px; padding: 0px;">
     <section class="section1">
       <img class="foodImages" src="/img/foodImage.PNG" alt="foodImage">
       <img class="platformLogos" src="/img/platformlogosImage.PNG" alt="platformLogos">
       <div class="title1" id="word">부담스러운 배달비 이제 나눠서 내자!</div>
-      <button class="btn btn-lg btn-primary serviceStartBtn" id="serviceStartBtn" type="button">서비스 시작하기</button>
+      <button class="btn btn-lg btn-primary serviceStartBtn" id="serviceStartBtn" th:onclick="|location.href = '@{/searchParty}'|" type="button">서비스 시작하기</button>
     </section>
+
+
+
+
+
+
+
+
+
 
     <section class="section2">
       <div class="shareImages" id="shareImages" style="position: relative">
@@ -346,33 +519,94 @@
         적은 배달비로 배달!
       </div>
       <h1 class="title2Sub1" id="title2Sub1">본 페이지는 배달의 민족, 요기요, 배달 특급 등의 플랫폼을 이용할 때 발생하는 배달비를 나눠서 분담하는 서비스입니다.</h1>
-
     </section>
-  </div>
 
-  <div class="container" style="padding-bottom: 250px; padding-top: 2000px">
-    <h1 style="padding-bottom: 100px"><b>지역과 주문할 지점으로 검색해서 조건에 맞는 사람을 검색하세요.</b></h1>
-    <div class="row">
-      <div class="col-md-8">
-        <img src="/img/hanRiverMap.PNG" alt="위치예시" width="800" height="400">
-      </div>
-      <div class="col-md-4">
-        <h1>여의도 공원 검색하는 이미지 삽입</h1>
-        <h1>검색 아이콘 삽입</h1>
-      </div>
-    </div>
-  </div>
 
-  <div class="container" style="padding-bottom: 250px; text-align: center">
-    <h1 class="mb-5"><b>원하는 파티가 없다면 직접 게시글을 등록할 수 있습니다.</b></h1>
-    <div class="row">
-      <div class="col">
-        <img src="/img/makePartyCapture.PNG" alt="로고" width="1200" height="600">
+
+
+
+
+
+
+
+
+    <section class="section3">
+      <img class="searchPartyImage" id="searchPartyImage" src="/img/searchPartyImage2.png" alt="searchPartyImage">
+      <div class="title3" id="title3">
+        원하는 파티를
+        <br>
+        검색 메뉴를 통해 서치!
       </div>
-      <div style="text-align: center">
-        <button class="btn btn-lg btn-primary mt-5" type="button" th:onclick="|location.href = '@{/makeParty}'|">파티 모집하기</button>
+      <div class="title3Sub1" id="title3Sub1">
+        지역과 주문할 지점으로 검색해서 조건에 맞는 사람을 검색하세요.
       </div>
-    </div>
+      <button class="btn btn-lg btn-primary serviceStartBtn" id="serviceStartBtn2" th:onclick="|location.href = '@{/searchParty}'|" type="button" style="top: 450px">서비스 시작하기</button>
+    </section>
+
+
+
+
+
+
+
+
+
+
+    <section class="section4">
+      <div class="sequenceCards">
+        <div class="sequenceCard" id="sequenceCard1">
+          <div style="font-family: '맑은 고딕'; font-size: 1em; font-weight: bolder; height: 30px;">1.</div>
+          <div style="font-family: '맑은 고딕'; font-size: 1.2em; font-weight: bolder; height: 65px;">모집글 <br> 등록하기</div>
+          <div style="font-family: '맑은 고딕'; font-size: 0.8em; height: 60px">모집글을 작성하고 <br> 등록하세요.</div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-cloud-plus" viewBox="0 0 16 16" style="width: 50px; height: 50px; margin-left: 75px; margin-top: 0px">
+            <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/>
+            <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"/>
+          </svg>
+        </div>
+        <img class="line" id="line1" src="/img/line.png" style="left: 173px; top: 85px">
+        <div class="sequenceCard" id="sequenceCard2" style="left: 215px; top: 0px;">
+          <div style="font-family: '맑은 고딕'; font-size: 1em; font-weight: bolder; height: 30px;">2.</div>
+          <div style="font-family: '맑은 고딕'; font-size: 1.2em; font-weight: bolder; height: 65px;">파티원 <br> 모집하기</div>
+          <div style="font-family: '맑은 고딕'; font-size: 0.8em; height: 60px">조건에 맞는 파티원들을 <br> 모집하세요.</div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16" style="width: 50px; height: 50px; margin-left: 75px; margin-top: 0px">
+            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+          </svg>
+        </div>
+        <img class="line" id="line2" src="/img/line.png" style="left: 387px; top: 85px">
+        <div class="sequenceCard" id="sequenceCard3" style="left: 430px; top: 0px;">
+          <div style="font-family: '맑은 고딕'; font-size: 1em; font-weight: bolder; height: 30px;">3.</div>
+          <div style="font-family: '맑은 고딕'; font-size: 1.2em; font-weight: bolder; height: 65px;">배달음식 <br> 주문하기</div>
+          <div style="font-family: '맑은 고딕'; font-size: 0.8em; height: 60px">배달 플랫폼으로 음식을 <br>주문하세요. 주문 후 파티원들이 결제한 배달비를 <br>수령하세요. </div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16" style="width: 50px; height: 50px; margin-left: 75px; margin-top: 0px">
+            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
+            <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
+          </svg>
+        </div>
+        <div class="sequenceCard" id="sequenceCard4" style="left: 0px; top: 255px;">
+          <div style="font-family: '맑은 고딕'; font-size: 1em; font-weight: bolder; height: 30px;">4.</div>
+          <div style="font-family: '맑은 고딕'; font-size: 1.2em; font-weight: bolder; height: 65px;">파티장 평가 <br> 남기기</div>
+          <div style="font-family: '맑은 고딕'; font-size: 0.8em; height: 60px">파티장 평가를 <br>남겨주세요. </div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-journal-plus" viewBox="0 0 16 16" style="width: 50px; height: 50px; margin-left: 75px; margin-top: 0px">
+            <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/>
+            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="title4" id="title4">
+        직접 파티 모집으로
+        <br>
+        원하는 조건으로 파티원 모집!
+      </div>
+      <div class="title4Sub1" id="title4Sub1">
+        원하는 파티를 찾지 못했다면
+        <br>
+        조건에 맞는 파티를 직접 만들 수 있습니다.
+      </div>
+      <button class="btn btn-lg btn-primary makePartyBtn" id="makePartyBtn" th:onclick="|location.href = '@{/makeParty}'|" type="button" style="top: 450px">파티 모집하기</button>
+    </section>
   </div>
 
   <!-- JavaScript Bundle with Popper -->
