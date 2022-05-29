@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-
-<!--<head th:replace="~{templates/fragments :: head}"></head>-->
-<head th:replace="fragments.html :: heads"></head>
+<head th:replace="fragments.html :: headers(~{::title}, ~{::link}, ~{::script}, ~{::style})">
+  <title>shareDeliveryFeeService</title>
+  <link rel="stylesheet" href="/css/indexStyle.css">
+  <script src="/js/indexJs.js"></script>
+  <style></style>
+</head>
 
 <body>
-  <nav class="container-fluid fixed-top border-bottom py-3 bg-white shadow-sm">
-    <div class="nav d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none px-4">
-        <img src="/img/deliveryIcon.PNG" alt="로고" width="100" height="80">
-      </a>
-
-      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-3 text-dark h3">소개</a></li>
-        <li><a th:href="@{/searchParty}" class="nav-link px-3 text-dark h3">검색</a></li>
-        <li><a href="#" class="nav-link px-3 text-dark h3">MY정보</a></li>
-      </ul>
-
-      <ul class="nav justify-content-center px-5">
-        <li><a th:href="@{/login}" class="nav-link px-2 text-dark h4">로그인</a></li>
-        <li><a th:href="@{/signUp}" class="nav-link px-2 text-dark h4">회원가입</a></li>
-      </ul>
-    </div>
-  </nav>
-
-
-
+  <nav th:replace="fragments.html :: navigator(0)"></nav>
+<!--  <nav th:replace="fragments.html :: navigatorTest"></nav>-->
 
   <div class="container" style="margin: 0px; padding: 0px;">
     <section class="section1">
