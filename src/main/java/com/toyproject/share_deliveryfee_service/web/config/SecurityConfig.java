@@ -5,9 +5,11 @@ import com.toyproject.share_deliveryfee_service.web.config.jwt.JwtAuthentication
 import com.toyproject.share_deliveryfee_service.web.config.jwt.JwtAuthorizationFilter;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
-                .antMatchers("/login", "/signUp/**", "/index", "/testdatasave", "/img/**", "/js/**", "/css/**", "/token", "/").permitAll()
+                .antMatchers("/fragments", "/login", "/signUp/**", "/index", "/testdatasave", "/img/**", "/js/**", "/css/**", "/token", "/").permitAll()
                 .anyRequest().authenticated();
 
 
@@ -55,6 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/")
                 .defaultSuccessUrl("/");
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .antMatchers("/favicon.ico", "resources/**");
     }
 
     @Bean
