@@ -3,7 +3,9 @@
 
 <head th:replace="fragments.html :: headers(~{::title}, ~{::link}, ~{::script}, ~{::style})">
     <title>파티찾기</title>
-    <link><script></script><style></style>
+    <link>
+    <script src="/js/searchPartyJs.js"></script>
+    <style></style>
 </head>
 
 <!--2022-03-24 강경민
@@ -23,32 +25,55 @@
             </form>
         </div>
         <div>
-            검색결과(<span id="searchNum">0</span>건)
+            검색결과(<span id="searchNum" th:text="${#lists.size(parties)}">0</span>건)
         </div>
         <hr>
 
-        <div th:each="party : ${parties}">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" style="height: 200px">
-                <div class="col-2 d-none d-lg-block text-center align-content-center bg-light">
-                    <img src="/img/baeminLogo.PNG" alt="배달매체" width="200" height="200">
-                </div>
-                <div class="col-10">
-                    <div class="row px-4">
-                        <h3 class="mt-1 mb-0 overflow-hidden" th:text="${party.title}" style="height: 30px;">제목</h3>
-                        <hr class="mt-2">
-                        <strong><div class="my-2 text-muted" th:text="${party.restaurant}">주문한 점포명</div></strong>
-                        <strong class="d-inline-block my-2 text-muted" th:text="${party.pickUpLocation} + ' ' + ${party.pickUpLocationDetail}">수령 장소</strong>
-                        <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                            <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
-                            <div class="mb-1 text-muted" th:text="'[' + ${party.limitTime} + ']까지 모집 중'">모집 시간</div>
-                        </div>
-                        <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                            <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                            <strong><a th:href="@{/partyDetails}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+        <th:block th:each="num : ${#numbers.sequence(0, 5)}">
+            <div th:object="${parties[num]}">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" style="height: 200px">
+                    <div class="col-2 d-none d-lg-block text-center align-content-center bg-light">
+                        <img src="/img/baeminLogo.PNG" alt="배달매체" width="200" height="200">
+                    </div>
+                    <div class="col-10">
+                        <div class="row px-4">
+                            <h3 class="mt-1 mb-0 overflow-hidden" th:text="${parties[num].title}" style="height: 30px;">제목</h3>
+                            <hr class="mt-2">
+                            <strong><div class="my-2 text-muted" th:text="${parties[num].restaurant}">주문한 점포명</div></strong>
+                            <strong class="d-inline-block my-2 text-muted" th:text="${parties[num].pickUpLocation} + ' ' + ${parties[num].pickUpLocationDetail}">수령 장소</strong>
+                            <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                                <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
+                                <div class="mb-1 text-muted" th:text="'[' + ${parties[num].limitTime} + ']까지 모집 중'">모집 시간</div>
+                            </div>
+                            <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                                <!--                            <a href="#" class="stretched-link">모집인원</a>-->
+                                <strong><a th:href="@{/partyDetails}" th:text="${parties[num].membersNum} + '/' + ${parties[num].maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </th:block>
+
+        <div class="text-center align-items-center pt-5">
+            <button type="button" id="toPreviewPage" class="btn btn-primary" onclick="previewPage()" style="position: relative; width: 25px; height: 25px; margin-right: 30px">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16" style="position: absolute; right: 4px; top: 3px">
+                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"></path>
+                </svg>
+            </button>
+            <span id="currentPage" th:value="1">1</span>
+            <span>/</span>
+            <span th:text="${#lists.size(parties)/6 + 1}"></span>
+            <button type="button" id="toNextPage" class="btn btn-primary" onclick="nextPage()" style="position: relative; width: 25px; height: 25px; margin-left: 30px">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16" style="position: absolute; left: 4px; top: 3px">
+                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="text-center pt-2 pb-5">
+            <span>총 (</span>
+            <span id="totalPage" th:text="${#lists.size(parties)/6 + 1}"></span>
+            <span>)페이지</span>
         </div>
     </div>
 
