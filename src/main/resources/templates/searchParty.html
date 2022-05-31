@@ -77,7 +77,80 @@
         </div>
     </div>
 
+    <div th:insert="fragments.html :: test3('param1')" class="py-5 text-center" id="testFra">
+        <span id="testFraIn">hihi</span>
+    </div>
+
+    <button type="button" id="testFraBtn" style="width: 100px; height: 100px"></button>
+
+    <select id="testFraBtn2" style="margin-bottom: 100px">
+        <option>Content 1</option>
+        <option>Content 2</option>
+    </select>
+
+
+    <script th:inline="javascript">
+        function testFuc() {
+            var testTag = document.getElementById("testFra");
+            // $('#testFra').load("/testFragment");
+            //ajax 써서 fragment 호출해줍니다.
+            // testTag.
+        }
+
+        var httpRequest;
+
+        document.getElementById("testFraBtn").addEventListener('click', () => {
+
+            console.log("listenerClicked");
+            var testTag = document.getElementById("testFra");
+            console.log(testTag.innerHTML);
+            var reqJson = new Object();
+            reqJson.getTestFra = 100;
+            httpRequest = new XMLHttpRequest();
+
+            httpRequest.onreadystatechange = () => {
+                //readyState가 Done이고 응답 값이 200일 때
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    if (httpRequest.status === 200) {
+                        var result = httpRequest.response;
+                        console.log(result);
+                        document.getElementById("testFraIn").replaceWith("result");
+                    } else {
+                        alert('ajax Request Error!');
+                    }
+                }
+            };
+            //Post 방식, 응답은 json, 요청헤더 json
+            httpRequest.open('POST', '/testFragment', true);
+            httpRequest.responseType = "text";
+            httpRequest.setRequestHeader('Content-Type', 'application/json');
+            httpRequest.send(JSON.stringify(reqJson));
+        });
+    </script>
+
+    <script>
+        // $(document).ready(function () {
+        //
+        //     //call function when page is loaded
+        //     getContent();
+        //
+        //     //set on change listener
+        //     $('#testFraBtn2').change(getContent);
+        //
+        //     function getContent() {
+        //
+        //         //create url to request fragment
+        //         var url = /testFragment;
+        //
+        //         //load fragment and replace content
+        //         $('#testFraIn').load(url);
+        //     }
+        // })
+    </script>
+
     <!-- JavaScript Bundle with Popper -->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>

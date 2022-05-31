@@ -11,13 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -86,5 +86,18 @@ public class PartyController {
         log.info("생성된 파티를 '{}'번으로 저장 완료", saveParty.getId());
 
         return "index";
+    }
+
+    @PostMapping("/testFragment")
+    public String getContent2(Model model) {
+        model.addAttribute("param1", "sendParamSuccess");
+
+        return "fragments :: test";
+    }
+
+    @RequestMapping("/test2Fragment")
+    @ResponseBody
+    public String getContent3() {
+        return "<div>test</div>";
     }
 }
