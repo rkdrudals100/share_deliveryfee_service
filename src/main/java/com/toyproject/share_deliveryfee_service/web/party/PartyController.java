@@ -43,6 +43,8 @@ public class PartyController {
 
 
 
+
+
     //  2022-05-09 강경민
     //  파티 모집글 등록 기능 수정
     @GetMapping("/makeParty")
@@ -52,6 +54,11 @@ public class PartyController {
         return "makeParty";
     }
 
+
+
+
+
+
     @GetMapping("/testsavememberParty")
     public String hihi(Principal principal){
         Member loginMember = memberRepository.findByUsername(principal.getName());
@@ -60,6 +67,11 @@ public class PartyController {
 
         return "index";
     }
+
+
+
+
+
 
 
     @PostMapping("/makeParty")
@@ -89,6 +101,11 @@ public class PartyController {
         return "index";
     }
 
+
+
+
+
+
     @PostMapping("/testFragment")
     public String getContent2(@RequestBody Map<String, Object> inputMap, Model model) {
         log.info((String) inputMap.get("getCurrentPageNum"));
@@ -114,6 +131,11 @@ public class PartyController {
         return "fragments :: test3";
     }
 
+
+
+
+
+
     @PostMapping("/changePageCards")
     @ResponseBody
     public Map<String, String> changePageCards(@RequestBody Map<String, Object> inputMap){
@@ -124,10 +146,14 @@ public class PartyController {
         String whichBtn = (String)inputMap.get("whichBtn");
         int printCardNum = 0;
 
-        if ((getCurrentPageNum) * 6 <= getTotalPageNum){
+        if (whichBtn.equals("right")) {
+            if ((getCurrentPageNum) * 6 <= getTotalPageNum) {
+                printCardNum = 6;
+            } else {
+                printCardNum = 6 - ((getCurrentPageNum * 6) - getTotalPageNum);
+            }
+        }else{
             printCardNum = 6;
-        } else {
-            printCardNum = 6 - ((getCurrentPageNum * 6) - getTotalPageNum);
         }
 
 //        model.addAttribute("printCardNum", printCardNum);
@@ -135,9 +161,15 @@ public class PartyController {
 
         log.info((String) inputMap.get("getCurrentPageNum"));
         log.info((String)inputMap.get("getTotalPageNum"));
+        log.info(whichBtn);
         log.info(String.valueOf(printCardNum));
         return returnMap;
     }
+
+
+
+
+
 
     @RequestMapping("/test2Fragment")
     @ResponseBody

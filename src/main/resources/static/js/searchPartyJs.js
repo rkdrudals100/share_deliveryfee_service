@@ -23,11 +23,9 @@ function changePageCards(whichBtn){
 
     var httpRequest;
 
-    console.log("listenerClicked");
-
     var reqJson = new Object();
     reqJson.getCurrentPageNum = document.getElementById("currentPage").innerText;
-    reqJson.getTotalPageNum = totalPageNum;
+    reqJson.getTotalPageNum = document.getElementById("totalCardNum").innerText;
     reqJson.whichBtn = whichBtn;
     httpRequest = new XMLHttpRequest();
 
@@ -37,9 +35,28 @@ function changePageCards(whichBtn){
             if (httpRequest.status === 200) {
                 var result = httpRequest.response;
 
-                console.log(result.printCardNum);
-
-
+                if (whichBtn == "right"){
+                    for (var i = 0; i < 6; i++){
+                        document.getElementById("partyNum" + String(((reqJson.getCurrentPageNum - 1) * 6) - i - 1)).style.display = 'none';
+                    }
+                    for (i = 0; i < result.printCardNum; i++){
+                        document.getElementById("partyNum" + String(((reqJson.getCurrentPageNum - 1) * 6) + i)).style.display = '';
+                    }
+                } else {
+                    for (var i = 0; i < result.printCardNum; i++){
+                        document.getElementById("partyNum" + String(((reqJson.getCurrentPageNum - 1) * 6) + i)).style.display = '';
+                    }
+                    if ((parseInt(reqJson.getCurrentPageNum) + 1) * 6 >= parseInt(reqJson.getTotalPageNum)){
+                        for (i = 0; i < parseInt(reqJson.getTotalPageNum) - (parseInt(reqJson.getCurrentPageNum) * 6); i++){
+                            document.getElementById("partyNum" + String((reqJson.getCurrentPageNum * 6) + i)).style.display = 'none';
+                        }
+                    } else{
+                        for (var i = 0; i < 6; i++){
+                            document.getElementById("partyNum" + String((reqJson.getCurrentPageNum * 6) + i)).style.display = 'none';
+                        }
+                    }
+                }
+                window.scrollTo(0, 0);
 
             } else {
                 alert('ajax Request Error!');
@@ -57,20 +74,18 @@ function changePageCards(whichBtn){
 
 
 function nextPage(){
-    var totalpage = document.getElementById("totalPage").innerText;
-    var currentPage = document.getElementById("currentPage").value;
+    var totalpage = parseInt(document.getElementById("totalPage").innerText);
+    var currentPage = parseInt(document.getElementById("currentPage").value);
 
     if (currentPage > 0 && currentPage < totalpage){
         document.getElementById("toPreviewPage").disabled = false;
         document.getElementById("currentPage").value = currentPage + 1;
         document.getElementById("currentPage").innerText = currentPage + 1;
     }
-    if (currentPage <= totalpage){
+    if (currentPage >= totalpage){
         document.getElementById("toNextPage").disabled = true;
     }
-    // console.log(currentPage + " " + totalpage);
-    var whichBtn = "right";
-    changePageCards(whichBtn);
+    changePageCards("right");
 }
 
 
@@ -85,8 +100,11 @@ function previewPage(){
         document.getElementById("currentPage").value = currentPage - 1;
         document.getElementById("currentPage").innerText = currentPage - 1;
     }
+
+    currentPage = document.getElementById("currentPage").value;
+
     if(currentPage <= 1){
         document.getElementById("toPreviewPage").disabled = true;
     }
-    // console.log(currentPage);
+    changePageCards("left");
 }

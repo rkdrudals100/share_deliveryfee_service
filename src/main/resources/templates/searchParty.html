@@ -63,7 +63,8 @@
             </button>
             <span id="currentPage" th:value="1">1</span>
             <span>/</span>
-            <span th:text="${#lists.size(parties)/6 + 1}"></span>
+            <span th:if="${#lists.size(parties)%6 != 0}" th:text="${#lists.size(parties)/6 + 1}"></span>
+            <span th:unless="${#lists.size(parties)%6 != 0}" th:text="${#lists.size(parties)/6}"></span>
             <button type="button" id="toNextPage" class="btn btn-primary" onclick="nextPage()" style="position: relative; width: 25px; height: 25px; margin-left: 30px">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16" style="position: absolute; left: 4px; top: 3px">
                     <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"></path>
@@ -72,7 +73,8 @@
         </div>
         <div class="text-center pt-2 pb-5">
             <span>총 (</span>
-            <span id="totalPage" th:text="${#lists.size(parties)/6 + 1}"></span>
+            <span th:if="${#lists.size(parties)%6 != 0}" th:id="totalPage" th:text="${#lists.size(parties)/6 + 1}"></span>
+            <span th:unless="${#lists.size(parties)%6 != 0}" th:id="totalPage" th:text="${#lists.size(parties)/6}"></span>
             <span>)페이지</span>
             <span id="totalCardNum" th:text="${#lists.size(parties)}" style="display: none"></span>
         </div>
@@ -86,7 +88,7 @@
 
     <script>
 
-        var totalPageNum = document.getElementById("totalCardNum").innerText;
+        // var totalPageNum = document.getElementById("totalCardNum").innerText;
 
         var httpRequest;
 
@@ -119,38 +121,6 @@
             httpRequest.setRequestHeader('Content-Type', 'application/json');
             httpRequest.send(JSON.stringify(reqJson));
         });
-
-        // function changePageCards(whichBtn){
-        //
-        //     var httpRequest;
-        //
-        //     console.log("listenerClicked");
-        //     // var testTag = document.getElementById("testFra");
-        //     var reqJson = new Object();
-        //     reqJson.getCurrentPageNum = document.getElementById("currentPage").innerText;
-        //     reqJson.getTotalPageNum = totalPageNum;
-        //     reqJson.whichBtn = whichBtn;
-        //     httpRequest = new XMLHttpRequest();
-        //
-        //     httpRequest.onreadystatechange = () => {
-        //         //readyState가 Done이고 응답 값이 200일 때
-        //         if (httpRequest.readyState === XMLHttpRequest.DONE) {
-        //             if (httpRequest.status === 200) {
-        //                 var result = httpRequest.response;
-        //                 // console.log(result);
-        //                 // document.getElementById("testFra").innerHTML = result;
-        //                 console.log(result.printCardNum);
-        //             } else {
-        //                 alert('ajax Request Error!');
-        //             }
-        //         }
-        //     };
-        //     //Post 방식, 응답은 json, 요청헤더 json
-        //     httpRequest.open('POST', '/changePageCards', true);
-        //     httpRequest.responseType = "json";
-        //     httpRequest.setRequestHeader('Content-Type', 'application/json');
-        //     httpRequest.send(JSON.stringify(reqJson));
-        // }
     </script>
 
 
