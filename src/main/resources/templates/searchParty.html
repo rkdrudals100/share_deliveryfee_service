@@ -29,25 +29,25 @@
         </div>
         <hr>
 
-        <th:block th:each="num : ${#numbers.sequence(0, 5)}">
-            <div th:object="${parties[num]}">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" style="height: 200px">
+        <th:block th:each="party, index : ${parties}">
+            <div th:object="${party}">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" th:id="partyNum + ${index.index}" style="height: 200px; display: none">
                     <div class="col-2 d-none d-lg-block text-center align-content-center bg-light">
                         <img src="/img/baeminLogo.PNG" alt="배달매체" width="200" height="200">
                     </div>
                     <div class="col-10">
                         <div class="row px-4">
-                            <h3 class="mt-1 mb-0 overflow-hidden" th:text="${parties[num].title}" style="height: 30px;">제목</h3>
+                            <h3 class="mt-1 mb-0 overflow-hidden" th:text="${party.title}" style="height: 30px;">제목</h3>
                             <hr class="mt-2">
-                            <strong><div class="my-2 text-muted" th:text="${parties[num].restaurant}">주문한 점포명</div></strong>
-                            <strong class="d-inline-block my-2 text-muted" th:text="${parties[num].pickUpLocation} + ' ' + ${parties[num].pickUpLocationDetail}">수령 장소</strong>
+                            <strong><div class="my-2 text-muted" th:text="${party.restaurant}">주문한 점포명</div></strong>
+                            <strong class="d-inline-block my-2 text-muted" th:text="${party.pickUpLocation} + ' ' + ${party.pickUpLocationDetail}">수령 장소</strong>
                             <div class="col-6 px-3 my-2 d-flex flex-column position-static">
                                 <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
-                                <div class="mb-1 text-muted" th:text="'[' + ${parties[num].limitTime} + ']까지 모집 중'">모집 시간</div>
+                                <div class="mb-1 text-muted" th:text="'[' + ${party.limitTime} + ']까지 모집 중'">모집 시간</div>
                             </div>
                             <div class="col-6 px-3 my-2 d-flex flex-column position-static">
                                 <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                                <strong><a th:href="@{/partyDetails}" th:text="${parties[num].membersNum} + '/' + ${parties[num].maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                                <strong><a th:href="@{/partyDetails}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
                             </div>
                         </div>
                     </div>
@@ -74,6 +74,7 @@
             <span>총 (</span>
             <span id="totalPage" th:text="${#lists.size(parties)/6 + 1}"></span>
             <span>)페이지</span>
+            <span id="totalCardNum" th:text="${#lists.size(parties)}" style="display: none"></span>
         </div>
     </div>
 
@@ -83,19 +84,9 @@
 
     <button type="button" id="testFraBtn" style="width: 100px; height: 100px"></button>
 
-    <select id="testFraBtn2" style="margin-bottom: 100px">
-        <option>Content 1</option>
-        <option>Content 2</option>
-    </select>
+    <script>
 
-
-    <script th:inline="javascript">
-        function testFuc() {
-            var testTag = document.getElementById("testFra");
-            // $('#testFra').load("/testFragment");
-            //ajax 써서 fragment 호출해줍니다.
-            // testTag.
-        }
+        var totalPageNum = document.getElementById("totalCardNum").innerText;
 
         var httpRequest;
 
@@ -105,7 +96,9 @@
             var testTag = document.getElementById("testFra");
             console.log(testTag.innerHTML);
             var reqJson = new Object();
-            reqJson.getTestFra = 100;
+            reqJson.getCurrentPageNum = document.getElementById("currentPage").innerText;
+            reqJson.getTotalPageNum = totalPageNum;
+            reqJson.whichBtn = "right";
             httpRequest = new XMLHttpRequest();
 
             httpRequest.onreadystatechange = () => {
@@ -114,7 +107,7 @@
                     if (httpRequest.status === 200) {
                         var result = httpRequest.response;
                         console.log(result);
-                        document.getElementById("testFraIn").replaceWith("result");
+                        document.getElementById("testFra").innerHTML = result;
                     } else {
                         alert('ajax Request Error!');
                     }
@@ -126,31 +119,42 @@
             httpRequest.setRequestHeader('Content-Type', 'application/json');
             httpRequest.send(JSON.stringify(reqJson));
         });
+
+        // function changePageCards(whichBtn){
+        //
+        //     var httpRequest;
+        //
+        //     console.log("listenerClicked");
+        //     // var testTag = document.getElementById("testFra");
+        //     var reqJson = new Object();
+        //     reqJson.getCurrentPageNum = document.getElementById("currentPage").innerText;
+        //     reqJson.getTotalPageNum = totalPageNum;
+        //     reqJson.whichBtn = whichBtn;
+        //     httpRequest = new XMLHttpRequest();
+        //
+        //     httpRequest.onreadystatechange = () => {
+        //         //readyState가 Done이고 응답 값이 200일 때
+        //         if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        //             if (httpRequest.status === 200) {
+        //                 var result = httpRequest.response;
+        //                 // console.log(result);
+        //                 // document.getElementById("testFra").innerHTML = result;
+        //                 console.log(result.printCardNum);
+        //             } else {
+        //                 alert('ajax Request Error!');
+        //             }
+        //         }
+        //     };
+        //     //Post 방식, 응답은 json, 요청헤더 json
+        //     httpRequest.open('POST', '/changePageCards', true);
+        //     httpRequest.responseType = "json";
+        //     httpRequest.setRequestHeader('Content-Type', 'application/json');
+        //     httpRequest.send(JSON.stringify(reqJson));
+        // }
     </script>
 
-    <script>
-        // $(document).ready(function () {
-        //
-        //     //call function when page is loaded
-        //     getContent();
-        //
-        //     //set on change listener
-        //     $('#testFraBtn2').change(getContent);
-        //
-        //     function getContent() {
-        //
-        //         //create url to request fragment
-        //         var url = /testFragment;
-        //
-        //         //load fragment and replace content
-        //         $('#testFraIn').load(url);
-        //     }
-        // })
-    </script>
 
     <!-- JavaScript Bundle with Popper -->
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>

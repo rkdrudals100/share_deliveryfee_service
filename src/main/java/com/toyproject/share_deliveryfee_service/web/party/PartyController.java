@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,10 +90,53 @@ public class PartyController {
     }
 
     @PostMapping("/testFragment")
-    public String getContent2(Model model) {
-        model.addAttribute("param1", "sendParamSuccess");
+    public String getContent2(@RequestBody Map<String, Object> inputMap, Model model) {
+        log.info((String) inputMap.get("getCurrentPageNum"));
+        log.info((String)inputMap.get("getTotalPageNum"));
 
-        return "fragments :: test";
+        List<Party> parties = partyRepository.findByPartyStatus(PartyStatus.RECRUITING, Sort.by(Sort.Direction.ASC, "pickUpLocation"));
+
+        int getCurrentPageNum = Integer.parseInt((String)inputMap.get("getCurrentPageNum"));
+        int getTotalPageNum = Integer.parseInt((String)inputMap.get("getTotalPageNum"));
+        String whichBtn = (String)inputMap.get("whichBtn");
+        int printCardNum = 0;
+
+        if ((getCurrentPageNum + 1) * 6 <= getTotalPageNum){
+            printCardNum = 6;
+        } else {
+            printCardNum = 6 - (getCurrentPageNum - getTotalPageNum);
+        }
+
+        model.addAttribute("param1", "sendParamSuccess");
+        model.addAttribute("parties", parties);
+        model.addAttribute("printCardNum", printCardNum);
+
+        return "fragments :: test3";
+    }
+
+    @PostMapping("/changePageCards")
+    @ResponseBody
+    public Map<String, String> changePageCards(@RequestBody Map<String, Object> inputMap){
+        Map<String, String> returnMap = new HashMap<>();
+
+        int getCurrentPageNum = Integer.parseInt((String)inputMap.get("getCurrentPageNum"));
+        int getTotalPageNum = Integer.parseInt((String)inputMap.get("getTotalPageNum"));
+        String whichBtn = (String)inputMap.get("whichBtn");
+        int printCardNum = 0;
+
+        if ((getCurrentPageNum) * 6 <= getTotalPageNum){
+            printCardNum = 6;
+        } else {
+            printCardNum = 6 - ((getCurrentPageNum * 6) - getTotalPageNum);
+        }
+
+//        model.addAttribute("printCardNum", printCardNum);
+        returnMap.put("printCardNum", String.valueOf(printCardNum));
+
+        log.info((String) inputMap.get("getCurrentPageNum"));
+        log.info((String)inputMap.get("getTotalPageNum"));
+        log.info(String.valueOf(printCardNum));
+        return returnMap;
     }
 
     @RequestMapping("/test2Fragment")
