@@ -64,4 +64,22 @@ public class PartyService {
         return partyRepository.save(saveParty);
     }
 
+
+
+    public int changePageContents(int currentPageNum,  int totalPageNum,  String whichBtn){
+        int printCardNum = 0;
+
+        if (whichBtn.equals("right")) {
+            if ((currentPageNum) * 6 <= totalPageNum) {
+                printCardNum = 6;
+            } else {
+                printCardNum = 6 - ((currentPageNum * 6) - totalPageNum);
+            }
+        }else{
+            printCardNum = 6;
+        }
+
+        return printCardNum;
+    }
+
 }

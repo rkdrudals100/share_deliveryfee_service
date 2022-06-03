@@ -31,16 +31,6 @@ public class PartyController {
     private final PartyRegisterValidator partyRegisterValidator;
     private final PartyService partyService;
 
-    @GetMapping("/searchParty")
-    public String searchParty(Model model){
-
-        List<Party> parties = partyRepository.findByPartyStatus(PartyStatus.RECRUITING, Sort.by(Sort.Direction.ASC, "pickUpLocation"));
-
-        model.addAttribute("parties", parties);
-
-        return "searchParty";
-    }
-
 
 
 
@@ -106,29 +96,43 @@ public class PartyController {
 
 
 
-    @PostMapping("/testFragment")
-    public String getContent2(@RequestBody Map<String, Object> inputMap, Model model) {
-        log.info((String) inputMap.get("getCurrentPageNum"));
-        log.info((String)inputMap.get("getTotalPageNum"));
+//    @PostMapping("/testFragment")
+//    public String getContent2(@RequestBody Map<String, Object> inputMap, Model model) {
+//        log.info((String) inputMap.get("getCurrentPageNum"));
+//        log.info((String)inputMap.get("getTotalPageNum"));
+//
+//        List<Party> parties = partyRepository.findByPartyStatus(PartyStatus.RECRUITING, Sort.by(Sort.Direction.ASC, "pickUpLocation"));
+//
+//        int getCurrentPageNum = Integer.parseInt((String)inputMap.get("getCurrentPageNum"));
+//        int getTotalPageNum = Integer.parseInt((String)inputMap.get("getTotalPageNum"));
+//        String whichBtn = (String)inputMap.get("whichBtn");
+//        int printCardNum = 0;
+//
+//        if ((getCurrentPageNum + 1) * 6 <= getTotalPageNum){
+//            printCardNum = 6;
+//        } else {
+//            printCardNum = 6 - (getCurrentPageNum - getTotalPageNum);
+//        }
+//
+//        model.addAttribute("param1", "sendParamSuccess");
+//        model.addAttribute("parties", parties);
+//        model.addAttribute("printCardNum", printCardNum);
+//
+//        return "fragments :: test3";
+//    }
+
+
+
+
+
+    @GetMapping("/searchParty")
+    public String searchParty(Model model){
 
         List<Party> parties = partyRepository.findByPartyStatus(PartyStatus.RECRUITING, Sort.by(Sort.Direction.ASC, "pickUpLocation"));
 
-        int getCurrentPageNum = Integer.parseInt((String)inputMap.get("getCurrentPageNum"));
-        int getTotalPageNum = Integer.parseInt((String)inputMap.get("getTotalPageNum"));
-        String whichBtn = (String)inputMap.get("whichBtn");
-        int printCardNum = 0;
-
-        if ((getCurrentPageNum + 1) * 6 <= getTotalPageNum){
-            printCardNum = 6;
-        } else {
-            printCardNum = 6 - (getCurrentPageNum - getTotalPageNum);
-        }
-
-        model.addAttribute("param1", "sendParamSuccess");
         model.addAttribute("parties", parties);
-        model.addAttribute("printCardNum", printCardNum);
 
-        return "fragments :: test3";
+        return "searchParty";
     }
 
 
@@ -141,28 +145,11 @@ public class PartyController {
     public Map<String, String> changePageCards(@RequestBody Map<String, Object> inputMap){
         Map<String, String> returnMap = new HashMap<>();
 
-        int getCurrentPageNum = Integer.parseInt((String)inputMap.get("getCurrentPageNum"));
-        int getTotalPageNum = Integer.parseInt((String)inputMap.get("getTotalPageNum"));
-        String whichBtn = (String)inputMap.get("whichBtn");
-        int printCardNum = 0;
+        int printCardNum = partyService.changePageContents(Integer.parseInt((String)inputMap.get("getCurrentPageNum")),
+                Integer.parseInt((String)inputMap.get("getTotalPageNum")), (String)inputMap.get("whichBtn"));
 
-        if (whichBtn.equals("right")) {
-            if ((getCurrentPageNum) * 6 <= getTotalPageNum) {
-                printCardNum = 6;
-            } else {
-                printCardNum = 6 - ((getCurrentPageNum * 6) - getTotalPageNum);
-            }
-        }else{
-            printCardNum = 6;
-        }
-
-//        model.addAttribute("printCardNum", printCardNum);
         returnMap.put("printCardNum", String.valueOf(printCardNum));
 
-        log.info((String) inputMap.get("getCurrentPageNum"));
-        log.info((String)inputMap.get("getTotalPageNum"));
-        log.info(whichBtn);
-        log.info(String.valueOf(printCardNum));
         return returnMap;
     }
 
@@ -171,9 +158,9 @@ public class PartyController {
 
 
 
-    @RequestMapping("/test2Fragment")
-    @ResponseBody
-    public String getContent3() {
-        return "<div>test</div>";
-    }
+//    @RequestMapping("/test2Fragment")
+//    @ResponseBody
+//    public String getContent3() {
+//        return "<div>test</div>";
+//    }
 }
