@@ -15,45 +15,58 @@
 
     <div class="container" style="padding-top: 90px">
         <div>
-            <form class="input-group has-validation pt-5 pb-3">
-                <input type="search" class="form-control" placeholder="search" aria-label="Search">
-                <button type="button" class="input-group-text">
+            <div class="input-group has-validation pt-5 pb-3">
+                <input type="search" class="form-control" id="searchWord" placeholder="search" aria-label="Search" onkeypress="javascript:if (event.keyCode==13){searchByWord()}">
+                <button type="button" class="input-group-text" id="searchBtn" onclick="searchByWord()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-            </form>
+            </div>
         </div>
         <div>
             검색결과(<span id="searchNum" th:text="${#lists.size(parties)}">0</span>건)
+            <span>
+                <button type="button" onclick="searchByWord()" style="background-color: transparent; border: 0; outline: 0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                      <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                    </svg>
+                </button>
+            </span>
         </div>
         <hr>
 
-        <th:block th:each="party, index : ${parties}">
-            <div th:object="${party}">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" th:id="partyNum + ${index.index}" style="height: 200px; display: none">
-                    <div class="col-2 d-none d-lg-block text-center align-content-center bg-light">
-                        <img src="/img/baeminLogo.PNG" alt="배달매체" width="200" height="200">
-                    </div>
-                    <div class="col-10">
-                        <div class="row px-4">
-                            <h3 class="mt-1 mb-0 overflow-hidden" th:text="${party.title}" style="height: 30px;">제목</h3>
-                            <hr class="mt-2">
-                            <strong><div class="my-2 text-muted" th:text="${party.restaurant}">주문한 점포명</div></strong>
-                            <strong class="d-inline-block my-2 text-muted" th:text="${party.pickUpLocation} + ' ' + ${party.pickUpLocationDetail}">수령 장소</strong>
-                            <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
-                                <div class="mb-1 text-muted" th:text="'[' + ${party.limitTime} + ']까지 모집 중'">모집 시간</div>
-                            </div>
-                            <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                                <strong><a th:href="@{/partyDetails}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+        <div id="cards">
+            <th:block th:each="party, index : ${parties}">
+                <div th:object="${party}">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" th:id="partyNum + ${index.index}" style="height: 200px; display: none">
+                        <div class="col-2 d-none d-lg-block text-center align-content-center bg-light">
+                            <img th:if="${party.deliveryPlatform.toString().equals('BM')}" src="/img/baeminLogo.PNG" alt="배달매체" width="200" height="200">
+                            <img th:if="${party.deliveryPlatform.toString().equals('BT')}" src="/img/baedalteuggeubLogo.PNG" alt="배달매체" width="200" height="200">
+                            <img th:if="${party.deliveryPlatform.toString().equals('YGY')}" src="/img/yogiyoLogo.PNG" alt="배달매체" width="200" height="200">
+                        </div>
+                        <div class="col-10">
+                            <div class="row px-4">
+                                <div th:id="partyId_ + ${party.id}" style="display: none"></div>
+                                <h3 class="mt-1 mb-0 overflow-hidden" th:text="${party.title}" style="height: 30px;">제목</h3>
+                                <hr class="mt-2">
+                                <strong><div class="my-2 text-muted" th:text="${party.restaurant}">주문한 점포명</div></strong>
+                                <strong class="d-inline-block my-2 text-muted" th:text="${party.pickUpLocation} + ' ' + ${party.pickUpLocationDetail}">수령 장소</strong>
+                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                                    <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
+                                    <div class="mb-1 text-muted" th:text="'[' + ${party.limitTime} + ']까지 모집 중'">모집 시간</div>
+                                </div>
+                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                                    <!--                            <a href="#" class="stretched-link">모집인원</a>-->
+                                    <strong><a th:href="@{/partyDetails}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </th:block>
+            </th:block>
+        </div>
 
         <div class="text-center align-items-center pt-5">
             <button type="button" id="toPreviewPage" class="btn btn-primary" onclick="previewPage()" style="position: relative; width: 25px; height: 25px; margin-right: 30px">
@@ -63,8 +76,8 @@
             </button>
             <span id="currentPage" th:value="1">1</span>
             <span>/</span>
-            <span th:if="${#lists.size(parties)%6 != 0}" th:text="${#lists.size(parties)/6 + 1}"></span>
-            <span th:unless="${#lists.size(parties)%6 != 0}" th:text="${#lists.size(parties)/6}"></span>
+            <span th:if="${#lists.size(parties)%6 != 0}" th:id="totalPage2" th:text="${#lists.size(parties)/6 + 1}"></span>
+            <span th:unless="${#lists.size(parties)%6 != 0}" th:id="totalPage2" th:text="${#lists.size(parties)/6}"></span>
             <button type="button" id="toNextPage" class="btn btn-primary" onclick="nextPage()" style="position: relative; width: 25px; height: 25px; margin-left: 30px">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16" style="position: absolute; left: 4px; top: 3px">
                     <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"></path>
@@ -79,49 +92,6 @@
             <span id="totalCardNum" th:text="${#lists.size(parties)}" style="display: none"></span>
         </div>
     </div>
-
-<!--    <div th:insert="fragments.html :: test3('param1')" class="py-5 text-center" id="testFra">-->
-<!--        <span id="testFraIn">hihi</span>-->
-<!--    </div>-->
-
-<!--    <button type="button" id="testFraBtn" style="width: 100px; height: 100px"></button>-->
-
-<!--    <script>-->
-
-<!--        // var totalPageNum = document.getElementById("totalCardNum").innerText;-->
-
-<!--        var httpRequest;-->
-
-<!--        document.getElementById("testFraBtn").addEventListener('click', () => {-->
-
-<!--            console.log("listenerClicked");-->
-<!--            var testTag = document.getElementById("testFra");-->
-<!--            console.log(testTag.innerHTML);-->
-<!--            var reqJson = new Object();-->
-<!--            reqJson.getCurrentPageNum = document.getElementById("currentPage").innerText;-->
-<!--            reqJson.getTotalPageNum = totalPageNum;-->
-<!--            reqJson.whichBtn = "right";-->
-<!--            httpRequest = new XMLHttpRequest();-->
-
-<!--            httpRequest.onreadystatechange = () => {-->
-<!--                //readyState가 Done이고 응답 값이 200일 때-->
-<!--                if (httpRequest.readyState === XMLHttpRequest.DONE) {-->
-<!--                    if (httpRequest.status === 200) {-->
-<!--                        var result = httpRequest.response;-->
-<!--                        console.log(result);-->
-<!--                        document.getElementById("testFra").innerHTML = result;-->
-<!--                    } else {-->
-<!--                        alert('ajax Request Error!');-->
-<!--                    }-->
-<!--                }-->
-<!--            };-->
-<!--            //Post 방식, 응답은 json, 요청헤더 json-->
-<!--            httpRequest.open('POST', '/testFragment', true);-->
-<!--            httpRequest.responseType = "text";-->
-<!--            httpRequest.setRequestHeader('Content-Type', 'application/json');-->
-<!--            httpRequest.send(JSON.stringify(reqJson));-->
-<!--        });-->
-<!--    </script>-->
 
 
     <!-- JavaScript Bundle with Popper -->

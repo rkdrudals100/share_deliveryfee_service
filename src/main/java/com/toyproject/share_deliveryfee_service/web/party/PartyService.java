@@ -5,8 +5,12 @@ import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -80,6 +84,29 @@ public class PartyService {
         }
 
         return printCardNum;
+    }
+
+
+
+    // 파티 검색
+    public List<Party> searchPartyByKeywords(String keyWord){
+        String[] keywords = keyWord.split("\\s", 2);
+        List<Party> parties = new ArrayList<>();
+
+        if (keywords.length > 1){
+            List<Party> parties1 = partyRepository.findBySearch(PartyStatus.RECRUITING, keywords[0], Sort.by(Sort.Direction.ASC, "pickUpLocation"));
+            List<Party> parties2 = partyRepository.findBySearch(PartyStatus.RECRUITING, keywords[1], Sort.by(Sort.Direction.ASC, "pickUpLocation"));
+
+            for (Party party: parties1){
+                if (parties2.contains(party)){
+                    parties.add(party);
+                }
+            }
+        } else {
+            parties = partyRepository.findBySearch(PartyStatus.RECRUITING, keyWord, Sort.by(Sort.Direction.ASC, "pickUpLocation"));
+        }
+
+        return parties;
     }
 
 }

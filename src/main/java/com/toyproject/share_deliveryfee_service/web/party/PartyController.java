@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,30 +97,26 @@ public class PartyController {
 
 
 
-//    @PostMapping("/testFragment")
-//    public String getContent2(@RequestBody Map<String, Object> inputMap, Model model) {
-//        log.info((String) inputMap.get("getCurrentPageNum"));
-//        log.info((String)inputMap.get("getTotalPageNum"));
-//
-//        List<Party> parties = partyRepository.findByPartyStatus(PartyStatus.RECRUITING, Sort.by(Sort.Direction.ASC, "pickUpLocation"));
-//
-//        int getCurrentPageNum = Integer.parseInt((String)inputMap.get("getCurrentPageNum"));
-//        int getTotalPageNum = Integer.parseInt((String)inputMap.get("getTotalPageNum"));
-//        String whichBtn = (String)inputMap.get("whichBtn");
-//        int printCardNum = 0;
-//
-//        if ((getCurrentPageNum + 1) * 6 <= getTotalPageNum){
-//            printCardNum = 6;
-//        } else {
-//            printCardNum = 6 - (getCurrentPageNum - getTotalPageNum);
-//        }
-//
-//        model.addAttribute("param1", "sendParamSuccess");
-//        model.addAttribute("parties", parties);
-//        model.addAttribute("printCardNum", printCardNum);
-//
-//        return "fragments :: test3";
-//    }
+    @PostMapping("/searchParty/search")
+    public String getContent2(@RequestBody Map<String, Object> inputMap, Model model) {
+        String keyWord = (String)inputMap.get("getSearchWord");
+        log.info("검색 키워드: " + keyWord);
+
+        List<Party> parties = partyService.searchPartyByKeywords(keyWord);
+
+        if (parties.isEmpty()){
+            parties.add(Party.builder().title("null").build());
+            model.addAttribute("isNull", "true");
+        } else{
+            model.addAttribute("isNull", "false");
+        }
+
+        model.addAttribute("parties", parties);
+        model.addAttribute("totalResultNum", parties.size());
+        model.addAttribute("keyword", keyWord);
+
+        return "fragments :: searchParty";
+    }
 
 
 
@@ -153,14 +150,4 @@ public class PartyController {
         return returnMap;
     }
 
-
-
-
-
-
-//    @RequestMapping("/test2Fragment")
-//    @ResponseBody
-//    public String getContent3() {
-//        return "<div>test</div>";
-//    }
 }

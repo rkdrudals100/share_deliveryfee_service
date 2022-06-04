@@ -12,6 +12,25 @@ import java.util.List;
 
 public interface PartyRepository extends JpaRepository<Party, Long> {
 
-    @Query("select p from Party p where p.partyStatus = 'RECRUITING'")
-    List<Party> findByPartyStatus(PartyStatus partyStatus, Sort sort);
+
+
+
+    @Query("select p from Party p where p.partyStatus = :partyStatus")
+    List<Party> findByPartyStatus(@Param("partyStatus") PartyStatus partyStatus, Sort sort);
+
+
+
+
+    @Query("select p from Party p where p.partyStatus = :partyStatus and " +
+            "(p.title like %:searchWord% or " +
+            "p.pickUpLocation like %:searchWord% or " +
+            "p.pickUpLocationDetail like %:searchWord% or " +
+            "p.restaurant like %:searchWord% or " +
+            "p.introduction like %:searchWord%)")
+    List<Party> findBySearch(@Param("partyStatus") PartyStatus partyStatus, @Param("searchWord") String word, Sort sort);
 }
+
+
+
+
+//(p.title like %:searchWord% or cast(p.id as string) = searchWord)

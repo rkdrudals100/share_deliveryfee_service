@@ -44,6 +44,7 @@
 <!--</div>-->
 
 
+<!--네비게이터-->
 <div>
     <nav th:fragment="navigator(login)" class="fixed-top">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-white px-5 shadow-sm">
@@ -65,6 +66,54 @@
         </div>
     </nav>
 </div>
+
+
+
+
+
+
+<!--파티 검색 시 대체할 목록들-->
+<div th:fragment="searchParty(totalResultNum)">
+    <div id="totalResultNum" th:value="${totalResultNum}" th:text="${totalResultNum}" style="display: none"></div>
+    <div id="keyword" th:value="${keyword}" th:text="${keyword}" style="display: none"></div>
+    <div id="isNull" th:value="${isNull}" th:text="${isNull}" style="display: none"></div>
+    <th:block th:each="num : ${#numbers.sequence(0, totalResultNum - 1)}">
+<!--        <div th:object="${party}">-->
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" th:id="partyNum + ${num}" style="height: 200px; display: none">
+                <div class="col-2 d-none d-lg-block text-center align-content-center bg-light">
+                    <img th:if="${parties[num].deliveryPlatform.toString().equals('BM')}" src="/img/baeminLogo.PNG" alt="배달매체" width="200" height="200">
+                    <img th:if="${parties[num].deliveryPlatform.toString().equals('BT')}" src="/img/baedalteuggeubLogo.PNG" alt="배달매체" width="200" height="200">
+                    <img th:if="${parties[num].deliveryPlatform.toString().equals('YGY')}" src="/img/yogiyoLogo.PNG" alt="배달매체" width="200" height="200">
+                </div>
+                <div class="col-10">
+                    <div class="row px-4">
+                        <div th:id="partyId_ + ${parties[num].id}" style="display: none"></div>
+                        <h3 class="mt-1 mb-0 overflow-hidden" th:id="partyTitle + ${num}" th:text="${parties[num].title}" style="height: 30px;">제목</h3>
+                        <hr class="mt-2">
+                        <strong><div class="my-2 text-muted" th:id="partyRestaurant + ${num}" th:text="${parties[num].restaurant}">주문한 점포명</div></strong>
+                        <strong class="d-inline-block my-2 text-muted" th:id="partyPickUpLocation + ${num}" th:text="${parties[num].pickUpLocation} + ' ' + ${parties[num].pickUpLocationDetail}">수령 장소</strong>
+                        <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                            <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
+                            <div class="mb-1 text-muted" th:id="partyLimitTime + ${num}" th:text="'[' + ${parties[num].limitTime} + ']까지 모집 중'">모집 시간</div>
+                        </div>
+                        <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                            <!--                            <a href="#" class="stretched-link">모집인원</a>-->
+                            <strong><a th:href="@{/partyDetails}" th:id="partyMembersNum + ${num}" th:text="${parties[num].membersNum} + '/' + ${parties[num].maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--        </div>-->
+    </th:block>
+</div>
+
+
+
+
+
+
+
+
 
 <div>
     <span th:fragment="test(param1)" th:text="${param1}"></span>
