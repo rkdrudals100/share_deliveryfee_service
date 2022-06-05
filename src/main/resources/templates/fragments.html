@@ -59,9 +59,28 @@
                 <li><a th:href="@{/login}" class="nav-link px-2 link-dark" style="font-size: 1.5em">MY정보</a></li>
             </ul>
 
-            <div class="col-md-3 text-end">
+            <div sec:authorize="isAnonymous()" class="col-md-3 text-end">
                 <button type="button" class="btn btn-outline-primary me-2" th:onclick="|location.href = '@{/login}'|">Login</button>
                 <button type="button" class="btn btn-outline-primary" th:onclick="|location.href = '@{/signUp}'|">Sign-up</button>
+            </div>
+            <div sec:authorize="isAuthenticated()" class="col-md-3 text-end">
+                <button type="button" class="btn me-2 dropdown-toggle" id="notice" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                    </svg>
+                </button>
+
+                <button type="button" class="btn me-2 bg-info text-white rounded-circle" id="memberBtn" style="width:45px; height: 45px; position: relative">
+                    <span style="position: absolute; font-weight: 500; font-size: 1.4em; left: 7px; top: 4px">km</span>
+                </button>
+
+                <ul class="customDropdown" id="memberDropdown">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
             </div>
         </div>
     </nav>

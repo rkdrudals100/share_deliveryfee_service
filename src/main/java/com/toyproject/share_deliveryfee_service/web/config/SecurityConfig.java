@@ -32,9 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
-                .antMatchers("/fragments", "/login", "/signUp/**", "/index", "/testdatasave", "/img/**", "/js/**", "/css/**", "/token", "/").permitAll()
+                .antMatchers("/fragments", "/login", "/signUp/**", "/index", "/testdatasave", "/token", "/").permitAll()
                 .anyRequest().authenticated();
-
 
 
 
@@ -62,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                .antMatchers("/favicon.ico", "resources/**");
+                .antMatchers("/favicon.ico", "/resources/**", "/error", "/img/**", "/js/**", "/css/**");
     }
 
     @Bean
