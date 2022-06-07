@@ -13,13 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -148,6 +144,21 @@ public class PartyController {
         returnMap.put("printCardNum", String.valueOf(printCardNum));
 
         return returnMap;
+    }
+
+
+    @GetMapping("/partyDetails/{partyId}")
+    public String detail(@PathVariable Long partyId, Model model){
+
+        log.info(String.valueOf(partyId));
+        Party getParty = partyRepository.findPartyById(partyId);
+//        if (getParty.isEmpty()){
+//            log.info("잘못된 접근, 파티가 존재하지 않음"); // 에러 페이지로 이동하도록 수정
+//        } else {
+            model.addAttribute("party", getParty);
+//        }
+
+        return "partyDetails";
     }
 
 }

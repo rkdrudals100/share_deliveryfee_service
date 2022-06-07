@@ -1,6 +1,5 @@
 package com.toyproject.share_deliveryfee_service.web.party;
 
-import com.toyproject.share_deliveryfee_service.web.domain.Member;
 import com.toyproject.share_deliveryfee_service.web.domain.Party;
 import com.toyproject.share_deliveryfee_service.web.domain.PartyStatus;
 import org.springframework.data.domain.Sort;
@@ -9,8 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PartyRepository extends JpaRepository<Party, Long> {
+
+
+//    Optional<Party> findById(Long id);
+
+    Party findPartyById(Long id);
 
 
 
@@ -32,5 +37,3 @@ public interface PartyRepository extends JpaRepository<Party, Long> {
 
 
 
-
-//(p.title like %:searchWord% or cast(p.id as string) = searchWord)

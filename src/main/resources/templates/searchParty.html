@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-6 px-3 my-2 d-flex flex-column position-static">
                                     <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                                    <strong><a th:href="@{/partyDetails}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                                    <strong><a th:href="@{/partyDetails/{partyId}(partyId=${party.id})}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
                                 </div>
                             </div>
                         </div>
