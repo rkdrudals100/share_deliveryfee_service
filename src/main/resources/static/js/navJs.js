@@ -13,10 +13,14 @@ function alertDropdown() {
 
 
 function DropdownSwitch(pressedDropdownBtn){
-    if (pressedDropdownBtn == "profileDropdown"){
-        document.getElementById("alertDropdown").classList.remove("showDropdown");
-    } else if(pressedDropdownBtn == "alertDropdown"){
-        document.getElementById("profileDropdown").classList.remove("showDropdown");
+    var dropdowns = document.getElementsByClassName("customDropdown");
+    var clickedElement = document.getElementById(pressedDropdownBtn);
+    var i = 0;
+    for(i = 0; i < dropdowns.length; i++){
+        var openDropdown = dropdowns[i];
+        if (openDropdown != clickedElement){
+            openDropdown.classList.remove('showDropdown');
+        }
     }
 }
 
