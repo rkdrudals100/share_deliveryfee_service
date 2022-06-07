@@ -64,24 +64,60 @@
                 <button type="button" class="btn btn-outline-primary" th:onclick="|location.href = '@{/signUp}'|">Sign-up</button>
             </div>
             <div sec:authorize="isAuthenticated()" class="col-md-3 text-end">
-                <button type="button" class="btn me-2 dropdown-toggle" id="notice" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                <button type="button" class="dropdownBtn btn me-2" id="notice" onclick="alertDropdown()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="dropdownBtn bi bi-bell-fill" viewBox="0 0 16 16">
+                        <path class="dropdownBtn" d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                     </svg>
                 </button>
 
-                <button type="button" class="btn me-2 bg-info text-white rounded-circle" id="memberBtn" style="width:45px; height: 45px; position: relative">
-                    <span style="position: absolute; font-weight: 500; font-size: 1.4em; left: 7px; top: 4px">km</span>
+                <button type="button" class="dropdownBtn profileImg2 text-white rounded-circle text-center" id="profileBtn" onclick="profileDropdown()" style="width:45px; height: 45px; position: relative">
+                    <svg class="dropdownBtn bi bi-person-fill" xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" viewBox="0 0 16 16">
+                        <path class="dropdownBtn" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>
                 </button>
-
-                <ul class="customDropdown" id="memberDropdown">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                </ul>
             </div>
+        </div>
+
+        <ul sec:authorize="isAuthenticated()" class="customDropdown dropdownArea" id="profileDropdown">
+            <div class="profileImg dropdownArea text-white rounded-circle text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" style="padding-top: 10px" fill="currentColor" class="dropdownArea bi bi-person-fill" viewBox="0 0 16 16">
+                    <path class="dropdownArea" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                </svg>
+            </div>
+            <li th:text="${#authentication.getPrincipal().member.username}" class="dropdownArea text-center dropdownItemProfileText">사용자 아이디</li>
+            <li th:text="${#authentication.getPrincipal().member.email}" class="dropdownArea text-center dropdownItemProfileText">사용자 이메일</li>
+            <li><hr class="dropdown-divider dropdownArea"></li>
+            <li><a class="dropdownItem dropdownItemText" href="#">참여한 파티</a></li>
+            <li><a class="dropdownItem dropdownItemText" href="#">사용자 정보</a></li>
+            <li><a class="dropdownItem dropdownItemText" href="#">알림</a></li>
+            <li><hr class="dropdown-divider dropdownArea"></li>
+            <li><a class="dropdownItem dropdownItemText" th:href="@{/logout}">로그아웃</a></li>
+        </ul>
+
+        <div sec:authorize="isAuthenticated()" class="customDropdown dropdownArea" style="padding-top: 5px; width: 500px; left: calc(50vw - 250px)" id="alertDropdown">
+            <div class="dropdownArea dropdownItemText text-center" style="position: relative">
+                <div class="text-center d-inline-block">알림</div>
+                <button type="button" class="btn" style="position: absolute; padding: 0px; right: 10px">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </button>
+            </div>
+<!--            <li class="dropdownArea dropdownItemText text-center">알림</li>-->
+            <div><hr class="dropdown-divider dropdownArea"></div>
+            <div><a class="dropdownItem dropdownAlertText" href="#">
+                예시 공지입니다.
+                <br>
+                [2022-03-19T15:30]
+            </a></div>
+            <div><hr class="dropdown-divider dropdownArea"></div>
+            <div><a class="dropdownItem dropdownAlertText" href="#">'kkkk'님의 파티에 참가하셨습니다. <br>[2022-03-19T15:30]</a></div>
+            <div><hr class="dropdown-divider dropdownArea"></div>
+            <div><a class="dropdownItem dropdownAlertText" href="#">'주문이 완료되었습니다.' <br>[2022-03-19T15:30]</a></div>
+            <div><hr class="dropdown-divider dropdownArea"></div>
+            <div><a class="dropdownItem dropdownAlertText" href="#">'kkkk'님이 파티에서 회원님을 추방하였습니다. <br>[2022-03-19T15:30]</a></div>
+            <div><hr class="dropdown-divider dropdownArea"></div>
+            <div><a class="dropdownItem dropdownAlertText" href="#">'kkkk'님이 파티에서 회원님을 추방하였습니다. dddddddddddddd ddddddddd adfasf <br>[2022-03-19T15:30]</a></div>
         </div>
     </nav>
 </div>

@@ -1,4 +1,91 @@
+
+.profileImg{
+    width: 80px;
+    height: 80px;
+    padding: 0px;
+    margin-left: calc(150px - 40px);
+    margin-bottom: 10px;
+    background-color: #96a6b4;
+}
+
+.profileImg2{
+    width: 45px;
+    height: 45px;
+    padding: 0px;
+    background-color: #96a6b4;
+    border-color: transparent;
+}
+
+.dropdownBtn{
+    cursor: pointer;
+}
+
+.dropdownArea{
+
+}
+
+
 .customDropdown{
     position: relative;
-    display: inline-block;
+    display: none;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 3px rgba(190, 190, 190, 0.6);
+    list-style: none;
+    padding-left: 0px;
+    padding-top: 20px;
+    left: calc(100vw - 340px);
+    background-color: white;
+}
+
+
+.dropdownItem {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    background-color: transparent;
+    border: 0;
+    text-decoration: none;
+    overflow-wrap: normal;
+}
+
+.dropdownItem:hover, .dropdown-item:focus {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+
+.dropdownItem.active, .dropdownItem:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #007bff;
+}
+
+.dropdown-item.disabled, .dropdown-item:disabled {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: transparent;
+}
+
+.dropdownItemText {
+    font-family: "맑은 고딕";
+    font-size: 1.2em;
+}
+
+.dropdownItemProfileText {
+    font-family: "맑은 고딕";
+    font-size: 1em;
+}
+
+.dropdownAlertText {
+    font-family: "맑은 고딕";
+    font-size: 1em;
+}
+
+.showDropdown {
+    display: block;
 }
