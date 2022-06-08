@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -140,7 +139,7 @@ public class MemberController {
                 .email(memberRegisterDto.getMemberEmail())
                 .phoneNum(memberRegisterDto.getMemberPhoneNum())
                 .memberRole(MemberRole.USER)
-                .memberRoles("USER")
+                .memberRoles("ROLE_USER")
                 .build();
 
         memberRepository.save(saveMember);
@@ -251,9 +250,30 @@ public class MemberController {
 
 
 
-    @GetMapping("/accountInfo")
-    public String showAccountInfo(){
 
+
+
+    @GetMapping("/accountInfo/{selectedTab}")
+    public String showJoinedParties(@PathVariable String selectedTab, Model model){
+
+        List<String> tabs = new ArrayList<>(Arrays.asList("myParties", "notification", "profile"));
+
+        log.info(selectedTab);
+        if (tabs.contains(selectedTab)){
+            model.addAttribute("selectedTab", selectedTab);
+        }   else{
+            return "errorPage";
+        }
         return "account";
     }
+
+
+
+
+//
+//    @GetMapping("/accountInfo/myParties")
+//    public String showNotification(){
+//
+//        return "account";
+//    }
 }

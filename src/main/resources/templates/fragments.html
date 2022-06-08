@@ -56,7 +56,7 @@
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li><a th:href="@{/}" class="nav-link px-2 link-dark" style="font-size: 1.5em">소개</a></li>
                 <li><a th:href="@{/searchParty}" class="nav-link px-2 link-dark" style="font-size: 1.5em">검색</a></li>
-                <li><a th:href="@{/accountInfo}" class="nav-link px-2 link-dark" style="font-size: 1.5em">MY정보</a></li>
+                <li><a th:href="@{/accountInfo/myParties}" class="nav-link px-2 link-dark" style="font-size: 1.5em">MY정보</a></li>
             </ul>
 
             <div sec:authorize="isAnonymous()" class="col-md-3 text-end">
@@ -87,7 +87,7 @@
             <li th:text="${#authentication.getPrincipal().member.username}" class="dropdownArea text-center dropdownItemProfileText">사용자 아이디</li>
             <li th:text="${#authentication.getPrincipal().member.email}" class="dropdownArea text-center dropdownItemProfileText">사용자 이메일</li>
             <li><hr class="dropdown-divider dropdownArea"></li>
-            <li><a class="dropdownItem dropdownItemText" href="#">참여한 파티</a></li>
+            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/myParties}">참여한 파티</a></li>
             <li><a class="dropdownItem dropdownItemText" href="#">사용자 정보</a></li>
             <li><a class="dropdownItem dropdownItemText" href="#">알림</a></li>
             <li><hr class="dropdown-divider dropdownArea"></li>
