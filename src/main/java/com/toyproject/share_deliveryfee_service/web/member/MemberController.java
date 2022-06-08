@@ -248,4 +248,12 @@ public class MemberController {
 
         return returnMap;
     }
+
+
+
+    @GetMapping("/accountInfo")
+    public String showAccountInfo(){
+
+        return "account";
+    }
 }

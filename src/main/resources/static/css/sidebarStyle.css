@@ -1,0 +1,26 @@
+.sidebar{
+    position: fixed;
+    display: flex;
+    width: 280px;
+    height: 85vh;
+    top: 120px;
+    border-radius: 0 0.5rem 0.5rem 0;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
+    /*background: #f8f9fa;*/
+    padding: 1rem;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+
+
+.sidebarItem{
+}
+
+
+
+li:hover, li.active, li:focus{
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+}
+

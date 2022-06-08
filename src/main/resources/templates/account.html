@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments.html :: headers(~{::title}, ~{::link}, ~{::script}, ~{::style})">
+    <title>계정정보</title>
+    <link rel="stylesheet" href="/css/navStyle.css">
+    <link rel="stylesheet" href="/css/sidebarStyle.css">
+    <script src="/js/navJs.js"></script>
+    <script src="/js/sidebarJs.js"></script>
+    <style></style>
+</head>
+
+<body>
+    <nav th:replace="fragments.html :: navigator(0)"></nav>
+
+    <div class="sidebar" id="sidebar">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <svg class="bi me-2" width="20" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <span class="fs-4">메뉴</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto" id="sidebarItems">
+            <li class="nav-item">
+                <a href="#" class="nav-link link-dark sidebarItem" aria-current="page">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style="position: relative; top: -2px" fill="currentColor" class="bi bi-basket2" viewBox="0 0 16 16">
+                        <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"/>
+                        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z"/>
+                    </svg>
+                    참여한 파티
+                </a>
+            </li>
+            <li class="">
+                <a href="#" class="nav-link link-dark sidebarItem">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style="position: relative; top: -2px" fill="currentColor" class="dropdownBtn bi bi-bell-fill" viewBox="0 0 16 16">
+                        <path class="dropdownBtn" d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                    </svg>
+                    알림
+                </a>
+            </li>
+            <hr>
+            <li class="">
+                <a href="#" class="nav-link link-dark sidebarItem">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style="position: relative; top: -2px" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                    사용자 정보
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div style="height: 10000px;"></div>
+</body>
