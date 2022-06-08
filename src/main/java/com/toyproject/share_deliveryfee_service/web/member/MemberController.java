@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.FileReader;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
 
@@ -254,11 +256,18 @@ public class MemberController {
 
 
     @GetMapping("/accountInfo/{selectedTab}")
-    public String showJoinedParties(@PathVariable String selectedTab, Model model){
+    public String showJoinedParties(@PathVariable String selectedTab, Model model) throws IOException {
+
+//        FileReader reader = new FileReader("src/main/resources/templates/account.html");
+//
+//        int ch;
+//        while ((ch = reader.read()) != -1) {
+//            System.out.print((char) ch);
+//        }
+
 
         List<String> tabs = new ArrayList<>(Arrays.asList("myParties", "notification", "profile"));
 
-        log.info(selectedTab);
         if (tabs.contains(selectedTab)){
             model.addAttribute("selectedTab", selectedTab);
         }   else{

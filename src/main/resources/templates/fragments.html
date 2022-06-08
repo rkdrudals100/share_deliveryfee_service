@@ -88,8 +88,8 @@
             <li th:text="${#authentication.getPrincipal().member.email}" class="dropdownArea text-center dropdownItemProfileText">사용자 이메일</li>
             <li><hr class="dropdown-divider dropdownArea"></li>
             <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/myParties}">참여한 파티</a></li>
-            <li><a class="dropdownItem dropdownItemText" href="#">사용자 정보</a></li>
-            <li><a class="dropdownItem dropdownItemText" href="#">알림</a></li>
+            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/profile}">사용자 정보</a></li>
+            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/notification}">알림</a></li>
             <li><hr class="dropdown-divider dropdownArea"></li>
             <li><a class="dropdownItem dropdownItemText" th:href="@{/logout}">로그아웃</a></li>
         </ul>

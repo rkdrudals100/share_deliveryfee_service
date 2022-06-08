@@ -59,17 +59,7 @@ function sidebarItemClick(clickedEle) {
 
 
 function contentSetting(selectedTab) {
-    if (selectedTab == 'myParties'){
-        document.getElementById('myParties').style.display = 'block';
-    } else if (selectedTab == 'notification'){
-        document.getElementById('myParties-tab').classList.toggle('active');
-        document.getElementById('notification-tab').classList.toggle('active');
-        document.getElementById('myParties').style.display = 'none';
-        document.getElementById('notification').style.display = 'block';
-    } else if (selectedTab == 'profile'){
-        document.getElementById('myParties-tab').classList.toggle('active');
-        document.getElementById('profile-tab').classList.toggle('active');
-        document.getElementById('myParties').style.display = 'none';
-        document.getElementById('profile').style.display = 'block';
-    }
+    document.getElementById('myParties-tab').classList.toggle('active');
+    document.getElementById(selectedTab + '-tab').classList.toggle('active');
+    document.getElementById(selectedTab).style.display = 'block';
 }
