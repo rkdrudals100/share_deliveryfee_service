@@ -6,6 +6,15 @@
     padding-bottom: 30px;
 }
 
+.titleCategory{
+    font-size: 1.25em;
+    font-weight: 400;
+    font-family: "맑은 고딕";
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-left: calc(50% - 500px);
+}
+
 .profileImg3{
     position: relative;
     width:300px;
