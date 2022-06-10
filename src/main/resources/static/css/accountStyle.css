@@ -1,0 +1,43 @@
+.profileImg3{
+    position: relative;
+    width:300px;
+    height: 300px;
+    padding: 0px;
+    margin-left: calc((50% - 150px));
+    margin-bottom: 10px;
+    background-color: #96a6b4;
+}
+
+.profileImg3 .personImg{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    left: calc(150px - 100px);
+    top: 40px;
+}
+
+.infoBox{
+    width: 1000px;
+    padding: 15px;
+    margin-left: calc(50% - 500px);
+    border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.infoBox .horizonLine{
+    height: 0.5px;
+}
+
+.userInfoFont{
+    display: inline-block;
+    width: 200px;
+    text-align: left;
+}
+
+.userInfoValue{
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+}

@@ -5,6 +5,7 @@
     <title>계정정보</title>
     <link rel="stylesheet" href="/css/navStyle.css">
     <link rel="stylesheet" href="/css/sidebarStyle.css">
+    <link rel="stylesheet" href="/css/accountStyle.css">
     <script src="/js/navJs.js"></script>
     <script src="/js/sidebarJs.js"></script>
     <style></style>
@@ -104,8 +105,31 @@
                     </div>
                 </div>
                 <div class="tabContent" id="notification">tab222222222222222222222222</div>
-                <div class="tabContent" id="profile">tab3333333333333333333333333333333333</div>
-                <div class="tabContent" id="profile2">tab3333333333333333333333333333333333</div>
+                <div class="tabContent" id="profile">
+                    <div class="container">
+                        <div class="profileImg3 text-white rounded-circle text-center">
+                            <svg class="dropdownBtn bi bi-person-fill personImg" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                                <path class="dropdownBtn" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                        </div>
+                        <div class="infoBox" th:object="${member}" style="margin-top: 60px;">
+                            <div>
+                                <div class="userInfoFont">사용자 이름</div>
+                                <div class="userInfoValue" th:text="${member.username}">username</div>
+                                <hr class="horizonLine">
+                            </div>
+                            <div>
+                                <div class="userInfoFont">이메일</div>
+                                <div class="userInfoValue" th:text="${member.email}">userEmail</div>
+                                <hr class="horizonLine">
+                            </div>
+                            <div>
+                                <div class="userInfoFont">휴대폰 번호</div>
+                                <div class="userInfoValue" th:text="${member.phoneNum}">userPhoneNum</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

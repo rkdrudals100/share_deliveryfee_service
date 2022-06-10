@@ -256,7 +256,7 @@ public class MemberController {
 
 
     @GetMapping("/accountInfo/{selectedTab}")
-    public String showJoinedParties(@PathVariable String selectedTab, Model model) throws IOException {
+    public String showJoinedParties(@PathVariable String selectedTab, Model model, Principal principal) throws IOException {
 
 //        FileReader reader = new FileReader("src/main/resources/templates/account.html");
 //
@@ -273,6 +273,8 @@ public class MemberController {
         }   else{
             return "errorPage";
         }
+
+        model.addAttribute("member", memberRepository.findByUsername(principal.getName()));
         return "account";
     }
 
