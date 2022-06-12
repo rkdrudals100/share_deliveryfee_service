@@ -1,11 +1,12 @@
 package com.toyproject.share_deliveryfee_service.web.member;
 
-import com.toyproject.share_deliveryfee_service.web.domain.Member;
-import com.toyproject.share_deliveryfee_service.web.domain.MemberRole;
+import com.toyproject.share_deliveryfee_service.web.domain.*;
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberDupCheckIdDto;
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberRegisterDto;
 import com.toyproject.share_deliveryfee_service.web.member.validator.MemberDupCheckValidator;
 import com.toyproject.share_deliveryfee_service.web.member.validator.MemberRegisterValidator;
+import com.toyproject.share_deliveryfee_service.web.party.MemberPartyRepository;
+import com.toyproject.share_deliveryfee_service.web.party.PartyRepository;
 import com.toyproject.share_deliveryfee_service.web.sms.SendSMSTwilio;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,8 @@ public class MemberController {
     private final MemberRegisterValidator memberRegisterValidator;
     private final MemberDupCheckValidator memberDupCheckValidator;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PartyRepository partyRepository;
+    private final MemberPartyRepository memberPartyRepository;
 
 
 
@@ -258,13 +261,16 @@ public class MemberController {
     @GetMapping("/accountInfo/{selectedTab}")
     public String showJoinedParties(@PathVariable String selectedTab, Model model, Principal principal) throws IOException {
 
+        Member loginMember = memberRepository.findByUsername(principal.getName());
+//        List<Party> ongoingParties = new ArrayList<>();
+//        List<Party> closedParties = new ArrayList<>();
+
 //        FileReader reader = new FileReader("src/main/resources/templates/account.html");
 //
 //        int ch;
 //        while ((ch = reader.read()) != -1) {
 //            System.out.print((char) ch);
 //        }
-
 
         List<String> tabs = new ArrayList<>(Arrays.asList("myParties", "notification", "profile"));
 
@@ -274,7 +280,11 @@ public class MemberController {
             return "errorPage";
         }
 
-        model.addAttribute("member", memberRepository.findByUsername(principal.getName()));
+        model.addAttribute("member", loginMember);
+
+        List<Object> myParties = memberService.DivideIntoClosedAndOngoingParties(memberPartyRepository.findByMember(loginMember));
+        model.addAttribute("ongoingParties", (List<Party>) myParties.get(0));
+        model.addAttribute("closedParties", (List<Party>) myParties.get(1));
         return "account";
     }
 

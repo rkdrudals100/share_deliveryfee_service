@@ -14,6 +14,7 @@
 <body>
     <nav th:replace="fragments.html :: navigator(0)"></nav>
 
+<!--사이드바-->
     <div class="sidebar" id="sidebar">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <svg class="bi me-2" width="20" height="32"><use xlink:href="#bootstrap"></use></svg>
@@ -51,176 +52,89 @@
         </ul>
     </div>
 
+
+
+
+
+
     <div style="margin-left: 280px">
         <div class="container" style="padding-top: 150px">
             <div>
+<!--                파티 탭-->
                 <div class="row tabContent" id="myParties">
                     <div class="container">
                         <div class="tabTitle">참여한 파티</div>
                         <div class="titleCategory">진행중인 파티</div>
                             <div class="scrollInfoBox" style="height: 445px;">
-                                <div>
-                                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" id="partyNum30" style="height: 200px;">
-                                        <div class="col-3 d-none d-lg-block text-center align-content-center bg-light">
-
-
-                                            <img src="/img/yogiyoLogo.PNG" alt="배달매체" width="200" height="200">
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="row px-4">
-                                                <div id="partyId_20" style="display: none"></div>
-                                                <h3 class="mt-1 mb-0 overflow-hidden" style="height: 30px;">sdfsdf</h3>
-                                                <hr class="mt-2">
-                                                <strong><div class="my-2 text-muted">fsfa</div></strong>
-                                                <strong class="d-inline-block my-2 text-muted">sdsdf 109동 놀이터 앞</strong>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
-                                                    <div class="mb-1 text-muted">[2022-03-19T15:30]까지 모집 중</div>
-                                                </div>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                                                    <strong><a href="/partyDetails/20" class="stretched-link text-decoration-none text-muted">1/4명</a></strong>
+                                <th:block th:each="party, index : ${ongoingParties}">
+                                    <div th:object="${party}">
+                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" th:id="partyNum + ${index.index}" style="height: 200px;">
+                                            <div class="col-3 d-none d-lg-block text-center align-content-center bg-light">
+                                                <img th:if="${party.deliveryPlatform.toString().equals('BM')}" src="/img/baeminLogo.PNG" alt="배달매체" width="200" height="200">
+                                                <img th:if="${party.deliveryPlatform.toString().equals('BT')}" src="/img/baedalteuggeubLogo.PNG" alt="배달매체" width="200" height="200">
+                                                <img th:if="${party.deliveryPlatform.toString().equals('YGY')}" src="/img/yogiyoLogo.PNG" alt="배달매체" width="200" height="200">
+                                            </div>
+                                            <div class="col-9">
+                                                <div class="row px-4">
+                                                    <div th:id="partyId_ + ${party.id}" style="display: none"></div>
+                                                    <h3 class="mt-1 mb-0 overflow-hidden" th:id="partyTitle + ${index.index}" th:text="${party.title}" style="height: 30px;">제목</h3>
+                                                    <hr class="mt-2">
+                                                    <strong><div class="my-2 text-muted" th:id="partyRestaurant + ${index.index}" th:text="${party.restaurant}">주문한 점포명</div></strong>
+                                                    <strong class="d-inline-block my-2 text-muted" th:id="partyPickUpLocation + ${index.index}" th:text="${party.pickUpLocation} + ' ' + ${party.pickUpLocationDetail}">수령 장소</strong>
+                                                    <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                                                        <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
+                                                        <div class="mb-1 text-muted" th:id="partyLimitTime + ${index.index}" th:text="'[' + ${party.limitTime} + ']까지 모집 중'">모집 시간</div>
+                                                    </div>
+                                                    <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                                                        <!--                            <a href="#" class="stretched-link">모집인원</a>-->
+                                                        <strong><a th:href="@{/partyDetails/{partyId}(partyId=${party.id})}" th:id="partyMembersNum + ${index.index}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" id="partyNum9" style="height: 200px;">
-                                        <div class="col-3 d-none d-lg-block text-center align-content-center bg-light">
-
-
-                                            <img src="/img/yogiyoLogo.PNG" alt="배달매체" width="200" height="200">
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="row px-4">
-                                                <div id="partyId_40" style="display: none"></div>
-                                                <h3 class="mt-1 mb-0 overflow-hidden" style="height: 30px;">sdfsdf</h3>
-                                                <hr class="mt-2">
-                                                <strong><div class="my-2 text-muted">fsfa</div></strong>
-                                                <strong class="d-inline-block my-2 text-muted">sdsdf 109동 놀이터 앞</strong>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
-                                                    <div class="mb-1 text-muted">[2022-03-19T15:30]까지 모집 중</div>
-                                                </div>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                                                    <strong><a href="/partyDetails/20" class="stretched-link text-decoration-none text-muted">1/4명</a></strong>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" id="partyNum55" style="height: 200px;">
-                                        <div class="col-3 d-none d-lg-block text-center align-content-center bg-light">
-
-
-                                            <img src="/img/yogiyoLogo.PNG" alt="배달매체" width="200" height="200">
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="row px-4">
-                                                <div id="partyId_60" style="display: none"></div>
-                                                <h3 class="mt-1 mb-0 overflow-hidden" style="height: 30px;">sdfsdf</h3>
-                                                <hr class="mt-2">
-                                                <strong><div class="my-2 text-muted">fsfa</div></strong>
-                                                <strong class="d-inline-block my-2 text-muted">sdsdf 109동 놀이터 앞</strong>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
-                                                    <div class="mb-1 text-muted">[2022-03-19T15:30]까지 모집 중</div>
-                                                </div>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                                                    <strong><a href="/partyDetails/20" class="stretched-link text-decoration-none text-muted">1/4명</a></strong>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </th:block>
                             </div>
+
                         <div class="titleCategory">만료된 파티</div>
                             <div class="scrollInfoBox" style="height: 445px; margin-bottom: 200px">
-                                <div>
-                                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" id="partyNum0" style="height: 200px;">
-                                        <div class="col-3 d-none d-lg-block text-center align-content-center bg-light">
-
-
-                                            <img src="/img/yogiyoLogo.PNG" alt="배달매체" width="200" height="200">
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="row px-4">
-                                                <div id="partyId_230" style="display: none"></div>
-                                                <h3 class="mt-1 mb-0 overflow-hidden" style="height: 30px;">sdfsdf</h3>
-                                                <hr class="mt-2">
-                                                <strong><div class="my-2 text-muted">fsfa</div></strong>
-                                                <strong class="d-inline-block my-2 text-muted">sdsdf 109동 놀이터 앞</strong>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
-                                                    <div class="mb-1 text-muted">[2022-03-19T15:30]까지 모집 중</div>
-                                                </div>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                                                    <strong><a href="/partyDetails/20" class="stretched-link text-decoration-none text-muted">1/4명</a></strong>
+                                <th:block th:each="party, index : ${closedParties}">
+                                    <div th:object="${party}">
+                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" th:id="partyNum + ${index.index}" style="height: 200px;">
+                                            <div class="col-3 d-none d-lg-block text-center align-content-center bg-light">
+                                                <img th:if="${party.deliveryPlatform.toString().equals('BM')}" src="/img/baeminLogo.PNG" alt="배달매체" width="200" height="200">
+                                                <img th:if="${party.deliveryPlatform.toString().equals('BT')}" src="/img/baedalteuggeubLogo.PNG" alt="배달매체" width="200" height="200">
+                                                <img th:if="${party.deliveryPlatform.toString().equals('YGY')}" src="/img/yogiyoLogo.PNG" alt="배달매체" width="200" height="200">
+                                            </div>
+                                            <div class="col-9">
+                                                <div class="row px-4">
+                                                    <div th:id="partyId_ + ${party.id}" style="display: none"></div>
+                                                    <h3 class="mt-1 mb-0 overflow-hidden" th:id="partyTitle + ${index.index}" th:text="${party.title}" style="height: 30px;">제목</h3>
+                                                    <hr class="mt-2">
+                                                    <strong><div class="my-2 text-muted" th:id="partyRestaurant + ${index.index}" th:text="${party.restaurant}">주문한 점포명</div></strong>
+                                                    <strong class="d-inline-block my-2 text-muted" th:id="partyPickUpLocation + ${index.index}" th:text="${party.pickUpLocation} + ' ' + ${party.pickUpLocationDetail}">수령 장소</strong>
+                                                    <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                                                        <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
+                                                        <div class="mb-1 text-muted" th:id="partyLimitTime + ${index.index}" th:text="'[' + ${party.limitTime} + ']까지 모집 중'">모집 시간</div>
+                                                    </div>
+                                                    <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                                                        <!--                            <a href="#" class="stretched-link">모집인원</a>-->
+                                                        <strong><a th:href="@{/partyDetails/{partyId}(partyId=${party.id})}" th:id="partyMembersNum + ${index.index}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" id="partyNum3" style="height: 200px;">
-                                        <div class="col-3 d-none d-lg-block text-center align-content-center bg-light">
-
-
-                                            <img src="/img/yogiyoLogo.PNG" alt="배달매체" width="200" height="200">
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="row px-4">
-                                                <div id="partyId_430" style="display: none"></div>
-                                                <h3 class="mt-1 mb-0 overflow-hidden" style="height: 30px;">sdfsdf</h3>
-                                                <hr class="mt-2">
-                                                <strong><div class="my-2 text-muted">fsfa</div></strong>
-                                                <strong class="d-inline-block my-2 text-muted">sdsdf 109동 놀이터 앞</strong>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
-                                                    <div class="mb-1 text-muted">[2022-03-19T15:30]까지 모집 중</div>
-                                                </div>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                                                    <strong><a href="/partyDetails/20" class="stretched-link text-decoration-none text-muted">1/4명</a></strong>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" id="partyNum5" style="height: 200px;">
-                                        <div class="col-3 d-none d-lg-block text-center align-content-center bg-light">
-
-
-                                            <img src="/img/yogiyoLogo.PNG" alt="배달매체" width="200" height="200">
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="row px-4">
-                                                <div id="partyId_640" style="display: none"></div>
-                                                <h3 class="mt-1 mb-0 overflow-hidden" style="height: 30px;">sdfsdf</h3>
-                                                <hr class="mt-2">
-                                                <strong><div class="my-2 text-muted">fsfa</div></strong>
-                                                <strong class="d-inline-block my-2 text-muted">sdsdf 109동 놀이터 앞</strong>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
-                                                    <div class="mb-1 text-muted">[2022-03-19T15:30]까지 모집 중</div>
-                                                </div>
-                                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                                    <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                                                    <strong><a href="/partyDetails/20" class="stretched-link text-decoration-none text-muted">1/4명</a></strong>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </th:block>
                             </div>
                     </div>
                 </div>
+
+
+
+
+
+<!--                알림 탭-->
                 <div class="tabContent" id="notification">
                     <div class="container">
                         <div class="tabTitle">알림</div>
@@ -251,6 +165,13 @@
                         </div>
                     </div>
                 </div>
+
+
+
+
+
+
+<!--                프로필 탭-->
                 <div class="tabContent" id="profile">
                     <div class="container">
                         <div class="tabTitle">사용자 정보</div>
