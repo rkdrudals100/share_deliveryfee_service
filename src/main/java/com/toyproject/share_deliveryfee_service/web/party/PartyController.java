@@ -177,11 +177,21 @@ public class PartyController {
 
 
 
-// ajax로 나중에 고치기
-    @GetMapping("/partyDetails/{partyId}/paymentSuccess")
-    public String paymentSuccess(@PathVariable Long partyId, Model model){
+    @PostMapping("/partyDetails/{partyId}/paymentSuccess")
+    public String paymentSuccess(@PathVariable Long partyId, Principal principal, @RequestBody Map<String, Object>inputMap){
+
+        Map<String, String> returnMap = new HashMap<>();
+
+        String messageBody = (String)inputMap.get("getMessageBody");
+        int serviceFee = Integer.parseInt(inputMap.get("getServiceFee").toString());
+        int deliveryFee = Integer.parseInt(inputMap.get("getDeliveryFee").toString());
+
+        Party party = partyRepository.findById(partyId).get();
+        Member member = memberRepository.findByUsername(principal.getName());
         // 결제 검증 코드
         // 파티장에게 메시지 날림
+        partyMessageService.newMessage(party, member, TypeOfMessage.PARTYAPPLICATION,
+                messageBody, serviceFee, deliveryFee);
         
         return "redirect:/partyDetails/" + partyId;
     }

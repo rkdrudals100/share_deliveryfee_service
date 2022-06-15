@@ -2,9 +2,7 @@ function aboutjoinPartyResponse(messageId, choice) {
     var httpRequest;
 
     var partyId = document.getElementById('partyId').innerText;
-    // var searchWord = document.getElementById("searchWord").value;
     var reqJson = new Object();
-    // reqJson.getSearchWord = searchWord;
     reqJson.getPartyMessageId = messageId;
     reqJson.getChoice = choice;
 

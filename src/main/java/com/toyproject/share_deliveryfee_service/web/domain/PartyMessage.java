@@ -17,7 +17,7 @@ import java.awt.*;
 @Builder
 public class PartyMessage extends BaseEntity{
 
-    @Id
+    @Id @GeneratedValue
     @Column(name = "party_message_id")
     private Long id;
 

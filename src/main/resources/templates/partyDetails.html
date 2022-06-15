@@ -14,7 +14,7 @@
 <!--2022-03-28 강경민
     파티 상세 페이지 작성-->
 <!--하단부에 (다른 파티 추천 기능) 추가 요망 -->
-<body>
+<body id="body">
 
   <nav th:replace="fragments.html :: navigator(0)"></nav>
 
@@ -178,7 +178,7 @@
         <div class="modal-footer">
 <!--          <button  class="btn btn-primary" onclick="requestPay('requestToJoin')">제출 및 결제</button>-->
           <button  class="btn btn-primary" onclick="testfuc()">제출 및 결제</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-secondary" id="modalClose" data-bs-dismiss="modal">닫기</button>
         </div>
       </div>
     </div>

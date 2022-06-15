@@ -40,7 +40,7 @@ function requestPay(whichOrder) {
             msg += '결제 이름 : ' + rsp.buyer_email+ '\n';
 
             console.log(msg);
-            location.href='/partyDetails/' + partyId + '/paymentSuccess';
+            sendJoinPartyMessageAjax();
         } else {    // 결제 실패 시 로직
             var msg = '결제에 실패하였습니다.';
             msg += '에러내용 : ' + rsp.error_msg;
@@ -51,7 +51,37 @@ function requestPay(whichOrder) {
 
 
 function testfuc() {
-    var partyId = document.getElementById('partyId').innerText;
-    location.href='/partyDetails/' + partyId + '/paymentSuccess';
+    sendJoinPartyMessageAjax();
 }
 
+
+
+function sendJoinPartyMessageAjax() {
+    var httpRequest;
+
+    var partyId = document.getElementById('partyId').innerText;
+    var reqJson = new Object();
+    reqJson.getMessageBody = document.getElementById('orderRequests').value;
+    reqJson.getServiceFee = document.getElementById('payment').value;
+    reqJson.getDeliveryFee = document.getElementById('deliveryfee').value;
+
+    console.log('body: ' + reqJson.getMessageBody);
+    httpRequest = new XMLHttpRequest();
+
+    httpRequest.onreadystatechange = () => {
+        //readyState가 Done이고 응답 값이 200일 때
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+            if (httpRequest.status === 200) {
+                var result = httpRequest.response;
+                document.getElementById('modalClose').click();
+            } else {
+                alert('ajax Request Error!');
+            }
+        }
+    };
+    //Post 방식, 응답은 json, 요청헤더 json
+    httpRequest.open('POST', '/partyDetails/' + partyId + '/paymentSuccess', true);
+    httpRequest.responseType = "json";
+    httpRequest.setRequestHeader('Content-Type', 'application/json');
+    httpRequest.send(JSON.stringify(reqJson));
+}

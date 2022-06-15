@@ -22,6 +22,36 @@ public class PartyMessageService {
 
 
 
+
+
+    public void newMessage(Party party, Member member,
+                           TypeOfMessage typeOfMessage,
+                           String messageBody,
+                           int serviceFee,
+                           int deliveryFee){
+        PartyMessage partyMessage = PartyMessage.builder()
+                .member(member)
+                .party(party)
+                .processingStatus(ProcessingStatus.NOTYET)
+                .typeOfMessage(typeOfMessage)
+                .messageBody(messageBody)
+                .serviceFee(serviceFee)
+                .deliveryFee(deliveryFee)
+                .price(serviceFee + deliveryFee)
+                .build();
+
+        partyMessageRepository.save(partyMessage);
+
+        member.addMessages(partyMessage);
+        party.addPartyMessage(partyMessage);
+    }
+
+
+
+
+
+
+
     public String processPartyJoin(Long partyId, Long partyMessageId, String choice){
 
         Party party = partyRepository.findById(partyId).get();
