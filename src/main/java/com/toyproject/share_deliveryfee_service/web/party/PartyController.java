@@ -4,6 +4,7 @@ import com.toyproject.share_deliveryfee_service.web.domain.*;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;
 import com.toyproject.share_deliveryfee_service.web.party.validator.PartyRegisterValidator;
+import com.toyproject.share_deliveryfee_service.web.partyMessage.PartyMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -27,6 +28,8 @@ public class PartyController {
     private final MemberRepository memberRepository;
     private final PartyRegisterValidator partyRegisterValidator;
     private final PartyService partyService;
+    private final PartyMessageRepository partyMessageRepository;
+    private final PartyMessageService partyMessageService;
 
 
 
@@ -96,7 +99,6 @@ public class PartyController {
     @PostMapping("/searchParty/search")
     public String getContent2(@RequestBody Map<String, Object> inputMap, Model model) {
         String keyWord = (String)inputMap.get("getSearchWord");
-        log.info("검색 키워드: " + keyWord);
 
         List<Party> parties = partyService.searchPartyByKeywords(keyWord);
 
@@ -106,7 +108,7 @@ public class PartyController {
         } else{
             model.addAttribute("isNull", "false");
         }
-
+        log.info(parties.get(0).getTitle());
         model.addAttribute("parties", parties);
         model.addAttribute("totalResultNum", parties.size());
         model.addAttribute("keyword", keyWord);
@@ -156,6 +158,7 @@ public class PartyController {
         Party getParty = partyRepository.findPartyById(partyId);
 
         String userRoleAtParty = partyService.determineUserRoleAtParty(memberRepository.findByUsername(principal.getName()), getParty);
+        List<PartyMessage> partyMessages = partyMessageRepository.findByPartyAndAndProcessingStatus(getParty, ProcessingStatus.NOTYET);
 
         if (getParty == null){
             log.info("잘못된 접근, 파티가 존재하지 않음"); // 에러 페이지로 이동하도록 수정
@@ -163,6 +166,7 @@ public class PartyController {
         } else {
             model.addAttribute("party", getParty);
             model.addAttribute("userRoleAtParty", userRoleAtParty);
+            model.addAttribute("partyMessages", partyMessages);
         }
 
         return "partyDetails";
@@ -182,6 +186,21 @@ public class PartyController {
         return "redirect:/partyDetails/" + partyId;
     }
 
+
+
+
+    @PostMapping("/partyDetails/{partyId}/PartyJoin")
+    public String PartyJoin(@PathVariable Long partyId, @RequestBody Map<String, String> inputMap){
+
+        Long partyMessageId = Long.valueOf(inputMap.get("getPartyMessageId"));
+        String choice = inputMap.get("getChoice");
+
+        String k = partyMessageService.processPartyJoin(partyId, partyMessageId, choice);
+
+        log.info(k);
+
+        return "redirect:/partyDetails/" + partyId;
+    }
 
 
 

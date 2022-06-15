@@ -11,18 +11,20 @@ window.onload = function (){
 
 
 // 초기 card 출력
-function firstCardSetting() {
+function firstCardSetting(isnull) {
     var totalPageNum = document.getElementById("totalCardNum").innerText;
 
-    if (totalPageNum >= 6){
-        for (var i = 0; i < 6; i++){
-            document.getElementById("partyNum" + i).style.display = '';
-        }
-    } else {
-        var i = 0;
-        while (i < totalPageNum){
-            document.getElementById("partyNum" + i).style.display = '';
-            i++;
+    if (isnull != 'true') {
+        if (totalPageNum >= 6) {
+            for (var i = 0; i < 6; i++) {
+                document.getElementById("partyNum" + i).style.display = '';
+            }
+        } else {
+            var i = 0;
+            while (i < totalPageNum) {
+                document.getElementById("partyNum" + i).style.display = '';
+                i++;
+            }
         }
     }
 
@@ -45,7 +47,7 @@ function searchByWord() {
     var searchWord = document.getElementById("searchWord").value;
     var reqJson = new Object();
     reqJson.getSearchWord = searchWord;
-    console.log(reqJson.getSearchWord);
+    console.log('검색어: ' + reqJson.getSearchWord);
     httpRequest = new XMLHttpRequest();
 
     httpRequest.onreadystatechange = () => {
@@ -55,13 +57,15 @@ function searchByWord() {
                 var result = httpRequest.response;
                 document.getElementById("cards").innerHTML = result;
 
+                var isNull = document.getElementById("isNull").innerText;
+
                 document.getElementById("totalCardNum").innerText = document.getElementById("totalResultNum").innerText;
                 document.getElementById("searchNum").innerText = document.getElementById("totalResultNum").innerText;
                 document.getElementById("currentPage").value = 1;
                 document.getElementById("currentPage").innerText = 1;
                 document.getElementById("totalPage").innerText = Math.ceil(document.getElementById("totalResultNum").innerText / 6);
                 document.getElementById("totalPage2").innerText = Math.ceil(document.getElementById("totalResultNum").innerText / 6);
-                firstCardSetting();
+                firstCardSetting(isNull);
 
                 // 검색 결과가 없을 때
                 if (document.getElementById("isNull").innerText == "true"){
@@ -69,6 +73,7 @@ function searchByWord() {
                     document.getElementById("totalCardNum").innerText = 0;
                     document.getElementById("searchNum").innerText = 0;
                 }
+
             } else {
                 alert('ajax Request Error!');
             }

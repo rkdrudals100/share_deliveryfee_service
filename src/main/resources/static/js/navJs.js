@@ -28,7 +28,6 @@ function DropdownSwitch(pressedDropdownBtn){
 
 window.onclick = function(event) {
     if (!event.target.matches(['.dropdownBtn', '.dropdownArea'])) {
-        console.log("here");
 
         var dropdowns = document.getElementsByClassName("customDropdown");
         var i;

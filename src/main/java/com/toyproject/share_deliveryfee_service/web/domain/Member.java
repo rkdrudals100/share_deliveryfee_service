@@ -48,6 +48,9 @@ public class Member extends BaseEntity{
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PartyMessage> messages = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DeliveryQuestion> deliveryQuestions = new ArrayList<>();
+
 
     public List<String> getRoleList(){
         if(this.memberRoles.length() > 0){
@@ -65,6 +68,11 @@ public class Member extends BaseEntity{
     public void addMessages(PartyMessage partyMessage){
         partyMessage.setMember(this);
         this.getMessages().add(partyMessage);
+    }
+
+    public void  addDeliveryQuestion(DeliveryQuestion deliveryQuestion){
+        deliveryQuestion.setMember(this);
+        this.getDeliveryQuestions().add(deliveryQuestion);
     }
 
     public void addMemberParties(MemberParty memberParty){

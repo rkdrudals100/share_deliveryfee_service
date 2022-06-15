@@ -66,6 +66,9 @@ public class Party extends BaseEntity{
     private List<MemberParty> memberParties = new ArrayList<>();
 
 
+
+
+
     // 연관관계 편의 메소드
     public void changeOrganizer(Member member){
         this.organizer = member;
@@ -87,4 +90,16 @@ public class Party extends BaseEntity{
         foodCategory.setParty(this);
     }
 
+
+
+
+
+    // 필드 변경 메소드
+    public void updateMembersNum(String upOrDown){
+        if(upOrDown.equals("up")){
+            this.membersNum = this.membersNum + 1;
+        } else if(upOrDown.equals("down")){
+            this.membersNum = this.membersNum - 1;
+        }
+    }
 }

@@ -1,13 +1,11 @@
 package com.toyproject.share_deliveryfee_service.web.domain;
 
-//  2022-04-14 강경민
-//  도메인 설계
-public enum PaymentStatus {
-    BEPAID("결제 완료"), NOTPAID("결제 X");
+public enum ProcessingStatus {
+    PROCESSED("처리 완료"), NOTYET("처리 중");
 
     private final String description;
 
-    PaymentStatus(String description) {
+    ProcessingStatus(String description) {
         this.description = description;
     }
 

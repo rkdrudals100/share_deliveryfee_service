@@ -87,7 +87,7 @@
             <li th:text="${#authentication.getPrincipal().member.username}" id="navMemberId" class="dropdownArea text-center dropdownItemProfileText">사용자 아이디</li>
             <li th:text="${#authentication.getPrincipal().member.email}" id="navMemberEmail" class="dropdownArea text-center dropdownItemProfileText">사용자 이메일</li>
             <li><hr class="dropdown-divider dropdownArea"></li>
-            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/myParties}">참여한 파티</a></li>
+            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/myParties}">파티 관리</a></li>
             <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/profile}">사용자 정보</a></li>
             <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/notification}">알림</a></li>
             <li><hr class="dropdown-divider dropdownArea"></li>
@@ -132,7 +132,7 @@
     <div id="keyword" th:value="${keyword}" th:text="${keyword}" style="display: none"></div>
     <div id="isNull" th:value="${isNull}" th:text="${isNull}" style="display: none"></div>
     <th:block th:each="num : ${#numbers.sequence(0, totalResultNum - 1)}">
-<!--        <div th:object="${party}">-->
+        <div th:if="${isNull != 'true'}">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" th:id="partyNum + ${num}" style="height: 200px; display: none">
                 <div class="col-2 d-none d-lg-block text-center align-content-center bg-light">
                     <img th:if="${parties[num].deliveryPlatform.toString().equals('BM')}" src="/img/baeminLogo.PNG" alt="배달매체" width="200" height="200">
@@ -157,7 +157,7 @@
                     </div>
                 </div>
             </div>
-<!--        </div>-->
+        </div>
     </th:block>
 </div>
 
@@ -166,22 +166,5 @@
 
 
 
-
-
-
-<div>
-    <span th:fragment="test(param1)" th:text="${param1}"></span>
-</div>
-
-<span th:fragment="test2">success</span>
-
-<div>
-    <span th:fragment="test3(param1)">
-        <span>djkjks</span>
-        <div>
-            <div th:text="${param1}"></div>
-        </div>
-    </span>
-</div>
 
 </html>
