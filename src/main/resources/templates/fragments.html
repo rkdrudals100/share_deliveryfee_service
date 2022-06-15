@@ -84,8 +84,8 @@
                     <path class="dropdownArea" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                 </svg>
             </div>
-            <li th:text="${#authentication.getPrincipal().member.username}" class="dropdownArea text-center dropdownItemProfileText">사용자 아이디</li>
-            <li th:text="${#authentication.getPrincipal().member.email}" class="dropdownArea text-center dropdownItemProfileText">사용자 이메일</li>
+            <li th:text="${#authentication.getPrincipal().member.username}" id="navMemberId" class="dropdownArea text-center dropdownItemProfileText">사용자 아이디</li>
+            <li th:text="${#authentication.getPrincipal().member.email}" id="navMemberEmail" class="dropdownArea text-center dropdownItemProfileText">사용자 이메일</li>
             <li><hr class="dropdown-divider dropdownArea"></li>
             <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/myParties}">참여한 파티</a></li>
             <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/profile}">사용자 정보</a></li>

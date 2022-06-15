@@ -147,18 +147,62 @@ public class PartyController {
     }
 
 
-    @GetMapping("/partyDetails/{partyId}")
-    public String detail(@PathVariable Long partyId, Model model){
 
-        log.info(String.valueOf(partyId));
+
+
+    @GetMapping("/partyDetails/{partyId}")
+    public String detail(@PathVariable Long partyId, Model model, Principal principal){
+
         Party getParty = partyRepository.findPartyById(partyId);
-//        if (getParty.isEmpty()){
-//            log.info("잘못된 접근, 파티가 존재하지 않음"); // 에러 페이지로 이동하도록 수정
-//        } else {
+
+        String userRoleAtParty = partyService.determineUserRoleAtParty(memberRepository.findByUsername(principal.getName()), getParty);
+
+        if (getParty == null){
+            log.info("잘못된 접근, 파티가 존재하지 않음"); // 에러 페이지로 이동하도록 수정
+            return "errorPage";
+        } else {
             model.addAttribute("party", getParty);
-//        }
+            model.addAttribute("userRoleAtParty", userRoleAtParty);
+        }
 
         return "partyDetails";
     }
+
+
+
+
+
+
+// ajax로 나중에 고치기
+    @GetMapping("/partyDetails/{partyId}/paymentSuccess")
+    public String paymentSuccess(@PathVariable Long partyId, Model model){
+        // 결제 검증 코드
+        // 파티장에게 메시지 날림
+        
+        return "redirect:/partyDetails/" + partyId;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

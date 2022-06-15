@@ -70,6 +70,8 @@ public class PartyService {
 
 
 
+
+
     public int changePageContents(int currentPageNum,  int totalPageNum,  String whichBtn){
         int printCardNum = 0;
 
@@ -85,6 +87,8 @@ public class PartyService {
 
         return printCardNum;
     }
+
+
 
 
 
@@ -107,6 +111,34 @@ public class PartyService {
         }
 
         return parties;
+    }
+
+
+
+
+
+    // 유저가 파티에 가입했는지, 파티원인지, 파티장인지 판별
+    public String determineUserRoleAtParty(Member member, Party party){
+        String userRole = "notJoined";
+
+        List<MemberParty> memberJoinedParty = memberPartyRepository.findByMember(member);
+        List<MemberParty> partyMembers = memberPartyRepository.findByParty(party);
+
+        int sizeOfJoinedParty = memberJoinedParty.size();
+        memberJoinedParty.removeAll(partyMembers);
+        int sizeOfJoinedParty2 = memberJoinedParty.size();
+
+        if(sizeOfJoinedParty == sizeOfJoinedParty2){
+            return userRole;
+        }   else {
+            userRole = "joined";
+        }
+
+        if (party.getOrganizer() == member){
+            userRole = "organizer";
+        }
+
+        return userRole;
     }
 
 }
