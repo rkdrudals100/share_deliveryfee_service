@@ -13,8 +13,8 @@ public interface PartyMessageRepository extends JpaRepository<PartyMessage, Long
 
     Optional<PartyMessage> findById(Long id);
 
-    List<PartyMessage> findByPartyAndAndProcessingStatus(Party party, ProcessingStatus processingStatus);
+    List<PartyMessage> findByPartyAndAndProcessingStatusOrderByIdDesc(Party party, ProcessingStatus processingStatus);
 
-    List<PartyMessage> findByPartyAndProcessingStatusAndTypeOfMessageNotLike(Party party, ProcessingStatus processingStatus, TypeOfMessage typeOfMessage);
+    List<PartyMessage> findByPartyAndProcessingStatusAndTypeOfMessageNotLikeOrderByIdDesc(Party party, ProcessingStatus processingStatus, TypeOfMessage typeOfMessage);
 
 }

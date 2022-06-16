@@ -76,6 +76,10 @@
     </div>
   </div>
 
+
+
+
+
   <div th:unless="${userRoleAtParty == 'notJoined'}" class="container" style="padding-top: 50px">
     <hr>
     <div class="subTitleStyle text-center">파티 메시지</div>
@@ -107,65 +111,13 @@
         <div><hr class="horizonLine"></div>
 
       </th:block>
-
-      <div class="row">
-        <div class="col-9">
-          [<span id="messageType" style="color: red">가입요청</span>]<span id="messageTypeContent"></span>'kkkk'님이 파티가입을 신청하셨습니다.<br>
-
-          <span>[내용]</span><br><span id="messageContent" style="word-break:break-all">황금올리브 1마리 주문할꺼고요, 추가요청사항으로 머스타드 소스 추가, 젓가락 2개 챙겨달라고 작성 부탁드립니다.</span><br>
-
-          <span>[요금]</span><br><span id="servicefee">25000</span><span>&nbsp;+&nbsp;</span><span id="dividedDeliveryfee">100</span><span>&nbsp;=&nbsp;</span><span id="totalfee">26000</span>원
-
-          <div id="recordedTime">[2022-03-19T15:30]</div>
-        </div>
-        <div class="col-3">
-          <div class="messageBtn">
-            <button class="btn btn-primary">수락</button>
-            <button class="btn btn-danger">거절</button>
-          </div>
-        </div>
-      </div>
-
-      <div><hr class="horizonLine"></div>
-
-      <div class="row">
-        <div class="col-9">
-          [<span id="messageType2" style="color: red">파티가입</span>]<span id="messageTypeContent2"></span>'kkkk'님이 파티에 참여하셨습니다.<br>
-
-          <div id="recordedTime2">[2022-03-19T15:30]</div>
-        </div>
-        <div class="col-3" style="display: none">
-          <div class="messageBtn">
-            <button class="btn btn-primary">수락</button>
-            <button class="btn btn-danger">거절</button>
-          </div>
-        </div>
-      </div>
-
-      <div><hr class="horizonLine"></div>
-
-      <div class="row">
-        <div class="col-9">
-          [<span  style="color: red">가입요청</span>]<span></span>'kkkk'님이 파티가입을 신청하셨습니다.<br>
-
-          <span>[내용]</span><br><span style="word-break:break-all">황금올리브 1마리 주문할꺼고요, 추가요청사항으로 머스타드 소스 추가, 젓가락 2개 챙겨달라고 작성 부탁드립니다. 황금올리브 1마리 주문할꺼고요, 추가요청사항으로 머스타드 소스 추가, 젓가락 2개 챙겨달라고 작성 부탁드립니다. 황금올리브 1마리 주문할꺼고요, 추가요청사항으로 머스타드 소스 추가, 젓가락 2개 챙겨달라고 작성 부탁드립니다. 황금올리브 1마리 주문할꺼고요, 추가요청사항으로 머스타드 소스 추가, 젓가락 2개 챙겨달라고 작성 부탁드립니다. 황금올리브 1마리 주문할꺼고요, 추가요청사항으로 머스타드 소스 추가, 젓가락 2개 챙겨달라고 작성 부탁드립니다.</span><br>
-
-          <span>[요금]</span><br><span>25000</span><span>&nbsp;+&nbsp;</span><span>100</span><span>&nbsp;=&nbsp;</span><span>26000</span>원
-
-          <div>[2022-03-19T15:30]</div>
-        </div>
-        <div class="col-3">
-          <div class="messageBtn">
-            <button class="btn btn-primary">수락</button>
-            <button class="btn btn-danger">거절</button>
-          </div>
-        </div>
-      </div>
-
-      <div><hr class="horizonLine"></div>
     </div>
   </div>
   <div style="padding-top: 200px"></div>
+
+
+
+
 
 
   <div th:if="${userRoleAtParty == 'notJoined'}" class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="joinModalLabel" aria-hidden="true">

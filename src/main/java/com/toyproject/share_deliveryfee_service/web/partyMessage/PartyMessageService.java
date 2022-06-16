@@ -61,9 +61,9 @@ public class PartyMessageService {
         List<PartyMessage> partyMessages;
 
         if (party.getOrganizer().getUsername().equals(username)){
-            partyMessages = partyMessageRepository.findByPartyAndAndProcessingStatus(party, ProcessingStatus.NOTYET);
+            partyMessages = partyMessageRepository.findByPartyAndAndProcessingStatusOrderByIdDesc(party, ProcessingStatus.NOTYET);
         }   else{
-            partyMessages = partyMessageRepository.findByPartyAndProcessingStatusAndTypeOfMessageNotLike(party, ProcessingStatus.NOTYET, TypeOfMessage.PARTYAPPLICATION);
+            partyMessages = partyMessageRepository.findByPartyAndProcessingStatusAndTypeOfMessageNotLikeOrderByIdDesc(party, ProcessingStatus.NOTYET, TypeOfMessage.PARTYAPPLICATION);
         }
 
         return partyMessages;
