@@ -1,6 +1,9 @@
 package com.toyproject.share_deliveryfee_service.web.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +13,9 @@ import java.util.List;
 //  도메인 설계
 @Entity
 @Data @Table(name = "notification_logs")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class NotificationLog extends BaseEntity{
 
     @Id @GeneratedValue
@@ -17,6 +23,8 @@ public class NotificationLog extends BaseEntity{
     private Long id;
 
     private String contents;
+
+    private String url;
 
     @Enumerated(EnumType.STRING)
     private ReadStatus readStatus;

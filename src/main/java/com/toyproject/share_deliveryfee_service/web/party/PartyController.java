@@ -49,19 +49,6 @@ public class PartyController {
 
 
 
-    @GetMapping("/testsavememberParty")
-    public String hihi(Principal principal){
-        Member loginMember = memberRepository.findByUsername(principal.getName());
-        log.info(String.valueOf(loginMember.getHostedparties().isEmpty()));
-        log.info(String.valueOf(loginMember.getMemberParties().isEmpty()));
-
-        return "index";
-    }
-
-
-
-
-
 
 
     @PostMapping("/makeParty")

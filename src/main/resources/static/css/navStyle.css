@@ -89,3 +89,17 @@
 .showDropdown {
     display: block;
 }
+
+.alertScroll {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.alertScroll::-webkit-scrollbar {
+    width: 7px;
+}
+
+.alertScroll::-webkit-scrollbar-thumb {
+    background-color: #0d6efd;
+    border-radius: 1em;
+}

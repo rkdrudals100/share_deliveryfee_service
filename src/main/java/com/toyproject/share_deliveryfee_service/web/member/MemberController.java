@@ -5,6 +5,8 @@ import com.toyproject.share_deliveryfee_service.web.member.form.MemberDupCheckId
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberRegisterDto;
 import com.toyproject.share_deliveryfee_service.web.member.validator.MemberDupCheckValidator;
 import com.toyproject.share_deliveryfee_service.web.member.validator.MemberRegisterValidator;
+import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogRepository;
+import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogService;
 import com.toyproject.share_deliveryfee_service.web.party.MemberPartyRepository;
 import com.toyproject.share_deliveryfee_service.web.party.PartyRepository;
 import com.toyproject.share_deliveryfee_service.web.sms.SendSMSTwilio;
@@ -30,53 +32,20 @@ import java.util.*;
 @Slf4j
 public class MemberController {
 
-    private final MemberRepository memberRepository;
-    private final MemberService memberService;
     private final MemberRegisterValidator memberRegisterValidator;
     private final MemberDupCheckValidator memberDupCheckValidator;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final PartyRepository partyRepository;
+
+    private final MemberRepository memberRepository;
     private final MemberPartyRepository memberPartyRepository;
+    private final PartyRepository partyRepository;
+    private final NotificationLogRepository notificationLogRepository;
+
+    private final MemberService memberService;
+    private final NotificationLogService notificationLogService;
 
 
 
-
-
-
-    @GetMapping("/testdatasave")
-    @Builder
-    public String testDataSave(){
-        Member baseMember = Member.builder()
-                .username("kkkk")
-                .email("rkdrudals100@gmail.com")
-                .phoneNum("01091571130")
-                .password(bCryptPasswordEncoder.encode("kkkk"))
-                .memberRole(MemberRole.USER)
-                .memberRoles("USER")
-                .build();
-
-
-        memberRepository.save(baseMember);
-
-        Member baseMemberAdmin = Member.builder()
-                .username("kkkkk")
-                .email("rkdrudals100@gmail.com")
-                .phoneNum("01091571131")
-                .password(bCryptPasswordEncoder.encode("kkkkk"))
-                .memberRole(MemberRole.ADMIN)
-                .memberRoles("ADMIN")
-                .build();
-
-        memberRepository.save(baseMemberAdmin);
-
-        return "login";
-    }
-
-    @PostMapping("token")
-    @ResponseBody
-    public String token(){
-        return "<h1>token</h1>";
-    }
 
 
     @GetMapping("admin/hello")
@@ -138,17 +107,12 @@ public class MemberController {
         }
         session.removeAttribute(phoneNumPlusAuthNum);
 
-        Member saveMember = Member.builder()
-                .username(memberRegisterDto.getMemberId())
-                .password(bCryptPasswordEncoder.encode(memberRegisterDto.getMemberPassword()))
-                .email(memberRegisterDto.getMemberEmail())
-                .phoneNum(memberRegisterDto.getMemberPhoneNum())
-                .memberRole(MemberRole.USER)
-                .memberRoles("ROLE_USER")
-                .build();
+        Member saveMember = memberService.registerMember(memberRegisterDto.getMemberId(), bCryptPasswordEncoder.encode(memberRegisterDto.getMemberPassword()),
+                memberRegisterDto.getMemberEmail(), memberRegisterDto.getMemberPhoneNum(), MemberRole.USER, "ROLE_USER");
 
-        memberRepository.save(saveMember);
         log.info("'{}'을 member에 저장 완료", memberRegisterDto.getMemberId());
+
+        notificationLogService.newNotificationLog(saveMember, "가입이 완료되었습니다.", "http://localhost:8080/accountInfo/notification");
 
         return "redirect:/login"; // 임시 작동 테스트
     }

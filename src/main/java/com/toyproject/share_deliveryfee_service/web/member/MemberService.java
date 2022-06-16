@@ -1,8 +1,6 @@
 package com.toyproject.share_deliveryfee_service.web.member;
 
-import com.toyproject.share_deliveryfee_service.web.domain.MemberParty;
-import com.toyproject.share_deliveryfee_service.web.domain.Party;
-import com.toyproject.share_deliveryfee_service.web.domain.PartyStatus;
+import com.toyproject.share_deliveryfee_service.web.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +18,30 @@ import java.util.Map;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+
+
+
+
+
+
+    public Member registerMember(String username, String password, String email, String phoneNum,
+                               MemberRole memberRole, String memberRoles){
+
+        Member newMember = Member.builder()
+                .username(username)
+                .password(password)
+                .email(email)
+                .phoneNum(phoneNum)
+                .memberRole(memberRole)
+                .memberRoles(memberRoles)
+                .build();
+
+        memberRepository.save(newMember);
+
+        return memberRepository.findByUsername(username);
+    }
+
+
 
 
 
