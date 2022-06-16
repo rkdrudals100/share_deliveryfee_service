@@ -13,9 +13,8 @@ function aboutjoinPartyResponse(messageId, choice) {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             if (httpRequest.status === 200) {
                 var result = httpRequest.response;
-                console.log(messageId);
-                console.log(choice);
 
+                window.location.replace('/partyDetails/' + partyId);
             } else {
                 alert('ajax Request Error!');
             }

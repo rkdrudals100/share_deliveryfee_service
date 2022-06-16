@@ -59,7 +59,8 @@
           <div class="col-4">
             <strong><div class="my-2 text-muted">모집인원</div></strong>
             <hr>
-            <div th:text="${party.maxMemberNum} + '명'">0명</div>
+            <span class="text-danger" th:text="${party.maxMemberNum}" style="font-weight: bold"></span>명 중 <span class="text-danger font-weight-bold" th:text="' ' + ${party.membersNum}" style="font-weight: bold"></span>명 참가 중
+<!--            <div th:text="${party.maxMemberNum} + '명 중 ' + ${party.membersNum} + '명 모집됨'">0명</div>-->
           </div>
           <div class="col-4">
             <strong><div class="my-2 text-muted">모집시간</div></strong>
@@ -68,8 +69,8 @@
           </div>
         </div>
         <div class="text-center">
-          <button th:if="${userRoleAtParty == 'notJoined'}" class="btn btn-primary btn-lg mt-5" type="button" data-bs-toggle="modal" data-bs-target="#joinModal">가입하기</button>
-          <button th:unless="${userRoleAtParty == 'notJoined'}" class="btn btn-primary btn-lg mt-5" type="button" data-bs-toggle="modal" data-bs-target="#joinModal" disabled>가입하기</button>
+          <button th:if="${userRoleAtParty == 'notJoined' and (party.maxMemberNum > party.membersNum)}" class="btn btn-primary btn-lg mt-5" type="button" data-bs-toggle="modal" data-bs-target="#joinModal">가입하기</button>
+          <button th:unless="${userRoleAtParty == 'notJoined' and (party.maxMemberNum > party.membersNum)}" class="btn btn-primary btn-lg mt-5" type="button" data-bs-toggle="modal" data-bs-target="#joinModal" disabled>가입하기</button>
         </div>
       </div>
     </div>
@@ -85,16 +86,20 @@
             [<span th:text="${partymessage.getTypeOfMessage().getDescription()}" style="color: red">메시지 종류</span>]'<span th:text="${partymessage.getMember().username}">username</span>'
             <span th:text="${partymessage.getTypeOfMessage().getHtmlDescription()}">님이 파티가입을 신청하셨습니다.</span><br>
 
-            <span>[내용]</span><br><span style="word-break:break-all" th:text="${partymessage.getMessageBody()}">요청 사항</span><br>
+            <div th:if="${partymessage.getMessageBody()}">
+              <span>[내용]</span><br><span style="word-break:break-all" th:text="${partymessage.getMessageBody()}">요청 사항</span><br>
+            </div>
 
-            <span>[요금]</span><br><span th:text="${partymessage.getServiceFee()}">서비스 비용</span><span>&nbsp;+&nbsp;</span><span th:text="${partymessage.getDeliveryFee()}">배달비</span><span>&nbsp;=&nbsp;</span><span th:text="${partymessage.getServiceFee() + partymessage.getDeliveryFee()}">총 비용</span>원<br>
+            <div th:unless="${partymessage.getServiceFee() == 0 and partymessage.getDeliveryFee() == 0}">
+              <span>[요금]</span><br><span th:text="${partymessage.getServiceFee()}">서비스 비용</span><span>&nbsp;+&nbsp;</span><span th:text="${partymessage.getDeliveryFee()}">배달비</span><span>&nbsp;=&nbsp;</span><span th:text="${partymessage.getServiceFee() + partymessage.getDeliveryFee()}">총 비용</span>원<br>
+            </div>
 
             <span th:text="'[' + ${partymessage.getCreateAt()} + ']'">[creat_at]</span>
           </div>
           <div class="col-3">
-            <div class="messageBtn">
+            <div th:if="${partymessage.getTypeOfMessage().getDescription().equals('파티가입신청')}" class="messageBtn">
               <button class="btn btn-primary" th:value="${partymessage.getId()}" onclick="aboutjoinPartyResponse(this.getAttribute('value'), 'yes')">수락</button>
-              <button class="btn btn-danger">거절</button>
+              <button class="btn btn-danger" th:value="${partymessage.getId()}" onclick="aboutjoinPartyResponse(this.getAttribute('value'), 'no')">거절</button>
             </div>
           </div>
         </div>

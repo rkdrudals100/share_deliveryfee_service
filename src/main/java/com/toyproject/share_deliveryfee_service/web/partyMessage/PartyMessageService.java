@@ -9,6 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.Null;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -52,6 +56,25 @@ public class PartyMessageService {
 
 
 
+    public List<PartyMessage> getPartyMessages(Party party, String username){
+
+        List<PartyMessage> partyMessages;
+
+        if (party.getOrganizer().getUsername().equals(username)){
+            partyMessages = partyMessageRepository.findByPartyAndAndProcessingStatus(party, ProcessingStatus.NOTYET);
+        }   else{
+            partyMessages = partyMessageRepository.findByPartyAndProcessingStatusAndTypeOfMessageNotLike(party, ProcessingStatus.NOTYET, TypeOfMessage.PARTYAPPLICATION);
+        }
+
+        return partyMessages;
+    }
+
+
+
+
+
+
+
     public String processPartyJoin(Long partyId, Long partyMessageId, String choice){
 
         Party party = partyRepository.findById(partyId).get();
@@ -61,15 +84,24 @@ public class PartyMessageService {
         partyMessage.updateProcessingStatus(ProcessingStatus.PROCESSED);
 
         if (choice.equals("yes")){
-            MemberParty memberParty = MemberParty.builder()
-                    .member(member)
-                    .party(party)
-                    .build();
+            if (party.getMembersNum() < party.getMaxMemberNum()) {
+                MemberParty memberParty = MemberParty.builder()
+                        .member(member)
+                        .party(party)
+                        .build();
 
-            memberParty.addMemberParty(party, member);
-            party.updateMembersNum("up");
+                memberParty.addMemberParty(party, member);
+                party.updateMembersNum("up");
+                newMessage(party, member, TypeOfMessage.PARTYJOIN, null, 0, 0);
+                log.info("파티 참가 수락");
+            } else {
+                log.info("파티 인원 초과");
+                return "overcrowding";
+            }
+        } else if (choice.equals("no")){
+            log.info("파티 참가 거절");
         }
-        return "done";
+        return "success";
     }
 
 

@@ -158,7 +158,7 @@ public class PartyController {
         Party getParty = partyRepository.findPartyById(partyId);
 
         String userRoleAtParty = partyService.determineUserRoleAtParty(memberRepository.findByUsername(principal.getName()), getParty);
-        List<PartyMessage> partyMessages = partyMessageRepository.findByPartyAndAndProcessingStatus(getParty, ProcessingStatus.NOTYET);
+        List<PartyMessage> partyMessages = partyMessageService.getPartyMessages(getParty, principal.getName());
 
         if (getParty == null){
             log.info("잘못된 접근, 파티가 존재하지 않음"); // 에러 페이지로 이동하도록 수정
@@ -207,8 +207,10 @@ public class PartyController {
 
         String k = partyMessageService.processPartyJoin(partyId, partyMessageId, choice);
 
+        //k가 overcrowding일 시 bindingresult 출력
         log.info(k);
 
+        // 성공 파티메시지 출력
         return "redirect:/partyDetails/" + partyId;
     }
 
