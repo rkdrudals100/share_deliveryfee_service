@@ -26,6 +26,11 @@ function DropdownSwitch(pressedDropdownBtn){
 
 
 
+function notificationReadStatusChange() {
+    console.log('hihi');
+}
+
+
 window.onclick = function(event) {
     if (!event.target.matches(['.dropdownBtn', '.dropdownArea'])) {
 

@@ -84,6 +84,8 @@
 .dropdownAlertText {
     font-family: "맑은 고딕";
     font-size: 1em;
+    text-decoration: none;
+    overflow-wrap: normal;
 }
 
 .showDropdown {

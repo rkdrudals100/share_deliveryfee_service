@@ -48,6 +48,7 @@ public class MemberController {
 
 
 
+
     @GetMapping("admin/hello")
     @ResponseBody
     public String admin(){
