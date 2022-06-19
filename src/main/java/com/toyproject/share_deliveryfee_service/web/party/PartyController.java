@@ -196,6 +196,11 @@ public class PartyController {
 
 
 
+
+
+
+
+
     @PostMapping("/partyDetails/{partyId}/PartyJoin")
     public String PartyJoin(@PathVariable Long partyId, @RequestBody Map<String, String> inputMap){
 
@@ -213,15 +218,37 @@ public class PartyController {
 
 
 
+
+
+
+
+
     @PostMapping("/partyDetails/{partyId}/partyStatusChange")
     @ResponseBody
-    public Map<String, String> changePartyStatus(@PathVariable Long partyId, @RequestBody Map<String, String> inputMap){
+    public Map<String, String> changePartyStatus(@PathVariable Long partyId, @RequestBody Map<String, String> inputMap, Principal principal){
 
         Map<String, String> returnMap = new HashMap<>();
 
         String getClickedBtn = inputMap.get("getClickedBtn");
+        Party party = partyRepository.findPartyById(partyId);
+        Member member = memberRepository.findByUsername(principal.getName());
 
-        returnMap.put("partyStatusDescription", partyService.updatePartyStatus(partyRepository.findPartyById(partyId), getClickedBtn).getDescription());
+        returnMap.put("partyStatusDescription", partyService.updatePartyStatus(party, getClickedBtn).getDescription());
+
+        partyMessageService.newMessage(party, member, TypeOfMessage.STATUSCHANGE,
+                null, 0, 0);
+
+        for (MemberParty eachMemberParty : party.getMemberParties()) {
+            if (eachMemberParty.getMember() != member) {
+                notificationLogService.newNotificationLog(eachMemberParty.getMember(),
+                        "'" + party.getTitle() + "' " + "파티 상태가 '" + getClickedBtn + "'으로 변경되었습니다.",
+                        "/partyDetails/" + party.getId());
+            } else {
+                notificationLogService.newNotificationLog(eachMemberParty.getMember(),
+                        "'" + party.getTitle() + "' " + "파티 상태를 '" + getClickedBtn + "'으로 변경하였습니다.",
+                        "/partyDetails/" + party.getId());
+            }
+        }
 
         return returnMap;
     }
