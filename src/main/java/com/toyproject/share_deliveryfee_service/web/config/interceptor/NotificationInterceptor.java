@@ -35,8 +35,8 @@ public class NotificationInterceptor implements HandlerInterceptor {
         if (modelAndView != null && !isRedirectView(modelAndView) && authentication != null && authentication.getPrincipal() instanceof UserDetails){
             log.warn("인터셉터 if 진입");
             Member member = memberRepository.findByUsername(((UserDetails) authentication.getPrincipal()).getUsername());
-            List<NotificationLog> notificationLogs = notificationLogRepository.findByMemberAndReadStatus(member, ReadStatus.NOTREAD);
-            modelAndView.addObject("notificationLogs", notificationLogs);
+            List<NotificationLog> notificationLogs = notificationLogRepository.findByMemberAndReadStatusOrderByCreateAtDesc(member, ReadStatus.NOTREAD);
+            modelAndView.addObject("navNotificationLogs", notificationLogs);
         }
 
     }

@@ -7,8 +7,6 @@ window.onload = function () {
 
     window.onclick = function(event) {
         if (!event.target.matches(['.dropdownBtn', '.dropdownArea'])) {
-            console.log("here2");
-            console.log(event.target);
 
             var dropdowns = document.getElementsByClassName("customDropdown");
             var i;
@@ -20,7 +18,6 @@ window.onload = function () {
             }
 
             if (event.target.matches('.sidebarItem')){
-                console.log('sidebarItemClicked');
                 sidebarItemClick(event.target);
             }
         }
@@ -40,11 +37,10 @@ function sidebarItemClick(clickedEle) {
         var item = sidebarItems[i];
         var content = document.getElementById(item.id.split('-')[0]);
         item.classList.remove('active');
-        console.log(item.id.split('-')[0]);
+
         if (content.id == clickedEle.id.split('-')[0]){
-            console.log("find");
             content.style.display = 'block';
-            console.log(content);
+            console.log('sidebarItemClicked ' + item.id.split('-')[0]);
         } else {
             content.style.display = 'none';
         }

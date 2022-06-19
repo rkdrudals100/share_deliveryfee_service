@@ -105,7 +105,7 @@
             </div>
             <div><hr class="dropdown-divider dropdownArea"></div>
             <div class="alertScroll">
-                <th:block th:each="notification: ${notificationLogs}">
+                <th:block th:each="notification: ${navNotificationLogs}">
                     <a class="dropdownItem" th:href="${notification.url}" onclick="notificationReadStatusChange()">
                         <span class="dropdownAlertText" th:text="${notification.contents}">알림 내용</span>
                         <br>

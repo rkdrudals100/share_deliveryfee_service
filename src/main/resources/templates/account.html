@@ -66,6 +66,7 @@
                         <div class="tabTitle">파티 관리</div>
                         <div class="titleCategory">진행중인 파티</div>
                             <div class="scrollInfoBox" style="height: 445px;">
+                                <div th:if="${ongoingParties.isEmpty()}">진행중인 파티가 없습니다.</div>
                                 <th:block th:each="party, index : ${ongoingParties}">
                                     <div th:object="${party}">
                                         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" th:id="partyNum + ${index.index}" style="height: 200px;">
@@ -98,6 +99,7 @@
 
                         <div class="titleCategory">만료된 파티</div>
                             <div class="scrollInfoBox" style="height: 445px; margin-bottom: 200px">
+                                <div th:if="${closedParties.isEmpty()}">만료된 파티가 없습니다.</div>
                                 <th:block th:each="party, index : ${closedParties}">
                                     <div th:object="${party}">
                                         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-2 shadow-sm position-relative" th:id="partyNum + ${index.index}" style="height: 200px;">
@@ -139,6 +141,14 @@
                     <div class="container">
                         <div class="tabTitle">알림</div>
                         <div class="scrollInfoBox">
+                            <th:block th:each="notification: ${notificationLogs}">
+                                <a class="dropdownItem" th:href="${notification.url}" onclick="notificationReadStatusChange()">
+                                    <span class="dropdownAlertText" th:text="${notification.contents}">알림 내용</span>
+                                    <br>
+                                    <span class="dropdownAlertText" th:text="'[' + ${notification.createAt} + ']'">2022-03-19T15:30</span>
+                                </a>
+                                <div><hr class="dropdown-divider dropdownArea"></div>
+                            </th:block>
                             <div class="userInfoValue2">예시 공지입니다. <br>[2022-03-19T15:30]</div>
                             <div><hr class="horizonLine"></div>
                             <div><a class="userInfoValue2" href="#">
@@ -210,6 +220,7 @@
         var selectedTab = [[${selectedTab}]];
         /*]]>*/
 
+        console.log(selectedTab + 'tab clicked');
         contentSetting(selectedTab);
     </script>
 </body>

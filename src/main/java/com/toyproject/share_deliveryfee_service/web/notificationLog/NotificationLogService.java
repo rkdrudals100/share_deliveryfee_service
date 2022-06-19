@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URI;
+
 @Service
 @Slf4j
 @Transactional
@@ -19,6 +21,8 @@ public class NotificationLogService {
     private final MemberRepository memberRepository;
     private final PartyRepository partyRepository;
     private final NotificationLogRepository notificationLogRepository;
+
+    String urlPrefix = "http://localhost:8080";
 
 
 
@@ -30,7 +34,7 @@ public class NotificationLogService {
         NotificationLog notificationLog = NotificationLog.builder()
                 .member(member)
                 .contents(contents)
-                .url(url)
+                .url(urlPrefix + url)
                 .readStatus(ReadStatus.NOTREAD)
                 .build();
 

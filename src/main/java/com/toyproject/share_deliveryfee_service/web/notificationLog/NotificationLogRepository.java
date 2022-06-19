@@ -9,5 +9,7 @@ import java.util.List;
 
 public interface NotificationLogRepository extends JpaRepository<NotificationLog, Long> {
 
-    List<NotificationLog> findByMemberAndReadStatus(Member member, ReadStatus readStatus);
+    List<NotificationLog> findByMemberAndReadStatusOrderByCreateAtDesc(Member member, ReadStatus readStatus);
+
+    List<NotificationLog> findByMemberOrderByCreateAtDesc(Member member);
 }

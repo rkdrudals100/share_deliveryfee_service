@@ -113,7 +113,7 @@ public class MemberController {
 
         log.info("'{}'을 member에 저장 완료", memberRegisterDto.getMemberId());
 
-        notificationLogService.newNotificationLog(saveMember, "가입이 완료되었습니다.", "http://localhost:8080/accountInfo/notification");
+        notificationLogService.newNotificationLog(saveMember, "가입이 완료되었습니다.", "/accountInfo/notification");
 
         return "redirect:/login"; // 임시 작동 테스트
     }
