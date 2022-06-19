@@ -32,4 +32,14 @@ public class NotificationLog extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+
+
+
+    // 필드 변경 메소드
+    public ReadStatus updateReadStatus(ReadStatus readStatus){
+        this.readStatus = readStatus;
+
+        return this.readStatus;
+    }
 }

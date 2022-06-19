@@ -46,4 +46,12 @@ public class NotificationLogService {
 
 
 
+
+    public ReadStatus changeReadStatus(NotificationLog notificationLog, ReadStatus readStatus){
+        return notificationLog.updateReadStatus(readStatus);
+    }
+
+
+
+
 }

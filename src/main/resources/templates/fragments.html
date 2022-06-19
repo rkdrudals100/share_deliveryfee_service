@@ -107,7 +107,7 @@
             <div class="alertScroll">
                 <div th:if="${navNotificationLogs.isEmpty()}">새로운 알림이 없습니다.</div>
                 <th:block th:each="notification: ${navNotificationLogs}">
-                    <a class="dropdownItem" th:href="${notification.url}" onclick="notificationReadStatusChange()">
+                    <a class="dropdownItem" th:id="'notification_' + ${notification.id}" th:name="${notification.url}" onclick="notificationReadStatusChange(this.id, this.name)">
                         <span class="dropdownAlertText" th:text="${notification.contents}">알림 내용</span>
                         <br>
                         <span class="dropdownAlertText" th:text="'[' + ${notification.createAt} + ']'">2022-03-19T15:30</span>

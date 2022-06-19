@@ -257,6 +257,20 @@ public class MemberController {
 
 
 
+
+
+    @PostMapping("/notificationAlert")
+    @ResponseBody
+    public Map<String, String> alertClicked(@RequestBody Map<String, Object> inputMap){
+
+        Map<String, String> returnMap = new HashMap<>();
+        String notificationLogId = (String)inputMap.get("getNotificationLogId");
+
+        notificationLogService.changeReadStatus(notificationLogRepository.findNotificationLogById(Long.parseLong(notificationLogId)), ReadStatus.READ);
+
+        return returnMap;
+    }
+
 //
 //    @GetMapping("/accountInfo/myParties")
 //    public String showNotification(){

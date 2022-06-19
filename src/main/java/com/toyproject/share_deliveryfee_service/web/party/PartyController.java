@@ -65,15 +65,6 @@ public class PartyController {
 
             return "makeParty";
         }
-        log.info(partyRegisterDto.getTitle());
-        log.info(partyRegisterDto.getPickUpLocation());
-        log.info(partyRegisterDto.getPickUpLocationDetail());
-        log.info(partyRegisterDto.getRestaurant());
-        log.info(partyRegisterDto.getIntroduction());
-        log.info(String.valueOf(partyRegisterDto.getTotalPrice()));
-        log.info(String.valueOf(partyRegisterDto.getMembersNum()));
-        log.info(partyRegisterDto.getLimitTime().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-        log.info(String.valueOf(partyRegisterDto.getDeliveryPlatform()));
 
         Party saveParty = partyService.createParty(principal.getName(), partyRegisterDto);
 
