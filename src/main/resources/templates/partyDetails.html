@@ -38,15 +38,21 @@
           <div class="d-inline-block" th:text="${party.pickUpLocation}">수령 장소</div><div class="d-inline-block" th:id="locationDetail" style="margin-left: 0.5em" th:text="${party.pickUpLocationDetail}"></div>
         </div>
         <div class="row mt-5">
-          <div class="col-6">
+          <div class="col-4">
             <strong><div class="my-2 text-muted">주문한 점포명</div></strong>
             <hr>
             <div th:text="${party.restaurant}">주문한 점포명</div>
           </div>
-          <div class="col-6">
+          <div class="col-4">
             <strong><div class="my-2 text-muted">배달 매체</div></strong>
             <hr>
             <div th:text="${party.deliveryPlatform.getName()}">배달 매체</div>
+          </div>
+          <div class="col-4">
+            <strong><span class="my-2 text-muted d-inline-block">파티 상태</span></strong>
+            <button th:if="${#authentication.getName().equals(party.organizer.username)}" class="partyStatusBtn" data-bs-toggle="modal" data-bs-target="#partyStatusChangeModal">변경하기</button>
+            <hr>
+            <div th:id="partyStatusText" th:text="${party.partyStatus.description}">파티 상태</div>
           </div>
         </div>
         <div class="row mt-5 bg-light">
@@ -141,6 +147,33 @@
       </div>
     </div>
   </div>
+
+
+
+  <div th:if="${#authentication.getName().equals(party.organizer.username)}" class="modal fade" id="partyStatusChangeModal" tabindex="-1" aria-labelledby="partyStatusChangeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="partyStatusChangeModalLabel">변경하기</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         <div>
+           <button id="partyStatusBtn_0" class="btn statusBtn btn-outline-primary" onclick="partyStatusBtnClicked('모집 중', 0)">모집 중</button>
+           <button id="partyStatusBtn_1" class="btn statusBtn btn-outline-primary" onclick="partyStatusBtnClicked('모집 완료', 1)">모집 완료</button>
+           <button id="partyStatusBtn_2" class="btn statusBtn btn-outline-primary" onclick="partyStatusBtnClicked('주문 완료', 2)">주문 완료</button>
+           <button id="partyStatusBtn_3" class="btn statusBtn btn-outline-primary" onclick="partyStatusBtnClicked('배달 완료', 3)">배달 완료</button>
+         </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="partyStatusChangeApply()">적용하기</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
   <!-- jQuery -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>

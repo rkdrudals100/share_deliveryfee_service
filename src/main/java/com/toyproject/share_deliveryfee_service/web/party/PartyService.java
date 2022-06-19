@@ -141,4 +141,24 @@ public class PartyService {
         return userRole;
     }
 
+
+
+
+    public PartyStatus updatePartyStatus(Party party, String partyDescription){
+
+        PartyStatus findPartyStatus = PartyStatus.RECRUITING;
+
+        if (partyDescription.equals("모집 중")){
+            findPartyStatus = PartyStatus.RECRUITING;
+        } else if (partyDescription.equals("모집 완료")){
+            findPartyStatus = PartyStatus.RECCOMPLETED;
+        } else if (partyDescription.equals("주문 완료")){
+            findPartyStatus = PartyStatus.ORDERED;
+        } else if (partyDescription.equals("배달 완료")){
+            findPartyStatus = PartyStatus.DELCOMPLETED;
+        }
+
+        return party.updatePartyStatus(findPartyStatus);
+    }
+
 }

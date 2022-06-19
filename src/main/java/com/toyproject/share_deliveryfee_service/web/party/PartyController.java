@@ -182,7 +182,7 @@ public class PartyController {
 
         // 신청자, 파티장 로그 작성
         notificationLogService.newNotificationLog(memberRepository.findByUsername(principal.getName()),
-                "'" + party.getTitle() + "' " + "파티에 가입신청을 하셨습니다.",
+                "'" + party.getTitle() + "' " + "파티에 가입신청이 완료되었습니다.",
                 "/accountInfo/notification");
 
         notificationLogService.newNotificationLog(memberRepository.findByUsername(party.getOrganizer().getUsername()),
@@ -208,6 +208,22 @@ public class PartyController {
         log.info(k);
         
         return "redirect:/partyDetails/" + partyId;
+    }
+
+
+
+
+    @PostMapping("/partyDetails/{partyId}/partyStatusChange")
+    @ResponseBody
+    public Map<String, String> changePartyStatus(@PathVariable Long partyId, @RequestBody Map<String, String> inputMap){
+
+        Map<String, String> returnMap = new HashMap<>();
+
+        String getClickedBtn = inputMap.get("getClickedBtn");
+
+        returnMap.put("partyStatusDescription", partyService.updatePartyStatus(partyRepository.findPartyById(partyId), getClickedBtn).getDescription());
+
+        return returnMap;
     }
 
 

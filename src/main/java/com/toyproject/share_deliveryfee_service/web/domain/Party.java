@@ -102,4 +102,10 @@ public class Party extends BaseEntity{
             this.membersNum = this.membersNum - 1;
         }
     }
+
+    public PartyStatus updatePartyStatus(PartyStatus partyStatus){
+        this.partyStatus = partyStatus;
+
+        return this.partyStatus;
+    }
 }
