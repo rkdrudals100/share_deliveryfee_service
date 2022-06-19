@@ -2,6 +2,7 @@ package com.toyproject.share_deliveryfee_service.web.party;
 
 import com.toyproject.share_deliveryfee_service.web.domain.*;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
+import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogService;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;
 import com.toyproject.share_deliveryfee_service.web.party.validator.PartyRegisterValidator;
 import com.toyproject.share_deliveryfee_service.web.partyMessage.PartyMessageService;
@@ -22,14 +23,17 @@ import java.util.*;
 @RequiredArgsConstructor
 @Slf4j
 public class PartyController {
+    
+    private final PartyRegisterValidator partyRegisterValidator;
 
     private final PartyRepository partyRepository;
-    private final MemberPartyRepository memberPartyRepository;
     private final MemberRepository memberRepository;
-    private final PartyRegisterValidator partyRegisterValidator;
-    private final PartyService partyService;
+    private final MemberPartyRepository memberPartyRepository;
     private final PartyMessageRepository partyMessageRepository;
+
+    private final PartyService partyService;
     private final PartyMessageService partyMessageService;
+    private final NotificationLogService notificationLogService;
 
 
 
@@ -75,7 +79,11 @@ public class PartyController {
 
         log.info("생성된 파티를 '{}'번으로 저장 완료", saveParty.getId());
 
-        return "index";
+        notificationLogService.newNotificationLog(memberRepository.findByUsername(principal.getName()),
+                "'" + saveParty.getTitle() + "' " + "파티가 생성되었습니다.",
+                "/partyDetails/" + saveParty.getId());
+
+        return "redirect:/";
     }
 
 
@@ -175,11 +183,22 @@ public class PartyController {
 
         Party party = partyRepository.findById(partyId).get();
         Member member = memberRepository.findByUsername(principal.getName());
-        // 결제 검증 코드
-        // 파티장에게 메시지 날림
+        // 결제 검증 코드 추가 요망
+        
+        // 파티장에게 파티메시지 전송
         partyMessageService.newMessage(party, member, TypeOfMessage.PARTYAPPLICATION,
                 messageBody, serviceFee, deliveryFee);
-        
+
+        // 신청자, 파티장 로그 작성
+        notificationLogService.newNotificationLog(memberRepository.findByUsername(principal.getName()),
+                "'" + party.getTitle() + "' " + "파티에 가입신청을 하셨습니다.",
+                "/accountInfo/notification");
+
+        notificationLogService.newNotificationLog(memberRepository.findByUsername(party.getOrganizer().getUsername()),
+                "'" + principal.getName() + "' " + "님이 '" + party.getTitle() + "' 파티에 가입을 신청하셨습니다.",
+                "/partyDetails/" + party.getId());
+
+        // 리턴값 returnMap으로 변경 요망
         return "redirect:/partyDetails/" + partyId;
     }
 
@@ -196,8 +215,7 @@ public class PartyController {
 
         //k가 overcrowding일 시 bindingresult 출력
         log.info(k);
-
-        // 성공 파티메시지 출력
+        
         return "redirect:/partyDetails/" + partyId;
     }
 

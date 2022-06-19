@@ -246,6 +246,7 @@ public class MemberController {
         }
 
         model.addAttribute("member", loginMember);
+        model.addAttribute("notificationLogs", notificationLogRepository.findByMemberOrderByCreateAtDesc(loginMember));
 
         List<Object> myParties = memberService.DivideIntoClosedAndOngoingParties(memberPartyRepository.findByMember(loginMember));
         model.addAttribute("ongoingParties", (List<Party>) myParties.get(0));

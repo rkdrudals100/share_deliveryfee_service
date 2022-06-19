@@ -105,6 +105,7 @@
             </div>
             <div><hr class="dropdown-divider dropdownArea"></div>
             <div class="alertScroll">
+                <div th:if="${navNotificationLogs.isEmpty()}">새로운 알림이 없습니다.</div>
                 <th:block th:each="notification: ${navNotificationLogs}">
                     <a class="dropdownItem" th:href="${notification.url}" onclick="notificationReadStatusChange()">
                         <span class="dropdownAlertText" th:text="${notification.contents}">알림 내용</span>
@@ -113,21 +114,6 @@
                     </a>
                     <div><hr class="dropdown-divider dropdownArea"></div>
                 </th:block>
-                <div><a class="dropdownItem dropdownAlertText" href="#">
-                    예시 공지입니다.
-                    <br>
-                    [2022-03-19T15:30]
-                </a></div>
-                <div><hr class="dropdown-divider dropdownArea"></div>
-                <div><a class="dropdownItem dropdownAlertText" href="#">'kkkk'님의 파티에 참가하셨습니다. <br>[2022-03-19T15:30]</a></div>
-                <div><hr class="dropdown-divider dropdownArea"></div>
-                <div><a class="dropdownItem dropdownAlertText" href="#">'주문이 완료되었습니다.' <br>[2022-03-19T15:30]</a></div>
-                <div><hr class="dropdown-divider dropdownArea"></div>
-                <div><a class="dropdownItem dropdownAlertText" href="#">'kkkk'님이 파티에서 회원님을 추방하였습니다. <br>[2022-03-19T15:30]</a></div>
-                <div><hr class="dropdown-divider dropdownArea"></div>
-                <div><a class="dropdownItem dropdownAlertText" href="#">'kkkk'님이 파티에서 회원님을 추방하였습니다. dddddddddddddd ddddddddd adfasffddddddddddd dffffffffffff dfdfdfdfdfdfdfdfdfdfdfdfdfdfdf dfdff <br>[2022-03-19T15:30]</a></div>
-                <div><hr class="dropdown-divider dropdownArea"></div>
-                <div><a class="dropdownItem dropdownAlertText" href="#">'kkkk'님이 파티에서 회원님을 추방하였습니다. dddddddddddddd ddddddddd adfasf <br>[2022-03-19T15:30]</a></div>
             </div>
         </div>
     </nav>
