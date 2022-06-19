@@ -113,7 +113,7 @@ public class MemberController {
 
         log.info("'{}'을 member에 저장 완료", memberRegisterDto.getMemberId());
 
-        notificationLogService.newNotificationLog(saveMember, "가입이 완료되었습니다.", "/accountInfo/notification");
+        notificationLogService.newNotificationLog(saveMember, "가입이 완료되었습니다.", "/");
 
         return "redirect:/login"; // 임시 작동 테스트
     }
@@ -259,17 +259,6 @@ public class MemberController {
 
 
 
-    @PostMapping("/notificationAlert")
-    @ResponseBody
-    public Map<String, String> alertClicked(@RequestBody Map<String, Object> inputMap){
-
-        Map<String, String> returnMap = new HashMap<>();
-        String notificationLogId = (String)inputMap.get("getNotificationLogId");
-
-        notificationLogService.changeReadStatus(notificationLogRepository.findNotificationLogById(Long.parseLong(notificationLogId)), ReadStatus.READ);
-
-        return returnMap;
-    }
 
 //
 //    @GetMapping("/accountInfo/myParties")

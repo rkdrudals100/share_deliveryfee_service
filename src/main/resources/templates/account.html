@@ -142,14 +142,18 @@
                         <div class="tabTitle">알림</div>
                         <div class="scrollInfoBox">
                             <th:block th:each="notification: ${notificationLogs}">
-                                <a class="dropdownItem" th:href="${notification.url}" onclick="notificationReadStatusChange()">
+                                <a class="dropdownItem" th:id="'notification_' + ${notification.id}" th:name="${notification.url}" onclick="notificationReadStatusChange(this.id, this.name)">
                                     <span class="dropdownAlertText" th:text="${notification.contents}">알림 내용</span>
                                     <br>
-                                    <span class="dropdownAlertText" th:text="'[' + ${notification.createAt} + ']'">2022-03-19T15:30</span>
+                                    <span class="dropdownAlertText d-inline-block" th:text="'[' + ${notification.createAt} + ']'">2022-03-19T15:30</span>
+                                    <span th:if="${notification.readStatus.toString().equals('READ')}" class="readStatus d-inline-block">읽음</span>
                                 </a>
                                 <div><hr class="dropdown-divider dropdownArea"></div>
                             </th:block>
                         </div>
+                        <form th:action="@{/notificationReadStatusAllChange}" th:method="post">
+                            <button type="submit" class="btn btn-primary readStatusBtn">전부 읽음으로 표시</button>
+                        </form>
                     </div>
                 </div>
 

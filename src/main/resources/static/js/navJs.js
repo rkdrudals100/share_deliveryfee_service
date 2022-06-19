@@ -55,6 +55,9 @@ function notificationReadStatusChange(notificationLogId, url) {
 }
 
 
+
+
+
 window.onclick = function(event) {
     if (!event.target.matches(['.dropdownBtn', '.dropdownArea'])) {
 

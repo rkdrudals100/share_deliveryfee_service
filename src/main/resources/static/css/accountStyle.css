@@ -102,3 +102,13 @@
     text-decoration: none;
     background-color: #0d6efd;
 }
+
+.readStatus{
+    margin-left: 78%;
+}
+
+.readStatusBtn{
+    margin-left: calc(50% + 310px);
+    margin-top: 20px;
+}
+
