@@ -22,8 +22,8 @@ public class NotificationLogService {
     private final PartyRepository partyRepository;
     private final NotificationLogRepository notificationLogRepository;
 
-    String urlPrefix = "http://localhost:8080";
-
+//    String urlPrefix = "http://localhost:8080";
+    String urlPrefix = "http://3.38.39.166:8080";
 
 
 

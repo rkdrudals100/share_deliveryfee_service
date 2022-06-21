@@ -3,18 +3,23 @@ package com.toyproject.share_deliveryfee_service.web.sms;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
+
 
 //2022-04-20 강경민
 //SMS 전송 구현
 @Slf4j
+@RequiredArgsConstructor
+@Profile("env")
 public class SendSMSTwilio {
 
     public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
     public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
 
     // 전송 함수
-    public static int sendSMS (String countryNum, String phoneNum) {
+    public static int sendSMS(String countryNum, String phoneNum) {
         // ACCOUNT_SID, AUTH_TOKEN 정보
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
