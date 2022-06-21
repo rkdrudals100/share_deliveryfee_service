@@ -1,17 +1,9 @@
 
-window.onload = function () {
-
-}
-
-
-
-
-
-
 
 window.addEventListener('scroll', function (){
 
     let value = window.scrollY;
+    console.log(value);
     window.scrollTo({left: 0, behavior: "instant"});
 
     if (value > 400){
@@ -32,7 +24,7 @@ window.addEventListener('scroll', function (){
         document.getElementById("title2Sub1").style.animation = "rightSlideAppear 1s ease-out forwards";
     }
 
-    if (value < 800 || value > 1600){
+    if (value < 800 || value > 1900){
         document.getElementById("searchPartyImage").style.animation = "leftSlideDisappear2 1s ease-out forwards";
         document.getElementById("title3").style.animation = "rightSlideDisappear 1s ease-out forwards";
         document.getElementById("title3Sub1").style.animation = "rightSlideDisappear 1s ease-out forwards";
