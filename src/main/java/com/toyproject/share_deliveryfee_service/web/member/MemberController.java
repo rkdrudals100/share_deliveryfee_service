@@ -1,6 +1,5 @@
 package com.toyproject.share_deliveryfee_service.web.member;
 
-import com.toyproject.share_deliveryfee_service.web.config.ConfigUtil;
 import com.toyproject.share_deliveryfee_service.web.domain.*;
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberDupCheckIdDto;
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberRegisterDto;
@@ -50,7 +49,6 @@ public class MemberController {
 
 
 
-
     @GetMapping("admin/hello")
     @ResponseBody
     public String admin(){
@@ -65,7 +63,10 @@ public class MemberController {
         return "login";
     }
 
-
+//    @PostMapping("/login")
+//    public String dologin(Model model){
+//        return "/";
+//    }
 
 
 
@@ -181,7 +182,7 @@ public class MemberController {
         // jwt를 만들어서 유저에게 전송, 임시로 휴대폰 번호 및 인증번호 전송(jwt 공부 후 추가)
         Map<String, String> jwtToken = new HashMap<>();
         jwtToken.put("putPhoneNum", (String) inputMap.get("getPhoneNum"));
-//        jwtToken.put("authenticationNum", String.valueOf(authNum));
+        jwtToken.put("authenticationNum", String.valueOf(authNum));
 
         String phoneNumPlusAuthNum = (String)inputMap.get("getPhoneNum") + "_" + authNum;
         log.info(bCryptPasswordEncoder.encode(phoneNumPlusAuthNum));

@@ -35,9 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### 환경변수 및 설정파일 ###
-env.properties
-
-### 데이터베이스 설정 파일 ###
-application.yml
