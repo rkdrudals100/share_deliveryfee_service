@@ -3,6 +3,7 @@ package com.toyproject.share_deliveryfee_service.web.member;
 import com.toyproject.share_deliveryfee_service.web.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,8 @@ import java.util.Map;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+
+
 
 
 

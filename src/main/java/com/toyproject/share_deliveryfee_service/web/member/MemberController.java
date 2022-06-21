@@ -13,6 +13,7 @@ import com.toyproject.share_deliveryfee_service.web.sms.SendSMSTwilio;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,10 +64,6 @@ public class MemberController {
         return "login";
     }
 
-//    @PostMapping("/login")
-//    public String dologin(Model model){
-//        return "/";
-//    }
 
 
 
@@ -257,13 +254,4 @@ public class MemberController {
 
 
 
-
-
-
-//
-//    @GetMapping("/accountInfo/myParties")
-//    public String showNotification(){
-//
-//        return "account";
-//    }
 }

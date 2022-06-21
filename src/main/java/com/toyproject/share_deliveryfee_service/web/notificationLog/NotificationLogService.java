@@ -1,5 +1,6 @@
 package com.toyproject.share_deliveryfee_service.web.notificationLog;
 
+import com.toyproject.share_deliveryfee_service.web.config.ConfigUtil;
 import com.toyproject.share_deliveryfee_service.web.domain.Member;
 import com.toyproject.share_deliveryfee_service.web.domain.NotificationLog;
 import com.toyproject.share_deliveryfee_service.web.domain.ReadStatus;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.net.URI;
 
 @Service
@@ -22,10 +24,25 @@ public class NotificationLogService {
     private final PartyRepository partyRepository;
     private final NotificationLogRepository notificationLogRepository;
 
-    String urlPrefix = "http://localhost:8080";
+    private final ConfigUtil configUtil;
+
+    private String urlPrefix;
 
 
 
+
+    @PostConstruct
+    public void init(){
+        String databaseProfile = configUtil.getProperty("spring.config.activate.on-profile");
+
+        if (databaseProfile !=null && databaseProfile.equals("prod")){
+            this.urlPrefix = "http://3.38.39.166:8080";
+        } else {
+            this.urlPrefix = "http://localhost:8080";
+        }
+
+        log.warn(databaseProfile);
+    }
 
 
 
