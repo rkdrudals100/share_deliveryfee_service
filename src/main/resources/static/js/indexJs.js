@@ -1,7 +1,18 @@
+
+window.onload = function () {
+
+}
+
+
+
+
+
+
+
 window.addEventListener('scroll', function (){
 
     let value = window.scrollY;
-    console.log(value);
+    window.scrollTo({left: 0, behavior: "instant"});
 
     if (value > 400){
         document.getElementById("word").style.animation = "disappear 0.5s ease-out forwards";
