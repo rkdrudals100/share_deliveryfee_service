@@ -321,6 +321,22 @@ body{
     opacity: 0;
 }
 
+.downArrow{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
+
+.downArrow2{
+    position: absolute;
+
+}
+
+.downArrow3{
+    position: absolute;
+
+}
+
 footer{
     position: relative;
     height: 250px;

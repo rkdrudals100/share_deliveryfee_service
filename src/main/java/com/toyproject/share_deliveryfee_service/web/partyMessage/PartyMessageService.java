@@ -5,6 +5,7 @@ import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogService;
 import com.toyproject.share_deliveryfee_service.web.party.PartyMessageRepository;
 import com.toyproject.share_deliveryfee_service.web.party.PartyRepository;
+import com.toyproject.share_deliveryfee_service.web.party.PartyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class PartyMessageService {
     private final PartyRepository partyRepository;
     private final PartyMessageRepository partyMessageRepository;
 
+    private final PartyService partyService;
     private final NotificationLogService notificationLogService;
 
 
@@ -84,6 +86,7 @@ public class PartyMessageService {
 
         partyMessage.updateProcessingStatus(ProcessingStatus.PROCESSED);
 
+        // 파티장이 참가 요청 수락 시
         if (choice.equals("yes")){
             if (party.getMembersNum() < party.getMaxMemberNum()) {
                 MemberParty memberParty = MemberParty.builder()
@@ -106,6 +109,20 @@ public class PartyMessageService {
                                 "'" + member.getUsername() + "'님의 '" + party.getTitle() + "' " + "파티가입요청이 수락되었습니다.",
                                 "/partyDetails/" + party.getId());
                     }
+                }
+
+                // 파티가 꽉차면 '모집완료' 로 상태 변경
+                if (!(party.getMaxMemberNum() > party.getMembersNum())){
+                    partyService.updatePartyStatus(party, "모집 완료");
+
+                    newMessage(party, member, TypeOfMessage.STATUSCHANGE, null, 0, 0);
+
+                    for (MemberParty eachMemberParty : party.getMemberParties()) {
+                        notificationLogService.newNotificationLog(eachMemberParty.getMember(),
+                                "'" + party.getTitle() + "' " + "파티 상태가 '모집 완료'으로 변경되었습니다.",
+                                "/partyDetails/" + party.getId());
+                    }
+
                 }
             } else {
                 log.info("파티 인원 초과");

@@ -211,6 +211,8 @@ public class PartyController {
 
         //k가 overcrowding일 시 bindingresult 출력
         log.info(k);
+
+
         
         return "redirect:/partyDetails/" + partyId;
     }
