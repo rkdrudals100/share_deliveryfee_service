@@ -110,7 +110,7 @@ public class MemberController {
 
         log.info("'{}'을 member에 저장 완료", memberRegisterDto.getMemberId());
 
-        notificationLogService.newNotificationLog(saveMember, "가입이 완료되었습니다.", "/");
+        notificationLogService.newNotificationLog(saveMember, "가입이 완료되었습니다.", "/accountInfo/profile");
 
         return "redirect:/login"; // 임시 작동 테스트
     }
@@ -179,7 +179,7 @@ public class MemberController {
         // jwt를 만들어서 유저에게 전송, 임시로 휴대폰 번호 및 인증번호 전송(jwt 공부 후 추가)
         Map<String, String> jwtToken = new HashMap<>();
         jwtToken.put("putPhoneNum", (String) inputMap.get("getPhoneNum"));
-        jwtToken.put("authenticationNum", String.valueOf(authNum));
+//        jwtToken.put("authenticationNum", String.valueOf(authNum));
 
         String phoneNumPlusAuthNum = (String)inputMap.get("getPhoneNum") + "_" + authNum;
         log.info(bCryptPasswordEncoder.encode(phoneNumPlusAuthNum));
