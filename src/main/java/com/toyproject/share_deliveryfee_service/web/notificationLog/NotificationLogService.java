@@ -31,6 +31,8 @@ public class NotificationLogService {
 
 
 
+
+
     @PostConstruct
     public void init(){
         String databaseProfile = configUtil.getProperty("spring.config.activate.on-profile");
@@ -43,6 +45,8 @@ public class NotificationLogService {
 
         log.warn(databaseProfile);
     }
+
+
 
 
 
@@ -59,6 +63,7 @@ public class NotificationLogService {
 
 //        member.addNotificationLogs(notificationLog);
     }
+
 
 
 
