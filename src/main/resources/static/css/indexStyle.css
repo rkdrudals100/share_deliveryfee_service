@@ -321,20 +321,36 @@ body{
     opacity: 0;
 }
 
-.downArrow{
+.downArrowContainer{
+    position: relative;
+    top: 60px;
+}
+
+.downArrows{
     position: absolute;
     width: 100px;
-    height: 100px;
+    height: 35px;
+    left: calc(50vw - 50px);
+    opacity: 0;
+    z-index: 1;
+}
+
+.downArrow1{
+    top: 0px;
+    animation: downArrowAnimation 10s ease-out forwards infinite;
+    animation-delay: 5s;
 }
 
 .downArrow2{
-    position: absolute;
-
+    top: 25px;
+    animation: downArrowAnimation 10s ease-out forwards infinite;
+    animation-delay: 5.2s;
 }
 
 .downArrow3{
-    position: absolute;
-
+    top: 50px;
+    animation: downArrowAnimation 10s ease-out forwards infinite;
+    animation-delay: 5.4s;
 }
 
 footer{
@@ -423,6 +439,21 @@ footer{
     }
     to{
         left: calc(50vw + 500px);
+        opacity: 0;
+    }
+}
+
+@keyframes downArrowAnimation {
+    from{
+        opacity: 0;
+    }
+    5%{
+        opacity: 1;
+    }
+    10%{
+        opacity: 0;
+    }
+    to{
         opacity: 0;
     }
 }

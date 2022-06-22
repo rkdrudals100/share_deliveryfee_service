@@ -22,23 +22,18 @@
       <button class="btn btn-lg btn-primary serviceStartBtn" id="serviceStartBtn" th:onclick="|location.href = '@{/searchParty}'|" type="button">서비스 시작하기</button>
     </section>
 
-<!--  <div style="position: relative;">-->
-<!--    <div class="downArrow">-->
-<!--      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-caret-down-fill downArrow" viewBox="0 0 16 16">-->
-<!--        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>-->
-<!--      </svg>-->
-<!--    </div>-->
-<!--    <div class="downArrow">-->
-<!--      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-caret-down-fill downArrow" viewBox="0 0 16 16">-->
-<!--        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>-->
-<!--      </svg>-->
-<!--    </div>-->
-<!--    <div class="downArrow">-->
-<!--      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">-->
-<!--        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>-->
-<!--      </svg>-->
-<!--    </div>-->
-  </div>
+
+    <div style="position: absolute">
+      <button class="downArrowContainer" id="downArrows1" onclick="downArrowActive(1)">
+        <img src="/img/downArrow.png" class="downArrows downArrow1">
+        <img src="/img/downArrow.png" class="downArrows downArrow2">
+        <img src="/img/downArrow.png" class="downArrows downArrow3">
+      </button>
+    </div>
+
+
+
+
 
 
 
@@ -70,6 +65,15 @@
     </section>
 
 
+    <div style="position: absolute">
+      <button class="downArrowContainer" id="downArrows2" onclick="downArrowActive(2)">
+        <img src="/img/downArrow.png" class="downArrows downArrow1">
+        <img src="/img/downArrow.png" class="downArrows downArrow2">
+        <img src="/img/downArrow.png" class="downArrows downArrow3">
+      </button>
+    </div>
+
+
 
 
 
@@ -90,6 +94,15 @@
       </div>
       <button class="btn btn-lg btn-primary serviceStartBtn" id="serviceStartBtn2" th:onclick="|location.href = '@{/searchParty}'|" type="button" style="top: 520px">서비스 시작하기</button>
     </section>
+
+
+    <div style="position: absolute">
+      <button class="downArrowContainer" id="downArrows3" onclick="downArrowActive(3)">
+        <img src="/img/downArrow.png" class="downArrows downArrow1">
+        <img src="/img/downArrow.png" class="downArrows downArrow2">
+        <img src="/img/downArrow.png" class="downArrows downArrow3">
+      </button>
+    </div>
 
 
 
@@ -156,6 +169,12 @@
       <button class="btn btn-lg btn-primary makePartyBtn" id="makePartyBtn" th:onclick="|location.href = '@{/makeParty}'|" type="button" style="top: 450px">파티 모집하기</button>
     </section>
   </div>
+
+
+
+
+
+
 
 
   <footer>

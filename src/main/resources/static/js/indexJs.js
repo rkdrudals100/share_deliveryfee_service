@@ -1,11 +1,19 @@
+window.onpageshow = function (){
+    setTimeout(function() {
+        window.scrollTo({left: 0, behavior: "instant"});
+    }, 0);
+}
+
+
 
 
 window.addEventListener('scroll', function (){
 
     let value = window.scrollY;
     console.log(value);
-    window.scrollTo({left: 0, behavior: "instant"});
+    // window.scrollTo({left: 0, behavior: "instant"});
 
+    // section animation
     if (value > 400){
         document.getElementById("word").style.animation = "disappear 0.5s ease-out forwards";
         document.getElementById("serviceStartBtn").style.animation = "disappear 0.5s ease-out forwards";
@@ -58,4 +66,47 @@ window.addEventListener('scroll', function (){
         document.getElementById("makePartyBtn").style.animationDelay = "1.5s";
     }
 
+    // downArrow 화살표 없애기
+    if (value > 100){
+        document.getElementById("downArrows1").disabled = true;
+        document.getElementById("downArrows1").style.display = "none";
+    }
+    if (value > 800){
+        document.getElementById("downArrows2").disabled = true;
+        document.getElementById("downArrows2").style.display = "none";
+    }
+    if (value > 1500){
+        document.getElementById("downArrows3").disabled = true;
+        document.getElementById("downArrows3").style.display = "none";
+    }
 })
+
+
+
+
+function downArrowActive(sectionNum) {
+    if (sectionNum == 1){
+        window.scrollTo({left: 0, top: 700});
+    } else if (sectionNum == 2){
+        window.scrollTo({left: 0, top: 1400});
+    } else if (sectionNum == 3){
+        window.scrollTo({left: 0, top: 2100});
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
