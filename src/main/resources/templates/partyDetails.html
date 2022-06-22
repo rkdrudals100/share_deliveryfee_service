@@ -77,7 +77,7 @@
         <div class="text-center">
           <button th:if="${userRoleAtParty == 'notJoined' and (party.maxMemberNum > party.membersNum)}" class="btn btn-primary btn-lg mt-5" type="button" data-bs-toggle="modal" data-bs-target="#joinModal">가입하기</button>
           <button th:unless="${userRoleAtParty == 'notJoined' and (party.maxMemberNum > party.membersNum)}" class="btn btn-secondary btn-lg mt-5" type="button" data-bs-toggle="modal" data-bs-target="#joinModal" disabled>가입하기</button>
-          <div style="color: red; margin-top: 1em">파티 정원이 초과되어 가입하실 수 없습니다.</div>
+          <div th:if="${userRoleAtParty == 'notJoined' and !(party.maxMemberNum > party.membersNum)}" style="color: red; margin-top: 1em">파티 정원이 초과되어 가입하실 수 없습니다.</div>
         </div>
       </div>
     </div>
