@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.servlet.http.Part;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,11 @@ public interface PartyRepository extends JpaRepository<Party, Long> {
 
 
     List<Party> findByMemberParties(MemberParty memberParty);
+
+
+
+
+    List<Party> findByLimitTimeBeforeAndPartyStatus(LocalDateTime limitTime, PartyStatus partyStatus);
 
 
 
