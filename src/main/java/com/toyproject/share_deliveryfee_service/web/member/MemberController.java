@@ -59,7 +59,7 @@ public class MemberController {
 
 
 
-    @GetMapping("/login")
+    @GetMapping("/signIn")
     public String login(Model model, Principal principal){
         return "login";
     }
