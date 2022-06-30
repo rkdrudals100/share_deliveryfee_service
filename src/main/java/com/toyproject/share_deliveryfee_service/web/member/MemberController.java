@@ -59,8 +59,11 @@ public class MemberController {
 
 
 
-    @GetMapping("/signIn")
+    @GetMapping("/login")
     public String login(Model model, Principal principal){
+        if(principal != null) {
+            return "redirect:/";
+        }
         return "login";
     }
 

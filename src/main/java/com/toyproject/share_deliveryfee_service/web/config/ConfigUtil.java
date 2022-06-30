@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 @Configuration
 @RequiredArgsConstructor
 @PropertySource("classpath:application.yml")
+@PropertySource("classpath:env.properties")
 public class ConfigUtil {
 
     private final Environment environment;

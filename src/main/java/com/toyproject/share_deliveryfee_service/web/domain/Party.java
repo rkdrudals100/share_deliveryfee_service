@@ -32,6 +32,10 @@ public class Party extends BaseEntity{
 
     private String pickUpLocationDetail;
 
+    private Double latitude;
+
+    private Double longitude;
+
     private String restaurant;
 
     private int totalPrice;

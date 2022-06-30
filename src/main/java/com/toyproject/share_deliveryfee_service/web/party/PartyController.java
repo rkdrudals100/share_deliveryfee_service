@@ -1,11 +1,17 @@
 package com.toyproject.share_deliveryfee_service.web.party;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.toyproject.share_deliveryfee_service.web.config.ConfigUtil;
 import com.toyproject.share_deliveryfee_service.web.domain.*;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogService;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;
 import com.toyproject.share_deliveryfee_service.web.party.validator.PartyRegisterValidator;
 import com.toyproject.share_deliveryfee_service.web.partyMessage.PartyMessageService;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -15,6 +21,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -35,6 +43,8 @@ public class PartyController {
     private final PartyMessageService partyMessageService;
     private final NotificationLogService notificationLogService;
 
+    private final ConfigUtil configUtil;
+
 
 
 
@@ -50,6 +60,12 @@ public class PartyController {
 
 
 
+    @GetMapping("/test")
+    public String test(){
+//        partyService.sortByDistanceFromUser();
+
+        return "index";
+    }
 
 
 
@@ -110,8 +126,13 @@ public class PartyController {
     public String searchParty(Model model){
 
         List<Party> parties = partyRepository.findByPartyStatus(PartyStatus.RECRUITING, Sort.by(Sort.Direction.ASC, "pickUpLocation"));
+//        List<Object> partiesPlusD = new ArrayList();
+//        partiesPlusD.add(parties.get(0));
 
+        // 반지름 정렬 메소드 추가
         model.addAttribute("parties", parties);
+        
+//        log.warn(String.format("%.2f", partyService.distanceInKilometerByHaversine(36.369649, 127.380346, 36.369653,127.382205)));
 
         return "searchParty";
     }

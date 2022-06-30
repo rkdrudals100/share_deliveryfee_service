@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
-                .antMatchers("/fragments", "/signIn", "/signUp/**", "/index", "/test", "/").permitAll()
+                .antMatchers("/fragments", "/login", "/signUp/**", "/index", "/test", "/").permitAll()
                 .anyRequest().hasRole("USER");
 
 
@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.addFilter(new JwtAuthorizationFilter(authenticationManager(), memberRepository));
 
         http.formLogin()
-                .loginPage("/signIn")
+                .loginPage("/login")
                 .loginProcessingUrl("/")
                 .defaultSuccessUrl("/");
     }

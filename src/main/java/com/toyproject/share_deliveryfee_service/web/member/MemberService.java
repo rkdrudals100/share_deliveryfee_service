@@ -35,6 +35,9 @@ public class MemberService {
                 .password(password)
                 .email(email)
                 .phoneNum(phoneNum)
+                .baseLocation(null)
+                .latitude(0.0)
+                .longitude(0.0)
                 .memberRole(memberRole)
                 .memberRoles(memberRoles)
                 .build();

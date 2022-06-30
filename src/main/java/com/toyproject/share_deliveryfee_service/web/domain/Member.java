@@ -30,6 +30,12 @@ public class Member extends BaseEntity{
     @Column(unique = true)
     private String phoneNum;
 
+    private String baseLocation;
+
+    private Double latitude;
+
+    private Double longitude;
+
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
     private String memberRoles;

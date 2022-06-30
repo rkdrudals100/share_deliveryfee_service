@@ -1,8 +1,12 @@
 package com.toyproject.share_deliveryfee_service.web.party;
 
+import com.toyproject.share_deliveryfee_service.web.config.ConfigUtil;
 import com.toyproject.share_deliveryfee_service.web.domain.*;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -23,6 +27,8 @@ public class PartyService {
     private final PartyRepository partyRepository;
     private final MemberRepository memberRepository;
     private final MemberPartyRepository memberPartyRepository;
+
+    private final ConfigUtil configUtil;
 
     
     // 2022-05-19 강경민
@@ -47,6 +53,8 @@ public class PartyService {
                 .title(partyRegisterDto.getTitle())
                 .pickUpLocation(partyRegisterDto.getPickUpLocation())
                 .pickUpLocationDetail(partyRegisterDto.getPickUpLocationDetail())
+                .latitude(0.0)
+                .longitude(0.0)
                 .restaurant(partyRegisterDto.getRestaurant())
                 .introduction(partyRegisterDto.getIntroduction())
                 .totalPrice(partyRegisterDto.getTotalPrice())
@@ -162,5 +170,44 @@ public class PartyService {
 
         return party.updatePartyStatus(findPartyStatus);
     }
+
+
+
+
+
+    public double distanceInKilometerByHaversine(double lat1, double lon1, double lat2, double lon2) {
+
+        double R = 6372.8; // 지구 반지름(km)
+
+        double deltaLatitude = Math.toRadians(lat2 - lat1);
+        double deltaLongitude = Math.toRadians(lon2 - lon1);
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+
+        double a = Math.pow(Math.sin(deltaLatitude / 2),2) + Math.pow(Math.sin(deltaLongitude / 2),2) * Math.cos(lat1) * Math.cos(lat2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+
+        return R * c;
+    }
+
+
+
+
+
+
+    public List<Party> sortByDistanceFromUser(List<Party> parties){
+        String restAPI_key = configUtil.getProperty("restAPI_key");
+        String url = "https://dapi.kakao.com/v2/local/search/address.json?query=";
+        String parameter = "전북 삼성동 100";
+
+        HttpResponse<JsonNode> response = Unirest.get(url + parameter)
+                .header("Authorization", "KakaoAK " + restAPI_key)
+                .asJson();
+
+        log.warn(response.getBody().toString());
+
+        return null;
+    }
+
 
 }
