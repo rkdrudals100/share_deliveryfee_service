@@ -2,6 +2,7 @@ package com.toyproject.share_deliveryfee_service.web.party.validator;
 
 import com.toyproject.share_deliveryfee_service.web.domain.Party;
 import com.toyproject.share_deliveryfee_service.web.party.PartyRepository;
+import com.toyproject.share_deliveryfee_service.web.party.PartyService;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,8 @@ import java.time.format.DateTimeFormatter;
 public class PartyRegisterValidator implements Validator {
 
     private final PartyRepository partyRepository;
+    
+    private final PartyService partyService;
 
 
     @Override
@@ -35,6 +38,8 @@ public class PartyRegisterValidator implements Validator {
 
         if (!StringUtils.hasText(partyRegisterDto.getPickUpLocation())) {
             errors.rejectValue("pickUpLocation", "required");
+        } else if (partyService.getLatitudeAndLongitudeFromKakaoMap(partyRegisterDto.getPickUpLocation()) == null) {
+            errors.rejectValue("pickUpLocation", "incorrect");
         }
 
         if (!StringUtils.hasText(partyRegisterDto.getPickUpLocationDetail())) {

@@ -1,8 +1,13 @@
 package com.toyproject.share_deliveryfee_service.web.party;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.share_deliveryfee_service.web.config.ConfigUtil;
 import com.toyproject.share_deliveryfee_service.web.domain.*;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
+import com.toyproject.share_deliveryfee_service.web.party.form.Documents;
+import com.toyproject.share_deliveryfee_service.web.party.form.KakaoGeoRes;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
@@ -10,13 +15,13 @@ import kong.unirest.Unirest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -49,12 +54,14 @@ public class PartyService {
             getDeliveryPlatform = DeliveryPlatform.BM;
         }
 
+        Map<String, Double> latitudeAndLongitude = getLatitudeAndLongitudeFromKakaoMap(partyRegisterDto.getPickUpLocation());
+
         Party saveParty = Party.builder()
                 .title(partyRegisterDto.getTitle())
                 .pickUpLocation(partyRegisterDto.getPickUpLocation())
                 .pickUpLocationDetail(partyRegisterDto.getPickUpLocationDetail())
-                .latitude(0.0)
-                .longitude(0.0)
+                .latitude(latitudeAndLongitude.get("latitude"))
+                .longitude(latitudeAndLongitude.get("longitude"))
                 .restaurant(partyRegisterDto.getRestaurant())
                 .introduction(partyRegisterDto.getIntroduction())
                 .totalPrice(partyRegisterDto.getTotalPrice())
@@ -195,16 +202,47 @@ public class PartyService {
 
 
 
-    public List<Party> sortByDistanceFromUser(List<Party> parties){
+
+    public Map<String, Double> getLatitudeAndLongitudeFromKakaoMap(String location){
+
+        Map<String, Double> returnMap = new HashMap<>();
+
         String restAPI_key = configUtil.getProperty("restAPI_key");
         String url = "https://dapi.kakao.com/v2/local/search/address.json?query=";
-        String parameter = "전북 삼성동 100";
 
-        HttpResponse<JsonNode> response = Unirest.get(url + parameter)
+        HttpResponse<JsonNode> response = Unirest.get(url + location)
                 .header("Authorization", "KakaoAK " + restAPI_key)
                 .asJson();
 
-        log.warn(response.getBody().toString());
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+
+
+        try {
+            KakaoGeoRes bodyJson = objectMapper.readValue(response.getBody().getObject().toString(), KakaoGeoRes.class);
+
+            if (bodyJson.getDocuments() != null && bodyJson.getDocuments().size() != 0) {
+                returnMap.put("latitude", bodyJson.getDocuments().get(0).getX());
+                returnMap.put("longitude", bodyJson.getDocuments().get(0).getY());
+            } else {
+                return null;
+            }
+
+            return returnMap;
+
+        } catch (JsonProcessingException e) {
+            return null;
+//            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+    public List<Party> sortByDistanceFromUser(List<Party> parties){
+
+
 
         return null;
     }

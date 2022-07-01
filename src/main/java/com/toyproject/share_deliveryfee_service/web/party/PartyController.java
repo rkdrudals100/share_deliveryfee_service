@@ -63,6 +63,7 @@ public class PartyController {
     @GetMapping("/test")
     public String test(){
 //        partyService.sortByDistanceFromUser();
+        partyService.getLatitudeAndLongitudeFromKakaoMap("전북 삼성동 100");
 
         return "index";
     }
