@@ -65,6 +65,8 @@ public class Member extends BaseEntity{
         return new ArrayList<>();
     }
 
+
+
     // 연관관계 편의 메소드
     public void addNotificationLogs(NotificationLog notificationLog){
         notificationLog.setMember(this);
@@ -84,6 +86,16 @@ public class Member extends BaseEntity{
     public void addMemberParties(MemberParty memberParty){
         memberParty.setMember(this);
         this.getMemberParties().add(memberParty);
+    }
+
+
+
+
+    //필드 변경 메소드
+    public void changeBaseLocationAndLatitudeAndLongitude(String baseLocation, double latitude, double longitude){
+        this.baseLocation = baseLocation;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 }

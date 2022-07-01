@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/accountStyle.css">
     <script src="/js/navJs.js"></script>
     <script src="/js/sidebarJs.js"></script>
+    <script src="/js/accountJs.js"></script>
     <style></style>
 </head>
 
@@ -145,8 +146,8 @@
                                 <a class="dropdownItem" th:id="'notification_' + ${notification.id}" th:name="${notification.url}" onclick="notificationReadStatusChange(this.id, this.name)">
                                     <span class="dropdownAlertText" th:text="${notification.contents}">알림 내용</span>
                                     <br>
-                                    <span class="dropdownAlertText d-inline-block" th:text="'[' + ${notification.createAt} + ']'">2022-03-19T15:30</span>
-                                    <span th:if="${notification.readStatus.toString().equals('READ')}" class="readStatus d-inline-block">읽음</span>
+                                    <span class="dropdownAlertText d-inline-block" th:text="'[' + ${notification.createAt} + ']'" style="width: 875px">2022-03-19T15:30</span>
+                                    <span th:if="${notification.readStatus.toString().equals('READ')}" class="d-inline-block">읽음</span>
                                 </a>
                                 <div><hr class="dropdown-divider dropdownArea"></div>
                             </th:block>
@@ -185,6 +186,13 @@
                             <div>
                                 <div class="userInfoFont">휴대폰 번호</div>
                                 <div class="userInfoValue" th:text="${member.phoneNum}">userPhoneNum</div>
+                                <hr class="horizonLine">
+                            </div>
+                            <div>
+                                <div class="userInfoFont">기본 픽업장소</div>
+                                <div th:if="${member.latitude == 0 and member.longitude == 0}" class="userInfoValue" th:text="없음">baseLocation</div>
+                                <div th:unless="${member.latitude == 0 and member.longitude == 0}" class="userInfoValue" th:text="${member.baseLocation}">baseLocation</div>
+                                <button type="button" class="btn btn-primary" onclick="changeBaseLocationModalToggle()">변경하기</button>
                             </div>
                         </div>
                     </div>
@@ -193,6 +201,32 @@
             </div>
         </div>
     </div>
+
+
+<!--모달    -->
+    <div class="customModal hideModal row" id="changeBaseLocationModal">
+        <div class="modal-header">
+            <span>기본 픽업장소 변경</span>
+            <button class="btn" style="position: absolute; left: 440px" onclick="changeBaseLocationModalToggle()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </button>
+        </div>
+        <form th:action="@{/accountInfo/basePickupLocation}" method="post" th:object="${baseLocationChangeDto}">
+            <div class="modal-body input-group has-validation">
+                <button type="button" class="input-group-text" onclick="execDaumPostcode2()">검색</button>
+                <input type="text" class="form-control" th:field="*{changedBaseLocation}" id="changedBaseLocation" placeholder="주소를 입력하세요." style="height: 2.5em">
+                <div style="color: red; display: none">식별 불가능한 주소입니다. 주소 검색 버튼을 통해 올바른 값을 입력해주세요.</div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">변경하기</button>
+            </div>
+        </form>
+    </div>
+
+
+
 
 <!--    어떤 탭이 눌리는지 파라미터로 받음-->
     <script th:inline="javascript">
@@ -204,4 +238,8 @@
         console.log(selectedTab + 'tab clicked');
         contentSetting(selectedTab);
     </script>
+
+
+    <!--다음 주소 api-->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </body>

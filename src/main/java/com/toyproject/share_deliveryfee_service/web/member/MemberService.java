@@ -1,6 +1,7 @@
 package com.toyproject.share_deliveryfee_service.web.member;
 
 import com.toyproject.share_deliveryfee_service.web.domain.*;
+import com.toyproject.share_deliveryfee_service.web.party.PartyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-
+    private final PartyService partyService;
 
 
 
@@ -88,6 +89,16 @@ public class MemberService {
             }
         }
         return new ArrayList<>(Arrays.asList(ongoingParties, closedParties));
+    }
+
+
+
+
+    public void ChangeBaseLocationAndLatitudeAndLongitude(Member member, String baseLocation){
+
+        Map<String, Double> LatitudeAndLongiTude = partyService.getLatitudeAndLongitudeFromKakaoMap(baseLocation);
+
+        member.changeBaseLocationAndLatitudeAndLongitude(baseLocation, LatitudeAndLongiTude.get("latitude"), LatitudeAndLongiTude.get("longitude"));
     }
 
 }

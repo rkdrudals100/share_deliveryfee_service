@@ -1,6 +1,7 @@
 package com.toyproject.share_deliveryfee_service.web.member;
 
 import com.toyproject.share_deliveryfee_service.web.domain.*;
+import com.toyproject.share_deliveryfee_service.web.member.form.BaseLocationChangeDto;
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberDupCheckIdDto;
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberRegisterDto;
 import com.toyproject.share_deliveryfee_service.web.member.validator.MemberDupCheckValidator;
@@ -9,6 +10,7 @@ import com.toyproject.share_deliveryfee_service.web.notificationLog.Notification
 import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogService;
 import com.toyproject.share_deliveryfee_service.web.party.MemberPartyRepository;
 import com.toyproject.share_deliveryfee_service.web.party.PartyRepository;
+import com.toyproject.share_deliveryfee_service.web.party.PartyService;
 import com.toyproject.share_deliveryfee_service.web.sms.SendSMSTwilio;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +45,7 @@ public class MemberController {
     private final NotificationLogRepository notificationLogRepository;
 
     private final MemberService memberService;
+    private final PartyService partyService;
     private final NotificationLogService notificationLogService;
 
 
@@ -113,7 +116,10 @@ public class MemberController {
 
         log.info("'{}'을 member에 저장 완료", memberRegisterDto.getMemberId());
 
-        notificationLogService.newNotificationLog(saveMember, "가입이 완료되었습니다.", "/accountInfo/profile");
+        notificationLogService.newNotificationLog(saveMember,
+                "가입이 완료되었습니다.", "/accountInfo/profile");
+        notificationLogService.newNotificationLog(saveMember,
+                "기본 픽업장소를 등록해주세요. 검색할 때 기본 픽업 장소를 기준으로 가까운 파티부터 검색이 가능합니다.", "/accountInfo/profile");
 
         return "redirect:/login"; // 임시 작동 테스트
     }
@@ -251,7 +257,26 @@ public class MemberController {
         List<Object> myParties = memberService.DivideIntoClosedAndOngoingParties(memberPartyRepository.findByMember(loginMember));
         model.addAttribute("ongoingParties", (List<Party>) myParties.get(0));
         model.addAttribute("closedParties", (List<Party>) myParties.get(1));
+        model.addAttribute("baseLocationChangeDto", new BaseLocationChangeDto());
         return "account";
+    }
+
+
+
+
+
+
+    @PostMapping("/accountInfo/basePickupLocation")
+    public String ChangeBasePickupLocation(@ModelAttribute BaseLocationChangeDto baseLocationChangeDto, Principal principal){
+
+        Member member = memberRepository.findByUsername(principal.getName());
+
+        memberService.ChangeBaseLocationAndLatitudeAndLongitude(member, baseLocationChangeDto.getChangedBaseLocation());
+
+        notificationLogService.newNotificationLog(member,
+                "기본 픽업장소가 '" + baseLocationChangeDto.getChangedBaseLocation() + "'으로 변경되었습니다.", "/accountInfo/profile");
+
+        return "redirect:/accountInfo/profile";
     }
 
 
