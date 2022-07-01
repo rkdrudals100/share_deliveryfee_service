@@ -4,6 +4,7 @@ import com.toyproject.share_deliveryfee_service.web.domain.*;
 import com.toyproject.share_deliveryfee_service.web.member.form.BaseLocationChangeDto;
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberDupCheckIdDto;
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberRegisterDto;
+import com.toyproject.share_deliveryfee_service.web.member.validator.BasePickupLocationChangeValidator;
 import com.toyproject.share_deliveryfee_service.web.member.validator.MemberDupCheckValidator;
 import com.toyproject.share_deliveryfee_service.web.member.validator.MemberRegisterValidator;
 import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogRepository;
@@ -37,6 +38,7 @@ public class MemberController {
 
     private final MemberRegisterValidator memberRegisterValidator;
     private final MemberDupCheckValidator memberDupCheckValidator;
+    private final BasePickupLocationChangeValidator basePickupLocationChangeValidator;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final MemberRepository memberRepository;
@@ -267,9 +269,30 @@ public class MemberController {
 
 
     @PostMapping("/accountInfo/basePickupLocation")
-    public String ChangeBasePickupLocation(@ModelAttribute BaseLocationChangeDto baseLocationChangeDto, Principal principal){
+    public String ChangeBasePickupLocation(@Validated @ModelAttribute BaseLocationChangeDto baseLocationChangeDto, BindingResult bindingResult, Principal principal, Model model){
 
         Member member = memberRepository.findByUsername(principal.getName());
+
+
+        basePickupLocationChangeValidator.validate(baseLocationChangeDto, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+
+            model.addAttribute("selectedTab", "profile");
+
+            model.addAttribute("member", member);
+            model.addAttribute("notificationLogs", notificationLogRepository.findByMemberOrderByCreateAtDesc(member));
+
+            List<Object> myParties = memberService.DivideIntoClosedAndOngoingParties(memberPartyRepository.findByMember(member));
+            model.addAttribute("ongoingParties", (List<Party>) myParties.get(0));
+            model.addAttribute("closedParties", (List<Party>) myParties.get(1));
+
+            return "account";
+        }
+
+
+
 
         memberService.ChangeBaseLocationAndLatitudeAndLongitude(member, baseLocationChangeDto.getChangedBaseLocation());
 

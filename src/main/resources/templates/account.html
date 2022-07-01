@@ -9,7 +9,16 @@
     <script src="/js/navJs.js"></script>
     <script src="/js/sidebarJs.js"></script>
     <script src="/js/accountJs.js"></script>
-    <style></style>
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .field-success {
+            border-color: #218838;
+            color: #218838;
+        }
+    </style>
 </head>
 
 <body>
@@ -193,6 +202,9 @@
                                 <div th:if="${member.latitude == 0 and member.longitude == 0}" class="userInfoValue" th:text="없음">baseLocation</div>
                                 <div th:unless="${member.latitude == 0 and member.longitude == 0}" class="userInfoValue" th:text="${member.baseLocation}">baseLocation</div>
                                 <button type="button" class="btn btn-primary" onclick="changeBaseLocationModalToggle()">변경하기</button>
+                                <div class="field-error" th:errors="${baseLocationChangeDto.changedBaseLocation}" style="padding-left: 205px">
+                                    픽업장소 에러
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -216,8 +228,7 @@
         <form th:action="@{/accountInfo/basePickupLocation}" method="post" th:object="${baseLocationChangeDto}">
             <div class="modal-body input-group has-validation">
                 <button type="button" class="input-group-text" onclick="execDaumPostcode2()">검색</button>
-                <input type="text" class="form-control" th:field="*{changedBaseLocation}" id="changedBaseLocation" placeholder="주소를 입력하세요." style="height: 2.5em">
-                <div style="color: red; display: none">식별 불가능한 주소입니다. 주소 검색 버튼을 통해 올바른 값을 입력해주세요.</div>
+                <input type="text" class="form-control" th:field="*{changedBaseLocation}" id="changedBaseLocation" th:errorclass="field-error" placeholder="주소를 입력하세요." style="height: 2.5em">
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">변경하기</button>
