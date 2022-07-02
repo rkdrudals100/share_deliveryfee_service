@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.share_deliveryfee_service.web.config.ConfigUtil;
 import com.toyproject.share_deliveryfee_service.web.domain.*;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
-import com.toyproject.share_deliveryfee_service.web.party.form.Documents;
 import com.toyproject.share_deliveryfee_service.web.party.form.KakaoGeoRes;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;
+import com.toyproject.share_deliveryfee_service.web.party.form.PartySearchDto;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
@@ -245,6 +245,47 @@ public class PartyService {
 
 
         return null;
+    }
+
+
+
+
+
+
+
+    public List<PartySearchDto> calculateAndAddDistance(Member member, List<Party> parties){
+        
+        List<PartySearchDto> partySearchDtos = new ArrayList<>();
+
+        for (Party party : parties){
+            PartySearchDto partySearchDto = PartySearchDto.builder()
+                    .id(party.getId())
+                    .title(party.getTitle())
+                    .introduction(party.getIntroduction())
+                    .pickUpLocation(party.getPickUpLocation())
+                    .pickUpLocationDetail(party.getPickUpLocationDetail())
+                    .latitude(party.getLatitude())
+                    .longitude(party.getLongitude())
+                    .restaurant(party.getRestaurant())
+                    .totalPrice(party.getTotalPrice())
+                    .membersNum(party.getMembersNum())
+                    .maxMemberNum(party.getMaxMemberNum())
+                    .limitTime(party.getLimitTime())
+                    .deliveryPlatform(party.getDeliveryPlatform())
+                    .partyStatus(party.getPartyStatus())
+                    .organizer(party.getOrganizer())
+                    .build();
+
+
+            double distance = distanceInKilometerByHaversine(partySearchDto.getLatitude(), partySearchDto.getLongitude(),
+                    member.getLatitude(), member.getLongitude());
+
+            partySearchDto.calcDistanceFromMemberBaseLocation(distance);
+
+            partySearchDtos.add(partySearchDto);
+        }
+
+        return partySearchDtos;
     }
 
 
