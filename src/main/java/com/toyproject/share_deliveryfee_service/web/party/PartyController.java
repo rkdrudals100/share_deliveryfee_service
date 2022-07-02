@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -124,9 +125,12 @@ public class PartyController {
 
         if (memberRepository.findByUsername(principal.getName()).getBaseLocation() == null){
             model.addAttribute("parties", parties);
+            model.addAttribute("basePickupLocationRegister", false);
         } else {
             List<PartySearchDto> partySearchDtos = partyService.calculateAndAddDistance(memberRepository.findByUsername(principal.getName()), parties);
-            model.addAttribute("parties", partySearchDtos);
+            model.addAttribute("parties",
+                    partySearchDtos.stream().sorted(Comparator.comparing(PartySearchDto::getDistanceFromMemberBaseLocation)).collect(Collectors.toList()));
+            model.addAttribute("basePickupLocationRegister", true);
         }
 
         return "searchParty";

@@ -254,7 +254,7 @@ public class PartyService {
 
 
     public List<PartySearchDto> calculateAndAddDistance(Member member, List<Party> parties){
-        
+
         List<PartySearchDto> partySearchDtos = new ArrayList<>();
 
         for (Party party : parties){
@@ -277,8 +277,8 @@ public class PartyService {
                     .build();
 
 
-            double distance = distanceInKilometerByHaversine(partySearchDto.getLatitude(), partySearchDto.getLongitude(),
-                    member.getLatitude(), member.getLongitude());
+            double distance = Math.round(distanceInKilometerByHaversine(partySearchDto.getLatitude(), partySearchDto.getLongitude(),
+                    member.getLatitude(), member.getLongitude())*100)/100.0;
 
             partySearchDto.calcDistanceFromMemberBaseLocation(distance);
 

@@ -58,9 +58,11 @@
                                     <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
                                     <div class="mb-1 text-muted" th:text="'[' + ${party.limitTime} + ']까지 모집 중'">모집 시간</div>
                                 </div>
-                                <div class="col-6 px-3 my-2 d-flex flex-column position-static">
-                                    <!--                            <a href="#" class="stretched-link">모집인원</a>-->
+                                <div class="col-3 px-3 my-2 d-flex flex-column position-static">
                                     <strong><a th:href="@{/partyDetails/{partyId}(partyId=${party.id})}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                                </div>
+                                <div th:if="${basePickupLocationRegister}" class="col-3 pl-3 my-2">
+                                   <span>픽업 장소까지:&nbsp;</span><strong><span th:text="${party.distanceFromMemberBaseLocation}">1.2</span></strong>km
                                 </div>
                             </div>
                         </div>
