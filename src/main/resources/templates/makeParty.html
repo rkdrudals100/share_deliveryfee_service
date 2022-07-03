@@ -84,7 +84,7 @@
             </div>
 
             <div class="col-3">
-              <label for="totalPrice" class="form-label">총 배달비<span class="text-muted">(Optional)</span></label>
+              <label for="totalPrice" class="form-label">총 배달비</label>
               <input type="email" class="form-control" id="totalPrice" th:field="*{totalPrice}" th:errorclass="field-error" placeholder="배달비 총액만 입력하세요. ex): 5000">
               <div class="field-error col-12" th:errors="*{totalPrice}">
                   총 배달비 에러
@@ -105,7 +105,7 @@
             </div>
 
             <div class="col-3">
-              <label for="limitTime" class="form-label">모집 시간</label>
+              <label for="limitTime" class="form-label">모집종료 시간(~까지)</label>
               <input class="form-control" id="limitTime" type="datetime-local" value="2022-03-19T15:30" th:field="*{limitTime}" th:errorclass="field-error">
               <div class="field-error col-12" th:errors="*{limitTime}">
                   모집 시간 에러

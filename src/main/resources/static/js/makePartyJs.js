@@ -52,7 +52,7 @@ function setCurrentTime() {
     var month = ('0' + (today.getMonth() + 1)).slice(-2);
     var day = ('0' + today.getDate()).slice(-2);
     var hours = ('0' + today.getHours()).slice(-2);
-    var minutes = ('0' + today.getMinutes()).slice(-2);
+    var minutes = ('0' + ((today.getMinutes() + 30) % 60)).slice(-2);
 
     var dateString = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
 
