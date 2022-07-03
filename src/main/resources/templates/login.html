@@ -34,12 +34,14 @@
         </div>
         <div class="container col-3">
             <div style="margin-top: 20%"></div>
-            <form th:action="@{/}" method="post">
+            <form th:action="@{/login/process}" method="post">
                 <div class="text-center">
-<!--                    <img class="mb-4 pt-5 mt-5" src="/img/deliveryIcon.PNG" alt="로고" width="200" height="200">-->
                     <div style="height: 230px"></div>
                 </div>
                 <div style="margin-top: 10vh"></div>
+                <div th:if="${error == 'true'}">
+                    <div class="loginErrorText" th:text="${exception}"></div>
+                </div>
                 <div class="form-floating">
                     <input class="form-control" id="username" name="username" placeholder="ID">
                     <label for="username">아이디</label>

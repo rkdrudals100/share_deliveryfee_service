@@ -65,9 +65,15 @@ public class MemberController {
 
 
     @GetMapping("/login")
-    public String login(Model model, Principal principal){
+    public String login(Model model, Principal principal, @RequestParam(value = "error", required = false) String error,
+                        @RequestParam(value = "exception", required = false) String exception){
         if(principal != null) {
             return "redirect:/";
+        }
+
+        if (error != null){
+            model.addAttribute("error", error);
+            model.addAttribute("exception", exception);
         }
         return "login";
     }

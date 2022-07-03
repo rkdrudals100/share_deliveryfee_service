@@ -57,3 +57,11 @@
     70% { opacity: 0.6;}
     100% { transform: scale(1) translateX(-100px); opacity: 0; filter: blur(10px);}
 }
+
+.loginErrorText{
+    color: #dc3545;
+    z-index: 1;
+    position: relative;
+    text-align: center;
+    transform: translateY(-15px);
+}

@@ -4,6 +4,7 @@ import com.toyproject.share_deliveryfee_service.web.config.filter.MyFilter;
 import com.toyproject.share_deliveryfee_service.web.config.jwt.JwtAuthenticationFilter;
 import com.toyproject.share_deliveryfee_service.web.config.jwt.JwtAuthorizationFilter;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
+import com.toyproject.share_deliveryfee_service.web.member.validator.LoginFailureHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter;
     private final MemberRepository memberRepository;
+    private final LoginFailureHandler loginFailureHandler;
 
 
     @Override
@@ -54,7 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/")
+                .loginProcessingUrl("/login/process")
+                .failureHandler(loginFailureHandler)
                 .defaultSuccessUrl("/");
     }
 
