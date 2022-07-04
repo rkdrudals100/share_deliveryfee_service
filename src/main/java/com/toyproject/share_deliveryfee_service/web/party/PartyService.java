@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.share_deliveryfee_service.web.config.ConfigUtil;
 import com.toyproject.share_deliveryfee_service.web.domain.*;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.DeliveryPlatform;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.PartyStatus;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import com.toyproject.share_deliveryfee_service.web.party.form.KakaoGeoRes;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;

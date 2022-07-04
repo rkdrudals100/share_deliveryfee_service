@@ -1,10 +1,11 @@
 package com.toyproject.share_deliveryfee_service.web.member;
 
 import com.toyproject.share_deliveryfee_service.web.domain.*;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.MemberRole;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.PartyStatus;
 import com.toyproject.share_deliveryfee_service.web.party.PartyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,7 @@ public class MemberService {
 
 
     public Member registerMember(String username, String password, String email, String phoneNum,
-                               MemberRole memberRole, String memberRoles){
+                                 MemberRole memberRole, String memberRoles){
 
         Member newMember = Member.builder()
                 .username(username)

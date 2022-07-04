@@ -1,5 +1,6 @@
 package com.toyproject.share_deliveryfee_service.web.domain;
 
+import com.toyproject.share_deliveryfee_service.web.domain.enums.MemberRole;
 import lombok.*;
 
 import javax.persistence.*;
@@ -57,6 +58,10 @@ public class Member extends BaseEntity{
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DeliveryQuestion> deliveryQuestions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "payer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Payments> payments = new ArrayList<>();
+
+
 
     public List<String> getRoleList(){
         if(this.memberRoles.length() > 0){
@@ -86,6 +91,11 @@ public class Member extends BaseEntity{
     public void addMemberParties(MemberParty memberParty){
         memberParty.setMember(this);
         this.getMemberParties().add(memberParty);
+    }
+
+    public void addPayments(Payments payments){
+        payments.setPayer(this);
+        this.getPayments().add(payments);
     }
 
 

@@ -1,5 +1,7 @@
 package com.toyproject.share_deliveryfee_service.web.domain;
 
+import com.toyproject.share_deliveryfee_service.web.domain.enums.DeliveryPlatform;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.PartyStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -62,6 +64,9 @@ public class Party extends BaseEntity{
     @OneToMany(mappedBy = "party", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FoodCategory> foodCategories = new ArrayList<>();
 
+    @OneToMany(mappedBy = "party", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Payments> payments = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member organizer;
@@ -92,6 +97,11 @@ public class Party extends BaseEntity{
     public void addFoodCategory(FoodCategory foodCategory){
         this.getFoodCategories().add(foodCategory);
         foodCategory.setParty(this);
+    }
+
+    public void addPayments(Payments payments){
+        this.getPayments().add(payments);
+        payments.setParty(this);
     }
 
 

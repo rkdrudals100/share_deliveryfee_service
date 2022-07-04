@@ -40,7 +40,7 @@ function requestPay(whichOrder) {
             msg += '결제 이름 : ' + rsp.buyer_email+ '\n';
 
             console.log(msg);
-            sendJoinPartyMessageAjax();
+            sendJoinPartyMessageAjax(rsp.merchant_uid, rsp.paid_amount, memberId, partyId);
         } else {    // 결제 실패 시 로직
             var msg = '결제에 실패하였습니다.';
             msg += '에러내용 : ' + rsp.error_msg;
@@ -50,20 +50,26 @@ function requestPay(whichOrder) {
 }
 
 
-function testfuc() {
-    sendJoinPartyMessageAjax();
-}
+// function testfuc() {
+//     sendJoinPartyMessageAjax();
+// }
 
 
 
-function sendJoinPartyMessageAjax() {
+function sendJoinPartyMessageAjax(merchant_uid, amount, payerName, partyId) {
     var httpRequest;
 
-    var partyId = document.getElementById('partyId').innerText;
+    // var partyId = document.getElementById('partyId').innerText;
+
+    console.log(merchant_uid + ' ' + amount + ' ' + payerName + ' ' + partyId);
     var reqJson = new Object();
     reqJson.getMessageBody = document.getElementById('orderRequests').value;
     reqJson.getServiceFee = document.getElementById('payment').value;
     reqJson.getDeliveryFee = document.getElementById('deliveryfee').value;
+    reqJson.getMerchant_uid = merchant_uid;
+    reqJson.getAmount = amount;
+    reqJson.getPayerName = payerName;
+    reqJson.getPartyId = partyId;
 
     console.log('body: ' + reqJson.getMessageBody);
     httpRequest = new XMLHttpRequest();

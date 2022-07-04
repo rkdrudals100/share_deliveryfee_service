@@ -1,6 +1,5 @@
 package com.toyproject.share_deliveryfee_service.web.party.form;
 
-import com.toyproject.share_deliveryfee_service.web.domain.DeliveryPlatform;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;

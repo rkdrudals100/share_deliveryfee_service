@@ -1,4 +1,4 @@
-package com.toyproject.share_deliveryfee_service.web.domain;
+package com.toyproject.share_deliveryfee_service.web.domain.enums;
 
 public enum ProcessingStatus {
     PROCESSED("처리 완료"), NOTYET("처리 중");

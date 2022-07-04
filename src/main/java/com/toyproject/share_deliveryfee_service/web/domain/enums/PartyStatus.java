@@ -1,4 +1,4 @@
-package com.toyproject.share_deliveryfee_service.web.domain;
+package com.toyproject.share_deliveryfee_service.web.domain.enums;
 
 //  2022-04-14 강경민
 //  도메인 설계

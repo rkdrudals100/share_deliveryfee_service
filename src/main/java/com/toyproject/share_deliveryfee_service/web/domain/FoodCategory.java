@@ -1,5 +1,6 @@
 package com.toyproject.share_deliveryfee_service.web.domain;
 
+import com.toyproject.share_deliveryfee_service.web.domain.enums.FoodCategoryName;
 import lombok.Data;
 
 import javax.persistence.*;

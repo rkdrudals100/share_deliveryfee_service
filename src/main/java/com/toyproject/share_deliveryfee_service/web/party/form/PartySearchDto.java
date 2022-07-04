@@ -1,6 +1,8 @@
 package com.toyproject.share_deliveryfee_service.web.party.form;
 
 import com.toyproject.share_deliveryfee_service.web.domain.*;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.DeliveryPlatform;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.PartyStatus;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 

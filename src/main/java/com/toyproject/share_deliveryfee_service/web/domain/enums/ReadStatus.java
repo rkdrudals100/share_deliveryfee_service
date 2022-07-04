@@ -1,13 +1,13 @@
-package com.toyproject.share_deliveryfee_service.web.domain;
+package com.toyproject.share_deliveryfee_service.web.domain.enums;
 
 //  2022-04-14 강경민
 //  도메인 설계
-public enum FoodReceive {
-    RECEIVED("음식 수령 완료"), DIDNTRECEIVED("음식 수령 X");
+public enum ReadStatus {
+    READ("확인 완료"), NOTREAD("아직 확인 X");
 
     private final String description;
 
-    FoodReceive(String description) {
+    ReadStatus(String description) {
         this.description = description;
     }
 

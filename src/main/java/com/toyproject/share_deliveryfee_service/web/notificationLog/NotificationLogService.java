@@ -3,7 +3,7 @@ package com.toyproject.share_deliveryfee_service.web.notificationLog;
 import com.toyproject.share_deliveryfee_service.web.config.ConfigUtil;
 import com.toyproject.share_deliveryfee_service.web.domain.Member;
 import com.toyproject.share_deliveryfee_service.web.domain.NotificationLog;
-import com.toyproject.share_deliveryfee_service.web.domain.ReadStatus;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.ReadStatus;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import com.toyproject.share_deliveryfee_service.web.party.PartyRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.net.URI;
 
 @Service
 @Slf4j

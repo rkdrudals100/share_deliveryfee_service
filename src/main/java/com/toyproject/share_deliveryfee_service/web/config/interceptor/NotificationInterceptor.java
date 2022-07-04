@@ -2,14 +2,13 @@ package com.toyproject.share_deliveryfee_service.web.config.interceptor;
 
 import com.toyproject.share_deliveryfee_service.web.domain.Member;
 import com.toyproject.share_deliveryfee_service.web.domain.NotificationLog;
-import com.toyproject.share_deliveryfee_service.web.domain.ReadStatus;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.ReadStatus;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

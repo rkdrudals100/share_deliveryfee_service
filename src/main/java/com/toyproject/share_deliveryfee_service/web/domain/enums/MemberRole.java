@@ -1,4 +1,4 @@
-package com.toyproject.share_deliveryfee_service.web.domain;
+package com.toyproject.share_deliveryfee_service.web.domain.enums;
 
 public enum MemberRole {
 

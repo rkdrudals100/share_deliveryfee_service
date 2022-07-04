@@ -2,12 +2,16 @@ package com.toyproject.share_deliveryfee_service.web.party;
 
 import com.toyproject.share_deliveryfee_service.web.config.ConfigUtil;
 import com.toyproject.share_deliveryfee_service.web.domain.*;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.PartyStatus;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.ReasonForPayment;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.TypeOfMessage;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogService;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartyRegisterDto;
 import com.toyproject.share_deliveryfee_service.web.party.form.PartySearchDto;
 import com.toyproject.share_deliveryfee_service.web.party.validator.PartyRegisterValidator;
 import com.toyproject.share_deliveryfee_service.web.partyMessage.PartyMessageService;
+import com.toyproject.share_deliveryfee_service.web.payment.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -36,6 +40,7 @@ public class PartyController {
     private final PartyService partyService;
     private final PartyMessageService partyMessageService;
     private final NotificationLogService notificationLogService;
+    private final PaymentService paymentService;
 
     private final ConfigUtil configUtil;
 
@@ -194,6 +199,14 @@ public class PartyController {
 
         Party party = partyRepository.findById(partyId).get();
         Member member = memberRepository.findByUsername(principal.getName());
+
+        log.warn(String.valueOf(inputMap.get("getMerchant_uid")));
+        log.warn(String.valueOf(inputMap.get("getAmount")));
+        log.warn(String.valueOf(inputMap.get("getPayerName")));
+        log.warn(String.valueOf(inputMap.get("getPartyId")));
+
+        paymentService.newPayment(party, member, String.valueOf(inputMap.get("getMerchant_uid")),
+                (Integer) inputMap.get("getAmount"), ReasonForPayment.JOINPARTY);
         // 결제 검증 코드 추가 요망
         
         // 파티장에게 파티메시지 전송

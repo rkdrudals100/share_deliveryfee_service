@@ -1,6 +1,8 @@
 package com.toyproject.share_deliveryfee_service.web.partyMessage;
 
 import com.toyproject.share_deliveryfee_service.web.domain.*;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.ProcessingStatus;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.TypeOfMessage;
 import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogService;
 import com.toyproject.share_deliveryfee_service.web.party.PartyMessageRepository;
@@ -11,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
 import java.util.List;
 
 

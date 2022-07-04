@@ -2,8 +2,8 @@ package com.toyproject.share_deliveryfee_service.web.scheduleService;
 
 import com.toyproject.share_deliveryfee_service.web.domain.MemberParty;
 import com.toyproject.share_deliveryfee_service.web.domain.Party;
-import com.toyproject.share_deliveryfee_service.web.domain.PartyStatus;
-import com.toyproject.share_deliveryfee_service.web.domain.TypeOfMessage;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.PartyStatus;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.TypeOfMessage;
 import com.toyproject.share_deliveryfee_service.web.notificationLog.NotificationLogService;
 import com.toyproject.share_deliveryfee_service.web.party.PartyRepository;
 import com.toyproject.share_deliveryfee_service.web.party.PartyService;

@@ -1,6 +1,7 @@
 package com.toyproject.share_deliveryfee_service.web.member;
 
 import com.toyproject.share_deliveryfee_service.web.domain.*;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.MemberRole;
 import com.toyproject.share_deliveryfee_service.web.member.form.BaseLocationChangeDto;
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberDupCheckIdDto;
 import com.toyproject.share_deliveryfee_service.web.member.form.MemberRegisterDto;
@@ -13,10 +14,8 @@ import com.toyproject.share_deliveryfee_service.web.party.MemberPartyRepository;
 import com.toyproject.share_deliveryfee_service.web.party.PartyRepository;
 import com.toyproject.share_deliveryfee_service.web.party.PartyService;
 import com.toyproject.share_deliveryfee_service.web.sms.SendSMSTwilio;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.FileReader;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;

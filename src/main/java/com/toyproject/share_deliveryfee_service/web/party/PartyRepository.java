@@ -2,16 +2,14 @@ package com.toyproject.share_deliveryfee_service.web.party;
 
 import com.toyproject.share_deliveryfee_service.web.domain.MemberParty;
 import com.toyproject.share_deliveryfee_service.web.domain.Party;
-import com.toyproject.share_deliveryfee_service.web.domain.PartyStatus;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.PartyStatus;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.servlet.http.Part;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface PartyRepository extends JpaRepository<Party, Long> {
 

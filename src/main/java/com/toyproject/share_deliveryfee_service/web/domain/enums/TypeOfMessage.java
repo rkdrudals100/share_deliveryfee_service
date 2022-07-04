@@ -1,4 +1,4 @@
-package com.toyproject.share_deliveryfee_service.web.domain;
+package com.toyproject.share_deliveryfee_service.web.domain.enums;
 
 public enum TypeOfMessage {
     PARTYAPPLICATION("파티가입신청", "님이 파티가입을 신청하셨습니다."), PARTYJOIN("파티 가입 완료", "님이 파티에 참가하셨습니다."),

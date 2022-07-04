@@ -1,13 +1,12 @@
 package com.toyproject.share_deliveryfee_service.web.domain;
 
+import com.toyproject.share_deliveryfee_service.web.domain.enums.ReadStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 //  2022-04-14 강경민
 //  도메인 설계

@@ -1,10 +1,9 @@
 package com.toyproject.share_deliveryfee_service.web.party;
 
 import com.toyproject.share_deliveryfee_service.web.domain.*;
-import org.springframework.data.domain.Sort;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.ProcessingStatus;
+import com.toyproject.share_deliveryfee_service.web.domain.enums.TypeOfMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
