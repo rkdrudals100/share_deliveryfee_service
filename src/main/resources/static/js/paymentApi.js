@@ -86,7 +86,8 @@ function sendJoinPartyMessageAjax(merchant_uid, amount, payerName, partyId) {
         }
     };
     //Post 방식, 응답은 json, 요청헤더 json
-    httpRequest.open('POST', '/partyDetails/' + partyId + '/paymentSuccess', true);
+    // httpRequest.open('POST', '/partyDetails/' + partyId + '/paymentSuccess', true);
+    httpRequest.open('POST', '/payment/partyjoin', true);
     httpRequest.responseType = "json";
     httpRequest.setRequestHeader('Content-Type', 'application/json');
     httpRequest.send(JSON.stringify(reqJson));

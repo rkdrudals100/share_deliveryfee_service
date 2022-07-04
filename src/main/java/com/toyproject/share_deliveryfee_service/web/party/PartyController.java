@@ -188,47 +188,6 @@ public class PartyController {
 
 
 
-    @PostMapping("/partyDetails/{partyId}/paymentSuccess")
-    public String paymentSuccess(@PathVariable Long partyId, Principal principal, @RequestBody Map<String, Object>inputMap){
-
-        Map<String, String> returnMap = new HashMap<>();
-
-        String messageBody = (String)inputMap.get("getMessageBody");
-        int serviceFee = Integer.parseInt(inputMap.get("getServiceFee").toString());
-        int deliveryFee = Integer.parseInt(inputMap.get("getDeliveryFee").toString());
-
-        Party party = partyRepository.findById(partyId).get();
-        Member member = memberRepository.findByUsername(principal.getName());
-
-        log.warn(String.valueOf(inputMap.get("getMerchant_uid")));
-        log.warn(String.valueOf(inputMap.get("getAmount")));
-        log.warn(String.valueOf(inputMap.get("getPayerName")));
-        log.warn(String.valueOf(inputMap.get("getPartyId")));
-
-        paymentService.newPayment(party, member, String.valueOf(inputMap.get("getMerchant_uid")),
-                (Integer) inputMap.get("getAmount"), ReasonForPayment.JOINPARTY);
-        // 결제 검증 코드 추가 요망
-        
-        // 파티장에게 파티메시지 전송
-        partyMessageService.newMessage(party, member, TypeOfMessage.PARTYAPPLICATION,
-                messageBody, serviceFee, deliveryFee);
-
-        // 신청자, 파티장 로그 작성
-        notificationLogService.newNotificationLog(memberRepository.findByUsername(principal.getName()),
-                "'" + party.getTitle() + "' " + "파티에 가입신청이 완료되었습니다.",
-                "/accountInfo/notification");
-
-        notificationLogService.newNotificationLog(memberRepository.findByUsername(party.getOrganizer().getUsername()),
-                "'" + principal.getName() + "' " + "님이 '" + party.getTitle() + "' 파티에 가입을 신청하셨습니다.",
-                "/partyDetails/" + party.getId());
-
-        // 리턴값 returnMap으로 변경 요망
-        return "redirect:/partyDetails/" + partyId;
-    }
-
-
-
-
 
 
 
