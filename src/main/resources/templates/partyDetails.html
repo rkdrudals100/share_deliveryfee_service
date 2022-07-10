@@ -109,7 +109,7 @@
             <span th:text="'[' + ${partymessage.getCreateAt()} + ']'">[creat_at]</span>
           </div>
           <div class="col-3">
-            <div th:if="${partymessage.getTypeOfMessage().getDescription().equals('파티가입신청')}" class="messageBtn">
+            <div th:if="${partymessage.getTypeOfMessage().getDescription().equals('파티가입신청')}" class="messageBtn" >
               <button class="btn btn-primary" th:value="${partymessage.getId()}" onclick="aboutjoinPartyResponse(this.getAttribute('value'), 'yes')">수락</button>
               <button class="btn btn-danger" th:value="${partymessage.getId()}" onclick="aboutjoinPartyResponse(this.getAttribute('value'), 'no')">거절</button>
             </div>

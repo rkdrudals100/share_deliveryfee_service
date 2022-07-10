@@ -242,16 +242,6 @@ public class PartyService {
 
 
 
-    public List<Party> sortByDistanceFromUser(List<Party> parties){
-
-
-
-        return null;
-    }
-
-
-
-
 
 
 

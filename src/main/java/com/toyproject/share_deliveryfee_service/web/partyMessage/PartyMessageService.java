@@ -1,5 +1,6 @@
 package com.toyproject.share_deliveryfee_service.web.partyMessage;
 
+import com.toyproject.share_deliveryfee_service.web.config.ConfigUtil;
 import com.toyproject.share_deliveryfee_service.web.domain.*;
 import com.toyproject.share_deliveryfee_service.web.domain.enums.ProcessingStatus;
 import com.toyproject.share_deliveryfee_service.web.domain.enums.TypeOfMessage;
@@ -8,6 +9,8 @@ import com.toyproject.share_deliveryfee_service.web.notificationLog.Notification
 import com.toyproject.share_deliveryfee_service.web.party.PartyMessageRepository;
 import com.toyproject.share_deliveryfee_service.web.party.PartyRepository;
 import com.toyproject.share_deliveryfee_service.web.party.PartyService;
+import com.toyproject.share_deliveryfee_service.web.payment.PaymentService;
+import com.toyproject.share_deliveryfee_service.web.payment.PaymentsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,9 +28,12 @@ public class PartyMessageService {
     private final MemberRepository memberRepository;
     private final PartyRepository partyRepository;
     private final PartyMessageRepository partyMessageRepository;
+    private final PaymentsRepository paymentsRepository;
 
     private final PartyService partyService;
     private final NotificationLogService notificationLogService;
+    private final PaymentService paymentService;
+
 
 
 
@@ -133,6 +139,8 @@ public class PartyMessageService {
             }
         } else if (choice.equals("no")){
             log.info("파티 참가 거절");
+            paymentService.cancelPayments(paymentsRepository.findByPayerAndCreateAt(member, partyMessage.getCreateAt()));
+
             notificationLogService.newNotificationLog(member,
                     "'" + party.getTitle() + "' " + "파티가입요청이 거절되었습니다.",
                     "/partyDetails/" + party.getId());
@@ -143,6 +151,9 @@ public class PartyMessageService {
         }
         return "success";
     }
+
+
+
 
 
 

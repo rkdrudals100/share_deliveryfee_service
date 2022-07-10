@@ -12,6 +12,7 @@ import com.toyproject.share_deliveryfee_service.web.party.form.PartySearchDto;
 import com.toyproject.share_deliveryfee_service.web.party.validator.PartyRegisterValidator;
 import com.toyproject.share_deliveryfee_service.web.partyMessage.PartyMessageService;
 import com.toyproject.share_deliveryfee_service.web.payment.PaymentService;
+import com.toyproject.share_deliveryfee_service.web.payment.PaymentsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -36,6 +37,7 @@ public class PartyController {
     private final MemberRepository memberRepository;
     private final MemberPartyRepository memberPartyRepository;
     private final PartyMessageRepository partyMessageRepository;
+    private final PaymentsRepository paymentsRepository;
 
     private final PartyService partyService;
     private final PartyMessageService partyMessageService;
@@ -59,13 +61,12 @@ public class PartyController {
 
 
 
-    @GetMapping("/test")
-    public String test(){
-//        partyService.sortByDistanceFromUser();
-        partyService.getLatitudeAndLongitudeFromKakaoMap("전북 삼성동 100");
-
-        return "index";
-    }
+//    @GetMapping("/test")
+//    public String test(){
+//        paymentService.cancelPayments(paymentsRepository.findPaymentsById(1L));
+//
+//        return "index";
+//    }
 
 
 

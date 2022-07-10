@@ -92,3 +92,11 @@ function sendJoinPartyMessageAjax(merchant_uid, amount, payerName, partyId) {
     httpRequest.setRequestHeader('Content-Type', 'application/json');
     httpRequest.send(JSON.stringify(reqJson));
 }
+
+
+
+
+
+function cancelPay() {
+    
+}
