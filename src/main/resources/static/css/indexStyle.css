@@ -324,6 +324,7 @@ body{
 .downArrowContainer{
     position: relative;
     top: 60px;
+    border: none;
 }
 
 .downArrows{

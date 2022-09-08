@@ -159,9 +159,15 @@
                             <!--                            <strong class="d-inline-block mb-2 text-success">수령 장소</strong>-->
                             <div class="mb-1 text-muted" th:id="partyLimitTime + ${num}" th:text="'[' + ${parties[num].limitTime} + ']까지 모집 중'">모집 시간</div>
                         </div>
-                        <div class="col-6 px-3 my-2 d-flex flex-column position-static">
+                        <div class="col-3 px-3 my-2 d-flex flex-column position-static">
                             <!--                            <a href="#" class="stretched-link">모집인원</a>-->
                             <strong><a th:href="@{/partyDetails/{partyId}(partyId=${parties[num].id})}" th:id="partyMembersNum + ${num}" th:text="${parties[num].membersNum} + '/' + ${parties[num].maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                        </div>
+                        <div th:if="${basePickupLocationRegister}" class="col-3 pl-3 my-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 20 20" style="color: #007bff; width: 24px; height: 24px">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            <span>픽업 장소까지:&nbsp;</span><strong><span th:text="${parties[num].distanceFromMemberBaseLocation}">1.2</span></strong>km
                         </div>
                     </div>
                 </div>

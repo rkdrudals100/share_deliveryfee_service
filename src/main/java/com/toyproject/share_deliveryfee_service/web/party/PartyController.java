@@ -100,19 +100,31 @@ public class PartyController {
 
 
     @PostMapping("/searchParty/search")
-    public String getContent2(@RequestBody Map<String, Object> inputMap, Model model) {
+    public String getContent2(@RequestBody Map<String, Object> inputMap, Model model, Principal principal) {
         String keyWord = (String)inputMap.get("getSearchWord");
 
         List<Party> parties = partyService.searchPartyByKeywords(keyWord);
 
+        // 검색 결과가 있는지 확인
         if (parties.isEmpty()){
             parties.add(Party.builder().title("null").build());
             model.addAttribute("isNull", "true");
         } else{
             model.addAttribute("isNull", "false");
         }
+
+        // 거리 측정을 사용할 수 있는지 확인
+        if (memberRepository.findByUsername(principal.getName()).getBaseLocation() != null){
+            List<PartySearchDto> partySearchDtos = partyService.calculateAndAddDistance(memberRepository.findByUsername(principal.getName()), parties);
+            model.addAttribute("parties",
+                    partySearchDtos.stream().sorted(Comparator.comparing(PartySearchDto::getDistanceFromMemberBaseLocation)).collect(Collectors.toList()));
+            model.addAttribute("basePickupLocationRegister", true);
+        } else{
+            model.addAttribute("parties", parties);
+            model.addAttribute("basePickupLocationRegister", false);
+        }
+
         log.info(parties.get(0).getTitle());
-        model.addAttribute("parties", parties);
         model.addAttribute("totalResultNum", parties.size());
         model.addAttribute("keyword", keyWord);
 

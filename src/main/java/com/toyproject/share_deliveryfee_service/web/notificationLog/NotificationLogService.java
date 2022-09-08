@@ -37,7 +37,7 @@ public class NotificationLogService {
         String databaseProfile = configUtil.getProperty("spring.config.activate.on-profile");
 
         if (databaseProfile !=null && databaseProfile.equals("prod")){
-            this.urlPrefix = "http://3.38.39.166:8080";
+            this.urlPrefix = "http://15.164.155.155:8080";
         } else {
             this.urlPrefix = "http://localhost:8080";
         }
