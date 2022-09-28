@@ -52,6 +52,7 @@ public class PaymentController {
                 (Integer) inputMap.get("getAmount"), ReasonForPayment.JOINPARTY);
         // 결제 검증 코드 추가 요망
 
+
         // 파티장에게 파티메시지 전송
         partyMessageService.newMessage(party, member, TypeOfMessage.PARTYAPPLICATION,
                 messageBody, serviceFee, deliveryFee);
