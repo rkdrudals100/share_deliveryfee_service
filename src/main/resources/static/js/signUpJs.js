@@ -64,7 +64,7 @@ window.onload = function() {
                     // document.getElementById("phoneCertificationNum").value = result.authenticationNum; // jwt 완성 후에 제거할 것
 
                 } else {
-                    alert('ajax Request Error');
+                    alert('번호를 정확히 입력해주세요.');
                 }
             }
         };

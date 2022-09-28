@@ -113,7 +113,7 @@ public class PartyService {
 
     // 파티 검색
     public List<Party> searchPartyByKeywords(String keyWord){
-        String[] keywords = keyWord.split("\\s", 2);
+        String[] keywords = keyWord.split("\\s", 3);
         List<Party> parties = new ArrayList<>();
 
         if (keywords.length > 1){

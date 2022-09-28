@@ -114,7 +114,7 @@ public class PartyController {
         }
 
         // 거리 측정을 사용할 수 있는지 확인
-        if (memberRepository.findByUsername(principal.getName()).getBaseLocation() != null){
+        if (memberRepository.findByUsername(principal.getName()).getBaseLocation() != null && model.getAttribute("isNull") != "true"){
             List<PartySearchDto> partySearchDtos = partyService.calculateAndAddDistance(memberRepository.findByUsername(principal.getName()), parties);
             model.addAttribute("parties",
                     partySearchDtos.stream().sorted(Comparator.comparing(PartySearchDto::getDistanceFromMemberBaseLocation)).collect(Collectors.toList()));
