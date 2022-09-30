@@ -41,7 +41,7 @@ public class PaymentController {
 
         Map<String, String> returnMap = new HashMap<>();
 
-        String messageBody = (String)inputMap.get("getMessageBody");
+        String messageBody = (String)inputMap.get( "getMessageBody");
         int serviceFee = Integer.parseInt(inputMap.get("getServiceFee").toString());
         int deliveryFee = Integer.parseInt(inputMap.get("getDeliveryFee").toString());
         Party party = partyRepository.findById(Long.valueOf(String.valueOf(inputMap.get("getPartyId")))).get();

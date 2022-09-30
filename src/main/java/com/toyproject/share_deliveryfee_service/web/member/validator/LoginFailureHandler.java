@@ -17,6 +17,7 @@ import java.net.URLEncoder;
 @Component
 public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
+    //로그인 실패 시 에러 출력
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
