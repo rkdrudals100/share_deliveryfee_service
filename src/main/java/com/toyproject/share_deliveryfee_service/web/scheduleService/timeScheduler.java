@@ -32,15 +32,18 @@ public class timeScheduler {
 
 
 
-    //예약 실행 메소드
+    // 예약 실행 메소드
     @Scheduled(fixedDelay = 1000 * 60)
     public void checkPartyLimitTime(){
 
+        // 모집 시간이 끝난 모집글 탐색
         List<Party> parties = partyRepository.findByLimitTimeBeforeAndPartyStatus(LocalDateTime.now(), PartyStatus.RECRUITING);
 
+        // 모집 완료로 파티 상태 변경
         for (Party eachParty: parties){
             partyService.updatePartyStatus(eachParty, "모집 완료");
 
+            // 파티 상태가 변경되었다는 파티 메시지와 알림 생성
             partyMessageService.newMessage(eachParty, eachParty.getOrganizer(), TypeOfMessage.STATUSCHANGE,
                     null, 0, 0);
 

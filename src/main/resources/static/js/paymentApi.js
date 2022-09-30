@@ -40,6 +40,8 @@ function requestPay(whichOrder) {
             msg += '결제 이름 : ' + rsp.buyer_email+ '\n';
 
             console.log(msg);
+
+            // 컨트롤러로 저장할 정보 전송하는 메소드 실행
             sendJoinPartyMessageAjax(rsp.merchant_uid, rsp.paid_amount, memberId, partyId);
         } else {    // 결제 실패 시 로직
             var msg = '결제에 실패하였습니다.';
@@ -86,7 +88,6 @@ function sendJoinPartyMessageAjax(merchant_uid, amount, payerName, partyId) {
         }
     };
     //Post 방식, 응답은 json, 요청헤더 json
-    // httpRequest.open('POST', '/partyDetails/' + partyId + '/paymentSuccess', true);
     httpRequest.open('POST', '/payment/partyjoin', true);
     httpRequest.responseType = "json";
     httpRequest.setRequestHeader('Content-Type', 'application/json');

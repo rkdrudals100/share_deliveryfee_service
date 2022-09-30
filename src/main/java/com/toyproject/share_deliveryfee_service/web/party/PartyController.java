@@ -124,8 +124,7 @@ public class PartyController {
             model.addAttribute("basePickupLocationRegister", false);
         }
 
-        log.info(parties.get(0).getTitle());
-        model.addAttribute("totalResultNum", parties.size());
+        model.addAttribute("totalResultNum", parties.size() );
         model.addAttribute("keyword", keyWord);
 
         return "fragments :: searchParty";

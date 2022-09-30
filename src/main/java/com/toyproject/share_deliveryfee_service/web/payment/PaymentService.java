@@ -39,6 +39,7 @@ public class PaymentService {
 
 
 
+    // 컨트롤러 단계에서 호출하는 서비스 단계의 함수입니다.
     public void newPayment(Party party, Member member,
                            String merchant_uid, int amount,
                            ReasonForPayment reasonForPayment){
@@ -135,8 +136,10 @@ public class PaymentService {
 
     public String cancelPayments(Payments payments){
 
+        // 환불 가능 금액 계산
         int cancelableAmount = payments.getAmount() - payments.getRefundAmount();
 
+        // 환불할 금액이 없을 때
         if (cancelableAmount <= 0){
             return "noCancelableAmount";
         }
@@ -151,6 +154,7 @@ public class PaymentService {
         params.put("amount", payments.getAmount());
         params.put("cancel_amount", cancelableAmount);
 
+        // 환불에 필요한 정보를 파라미터로 포함시켜서 환불 요청
         HttpResponse<JsonNode> response = Unirest.post(url)
                 .header("Authorization", AccessToken)
                 .fields(params)
@@ -158,6 +162,7 @@ public class PaymentService {
 
         int codeNum = Integer.parseInt(response.getBody().toString().split(",")[0].split(":")[1]);
 
+        // 응답 번호에 따라 다르게 처리
         if (codeNum == 0){
             log.warn("환불 완료");
             return "cancelSuccess";

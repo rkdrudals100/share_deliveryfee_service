@@ -30,7 +30,10 @@ public class NotificationInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
+        // 사용자 정보 받아오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 알림이 필요한 페이지, 사용자라고 판별될 경우 modelAndView에 읽지 않은 알림정보를 담아서 전송
         if (modelAndView != null && !isRedirectView(modelAndView) && authentication != null && authentication.getPrincipal() instanceof UserDetails){
 
             Member member = memberRepository.findByUsername(((UserDetails) authentication.getPrincipal()).getUsername());

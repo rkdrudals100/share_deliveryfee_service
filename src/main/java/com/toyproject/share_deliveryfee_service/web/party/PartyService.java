@@ -116,6 +116,7 @@ public class PartyService {
         String[] keywords = keyWord.split("\\s", 3);
         List<Party> parties = new ArrayList<>();
 
+        // 키워드가 두 개일 경우
         if (keywords.length > 1){
             List<Party> parties1 = partyRepository.findBySearch(PartyStatus.RECRUITING, keywords[0], Sort.by(Sort.Direction.ASC, "pickUpLocation"));
             List<Party> parties2 = partyRepository.findBySearch(PartyStatus.RECRUITING, keywords[1], Sort.by(Sort.Direction.ASC, "pickUpLocation"));
@@ -125,6 +126,7 @@ public class PartyService {
                     parties.add(party);
                 }
             }
+        // 키워드가 하나일 경우
         } else {
             parties = partyRepository.findBySearch(PartyStatus.RECRUITING, keyWord, Sort.by(Sort.Direction.ASC, "pickUpLocation"));
         }
@@ -184,6 +186,7 @@ public class PartyService {
 
 
 
+    // Haversine을 이용한 거리 측정
     public double distanceInKilometerByHaversine(double lat1, double lon1, double lat2, double lon2) {
 
         double R = 6372.8; // 지구 반지름(km)
@@ -209,6 +212,7 @@ public class PartyService {
 
         Map<String, Double> returnMap = new HashMap<>();
 
+        // 카카오 서버로 위치 정보 요청
         String restAPI_key = configUtil.getProperty("restAPI_key");
         String url = "https://dapi.kakao.com/v2/local/search/address.json?query=";
 
@@ -219,7 +223,7 @@ public class PartyService {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 
-
+        // 받아온 json 정보 파싱
         try {
             KakaoGeoRes bodyJson = objectMapper.readValue(response.getBody().getObject().toString(), KakaoGeoRes.class);
 
