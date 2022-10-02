@@ -36,7 +36,7 @@ public class PartyMessageService {
 
 
 
-
+    // 파티 메시지 생성
     public void newMessage(Party party, Member member,
                            TypeOfMessage typeOfMessage,
                            String messageBody,
@@ -64,7 +64,7 @@ public class PartyMessageService {
 
 
 
-
+    // 파티 메시지 검색
     public List<PartyMessage> getPartyMessages(Party party, String username){
 
         List<PartyMessage> partyMessages;
@@ -83,7 +83,7 @@ public class PartyMessageService {
 
 
 
-
+    // 파티 참가 시 파티 메시지, notificationLog 처리
     public String processPartyJoin(Long partyId, Long partyMessageId, String choice){
 
         Party party = partyRepository.findById(partyId).get();
