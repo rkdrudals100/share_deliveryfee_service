@@ -150,7 +150,7 @@ public class MemberController {
 
 
     //문자 전송 버튼 작동 작업 및 검증 작성
-    @PostMapping("/signUp/sendAuthenticationNum")
+    @PostMapping("/signUp/authNum")
     @ResponseBody
     public Map<String, String> sendAuthenticationNum(@RequestBody Map<String, Object> inputMap, HttpSession session){
         log.info("'{}' 로 인증번호 전송 시도", inputMap.get("getPhoneNum"));

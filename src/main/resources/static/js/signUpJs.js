@@ -69,7 +69,7 @@ window.onload = function() {
             }
         };
         //Post 방식, 응답은 json, 요청헤더 json
-        httpRequest.open('POST', 'signUp/sendAuthenticationNum', true);
+        httpRequest.open('POST', 'signUp/authNum', true);
         httpRequest.responseType = "json";
         httpRequest.setRequestHeader('Content-Type', 'application/json');
         httpRequest.send(JSON.stringify(reqJson));
