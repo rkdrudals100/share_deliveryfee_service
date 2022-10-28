@@ -61,11 +61,11 @@ public class MemberService {
         returnMap.put("beforeMemberId", userId);
 
         if (memberRepository.findByUsername(userId) == null){
-            returnMap.put("dupCheckId", "true");
-            log.info("'{}' 아이디 중복 체크, 중복 없음", userId);
+            returnMap.put("duplicate", "false");
+            log.debug("'{}' 아이디 중복 체크, 중복 없음", userId);
         } else {
-            returnMap.put("dupCheckId", "false");
-            log.info("'{}' 아이디 중복 체크, 중복 발생", userId);
+            returnMap.put("duplicate", "true");
+            log.debug("'{}' 아이디 중복 체크, 중복 발생", userId);
         }
 
         return returnMap;

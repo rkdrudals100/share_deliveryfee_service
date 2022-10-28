@@ -92,7 +92,7 @@ public class MemberController {
 
 
 
-    //2022-04-21 강경민
+
     //멤버 저장 시 검증 작성
     @PostMapping("/signUp")
     public String registerMember(@Validated @ModelAttribute("member") MemberRegisterDto memberRegisterDto, BindingResult bindingResult, HttpServletRequest request) {
@@ -135,54 +135,20 @@ public class MemberController {
 
 
 
-    @PostMapping("/signUp/dupCheckId2")
-    public String dupFormTest(@Validated @ModelAttribute("member") MemberDupCheckIdDto memberDupCheckIdDto, BindingResult bindingResult){
-
-//        log.info("중복체크 버튼 클릭 후 컨트롤러 진입");
-//        log.info("{}", memberDupCheckIdDto.toString());
-//        log.info("{}", memberDupCheckIdDto.getMemberId());
-
-        memberDupCheckValidator.validate(memberDupCheckIdDto, bindingResult);
-
-//        log.info("검증기 실행 완료");
-        if (bindingResult.hasErrors()) {
-            log.info("errors={}", bindingResult);
-
-            return "signUp";
-        }
-
-        return "redirect:/signUp";
-    }
-
-
-
-
-
-
-    //2022-0422 강경민
     //아이디 중복 확인 기능 작성
-    @PostMapping("/signUp/dupCheckId")
+    @GetMapping("/signUp/userId")
     @ResponseBody
-    public Map<String, String> dupCheckMemberId(@RequestBody Map<String, Object> inputMap, BindingResult bindingResult){
+    public Map<String, String> dupCheckMemberId(@RequestParam String userId){
 
-        String getMemberId = (String) inputMap.get("getMemberId");
         Map<String, String> returnMap = new HashMap<>();
 
-        MemberDupCheckIdDto memberDupCheckIdDto = MemberDupCheckIdDto.builder()
-                .memberId(getMemberId)
-                .build();
-
-//        memberDupCheckValidator.validate(memberDupCheckIdDto, bindingResult);
-
-        memberService.DupCheckByUserId(getMemberId, returnMap);
-
-        return returnMap;
+        return memberService.DupCheckByUserId(userId, returnMap);
     }
 
 
 
 
-    //2022-0422 강경민
+
     //문자 전송 버튼 작동 작업 및 검증 작성
     @PostMapping("/signUp/sendAuthenticationNum")
     @ResponseBody
@@ -207,7 +173,7 @@ public class MemberController {
 
 
 
-    //2022-0513 강경민
+
     //인증하기 버튼 작업
     @PostMapping("/signUp/authNumCorrect")
     @ResponseBody

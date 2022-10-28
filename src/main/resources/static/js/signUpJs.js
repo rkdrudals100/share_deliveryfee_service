@@ -92,8 +92,8 @@ window.onload = function() {
     document.getElementById("idDupCheck").addEventListener('click', () => {
 
         var memberId = document.getElementById("memberId").value;
-        var reqJson = new Object();
-        reqJson.getMemberId = memberId;
+        // var reqJson = new Object();
+        // reqJson.getMemberId = memberId;
         httpRequest2 = new XMLHttpRequest();
 
         httpRequest2.onreadystatechange = () => {
@@ -102,10 +102,11 @@ window.onload = function() {
                 if (httpRequest2.status === 200) {
                     var result = httpRequest2.response;
 
+                    console.log("200 신호");
                     // 아이디 형식 검증 및 중복 검증
                     var regExp = /^([A-Z|a-z|0-9]){4,20}$/;
 
-                    if(result.beforeMemberId.length == 0){
+                    if(memberId.length == 0){
                         document.getElementById("idFormErr").style.display = "none";
                         document.getElementById("idBlankErr").style.display = "block";
 
@@ -113,7 +114,7 @@ window.onload = function() {
                             document.getElementById("idBlankErr").style.display = "none";
                         }, 3000);
 
-                    } else if(!regExp.test(result.beforeMemberId)){
+                    } else if(!regExp.test(result.memberId)){
                         document.getElementById("idBlankErr").style.display = "none";
                         document.getElementById("idFormErr").style.display = "block";
 
@@ -125,7 +126,7 @@ window.onload = function() {
                         document.getElementById("idBlankErr").style.display = "none";
                         document.getElementById("idFormErr").style.display = "none";
 
-                        if (result.dupCheckId == "false"){
+                        if (result.duplicate == "true"){
                             document.getElementById("idDupCheckFail").style.display = "block";
                             document.getElementById("idDupCheckSuccess").style.display = "none";
 
@@ -147,10 +148,9 @@ window.onload = function() {
             }
         };
         //Post 방식, 응답은 json, 요청헤더 json
-        httpRequest2.open('POST', 'signUp/dupCheckId', true);
+        httpRequest2.open('GET', 'signUp/userId?userId=' + memberId);
         httpRequest2.responseType = "json";
-        httpRequest2.setRequestHeader('Content-Type', 'application/json');
-        httpRequest2.send(JSON.stringify(reqJson));
+        httpRequest2.send();
     });
 
 
