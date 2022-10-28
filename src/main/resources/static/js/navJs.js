@@ -32,7 +32,6 @@ function notificationReadStatusChange(notificationLogId, url) {
 
     var reqJson = new Object();
     reqJson.getNotificationLogId = notificationLogId.split('_')[1];
-
     httpRequest = new XMLHttpRequest();
 
     httpRequest.onreadystatechange = () => {
@@ -48,7 +47,7 @@ function notificationReadStatusChange(notificationLogId, url) {
         }
     };
     //Post 방식, 응답은 json, 요청헤더 json
-    httpRequest.open('POST', '/notificationAlert', true);
+    httpRequest.open('PUT', '/userInfo/selectedTab/notification/notificationLog/' + reqJson.getNotificationLogId, true);
     httpRequest.responseType = "json";
     httpRequest.setRequestHeader('Content-Type', 'application/json');
     httpRequest.send(JSON.stringify(reqJson));

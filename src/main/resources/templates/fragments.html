@@ -57,7 +57,7 @@
                 <li><a th:href="@{/}" class="nav-link px-2 link-dark" style="font-size: 1.5em">소개</a></li>
                 <li><a th:href="@{/searchParty}" class="nav-link px-2 link-dark" style="font-size: 1.5em">검색</a></li>
                 <li><a th:href="@{/makeParty}" class="nav-link px-2 link-dark" style="font-size: 1.5em">모집</a></li>
-                <li><a th:href="@{/accountInfo/myParties}" class="nav-link px-2 link-dark" style="font-size: 1.5em">MY정보</a></li>
+                <li><a th:href="@{/accountInfo/selectedTab/myParties}" class="nav-link px-2 link-dark" style="font-size: 1.5em">MY정보</a></li>
             </ul>
 
             <div sec:authorize="isAnonymous()" class="col-md-3 text-end">
@@ -98,9 +98,9 @@
             <li th:text="${#authentication.getPrincipal().member.username}" id="navMemberId" class="dropdownArea text-center dropdownItemProfileText">사용자 아이디</li>
             <li th:text="${#authentication.getPrincipal().member.email}" id="navMemberEmail" class="dropdownArea text-center dropdownItemProfileText">사용자 이메일</li>
             <li><hr class="dropdown-divider dropdownArea"></li>
-            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/myParties}">파티 관리</a></li>
-            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/profile}">사용자 정보</a></li>
-            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/notification}">알림</a></li>
+            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/selectedTab/myParties}">파티 관리</a></li>
+            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/selectedTab/profile}">사용자 정보</a></li>
+            <li><a class="dropdownItem dropdownItemText" th:href="@{/accountInfo/selectedTab/notification}">알림</a></li>
             <li><hr class="dropdown-divider dropdownArea"></li>
             <li><a class="dropdownItem dropdownItemText" th:href="@{/logout}">로그아웃</a></li>
         </ul>

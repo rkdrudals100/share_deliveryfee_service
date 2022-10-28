@@ -161,7 +161,7 @@
                                 <div><hr class="dropdown-divider dropdownArea"></div>
                             </th:block>
                         </div>
-                        <form th:action="@{/notificationReadStatusAllChange}" th:method="post">
+                        <form th:action="@{/userInfo/selectedTab/notification/notificationLog}" th:method="put">
                             <button type="submit" class="btn btn-primary readStatusBtn">전부 읽음으로 표시</button>
                         </form>
                     </div>
@@ -225,7 +225,8 @@
                 </svg>
             </button>
         </div>
-        <form th:action="@{/accountInfo/basePickupLocation}" method="post" th:object="${baseLocationChangeDto}">
+        <form th:action="@{/accountInfo/selectedTab/profile/basePickupLocation}" th:method="put" th:object="${baseLocationChangeDto}">
+<!--            <input type="hidden" name="_method" value="PUT"/>-->
             <div class="modal-body input-group has-validation">
                 <button type="button" class="input-group-text" onclick="execDaumPostcode2()">검색</button>
                 <input type="text" class="form-control" th:field="*{changedBaseLocation}" id="changedBaseLocation" th:errorclass="field-error" placeholder="주소를 입력하세요." style="height: 2.5em">

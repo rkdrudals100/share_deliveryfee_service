@@ -60,7 +60,7 @@ public class PaymentController {
         // 신청자, 파티장 로그 작성
         notificationLogService.newNotificationLog(memberRepository.findByUsername(principal.getName()),
                 "'" + party.getTitle() + "' " + "파티에 가입신청이 완료되었습니다.",
-                "/accountInfo/notification");
+                "/accountInfo/selectedTab/notification");
 
         notificationLogService.newNotificationLog(memberRepository.findByUsername(party.getOrganizer().getUsername()),
                 "'" + principal.getName() + "' " + "님이 '" + party.getTitle() + "' 파티에 가입을 신청하셨습니다.",

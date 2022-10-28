@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,7 +29,7 @@ public class NotificationLogController {
 
 
 
-    @PostMapping("/notificationAlert")
+    @PutMapping("/userInfo/selectedTab/notification/notificationLog/{notificationLogId}")
     @ResponseBody
     public Map<String, String> alertClicked(@RequestBody Map<String, Object> inputMap){
 
@@ -42,7 +43,7 @@ public class NotificationLogController {
 
 
 
-    @PostMapping("/notificationReadStatusAllChange")
+    @PutMapping("/userInfo/selectedTab/notification/notificationLog")
     public String readStatusAllChange(Principal principal){
 
         Member member = memberRepository.findByUsername(principal.getName());
@@ -50,6 +51,6 @@ public class NotificationLogController {
         for(NotificationLog notificationLog: notificationLogRepository.findByMemberOrderByCreateAtDesc(member)){
             notificationLogService.changeReadStatus(notificationLog, ReadStatus.READ);
         }
-        return "redirect:/accountInfo/notification";
+        return "redirect:/accountInfo/selectedTab/notification";
     }
 }

@@ -123,9 +123,9 @@ public class MemberController {
         log.info("'{}'을 member에 저장 완료", memberRegisterDto.getMemberId());
 
         notificationLogService.newNotificationLog(saveMember,
-                "가입이 완료되었습니다.", "/accountInfo/profile");
+                "가입이 완료되었습니다.", "/accountInfo/selectedTab/profile");
         notificationLogService.newNotificationLog(saveMember,
-                "기본 픽업장소를 등록해주세요. 검색할 때 기본 픽업 장소를 기준으로 가까운 파티부터 검색이 가능합니다.", "/accountInfo/profile");
+                "기본 픽업장소를 등록해주세요. 검색할 때 기본 픽업 장소를 기준으로 가까운 파티부터 검색이 가능합니다.", "/accountInfo/selectedTab/profile");
 
         return "redirect:/login"; // 임시 작동 테스트
     }
@@ -158,16 +158,16 @@ public class MemberController {
         int authNum = SendSMSTwilio.sendSMS("82", (String) inputMap.get("getPhoneNum"));
 
         // jwt를 만들어서 유저에게 전송, 임시로 휴대폰 번호 및 인증번호 전송(jwt 공부 후 추가)
-        Map<String, String> jwtToken = new HashMap<>();
-        jwtToken.put("putPhoneNum", (String) inputMap.get("getPhoneNum"));
-//        jwtToken.put("authenticationNum", String.valueOf(authNum));
+        Map<String, String> returnMap = new HashMap<>();
+        returnMap.put("putPhoneNum", (String) inputMap.get("getPhoneNum"));
+        returnMap.put("authenticationNum", String.valueOf(authNum));
 
         String phoneNumPlusAuthNum = (String)inputMap.get("getPhoneNum") + "_" + authNum;
         log.info(bCryptPasswordEncoder.encode(phoneNumPlusAuthNum));
         session.setAttribute("authNum", bCryptPasswordEncoder.encode(phoneNumPlusAuthNum));
         session.setMaxInactiveInterval(60*3);
 
-        return jwtToken;
+        return returnMap;
     }
 
 
@@ -175,7 +175,7 @@ public class MemberController {
 
 
     //인증하기 버튼 작업
-    @PostMapping("/signUp/authNumCorrect")
+    @PostMapping("/signUp/phoneNum/authNum")
     @ResponseBody
     public  Map<String, String> certificationNum(@RequestBody Map<String, Object> inputMap, HttpServletRequest request){
 
@@ -201,19 +201,10 @@ public class MemberController {
 
 
 
-    @GetMapping("/accountInfo/{selectedTab}")
+    @GetMapping("/accountInfo/selectedTab/{selectedTab}")
     public String showJoinedParties(@PathVariable String selectedTab, Model model, Principal principal) throws IOException {
 
         Member loginMember = memberRepository.findByUsername(principal.getName());
-//        List<Party> ongoingParties = new ArrayList<>();
-//        List<Party> closedParties = new ArrayList<>();
-
-//        FileReader reader = new FileReader("src/main/resources/templates/account.html");
-//
-//        int ch;
-//        while ((ch = reader.read()) != -1) {
-//            System.out.print((char) ch);
-//        }
 
         List<String> tabs = new ArrayList<>(Arrays.asList("myParties", "notification", "profile"));
 
@@ -238,7 +229,7 @@ public class MemberController {
 
 
 
-    @PostMapping("/accountInfo/basePickupLocation")
+    @PutMapping("/accountInfo/selectedTab/profile/basePickupLocation")
     public String ChangeBasePickupLocation(@Validated @ModelAttribute BaseLocationChangeDto baseLocationChangeDto, BindingResult bindingResult, Principal principal, Model model){
 
         Member member = memberRepository.findByUsername(principal.getName());
@@ -257,6 +248,7 @@ public class MemberController {
             List<Object> myParties = memberService.DivideIntoClosedAndOngoingParties(memberPartyRepository.findByMember(member));
             model.addAttribute("ongoingParties", (List<Party>) myParties.get(0));
             model.addAttribute("closedParties", (List<Party>) myParties.get(1));
+            model.addAttribute("baseLocationChangeDto", new BaseLocationChangeDto());
 
             return "account";
         }
@@ -267,9 +259,9 @@ public class MemberController {
         memberService.ChangeBaseLocationAndLatitudeAndLongitude(member, baseLocationChangeDto.getChangedBaseLocation());
 
         notificationLogService.newNotificationLog(member,
-                "기본 픽업장소가 '" + baseLocationChangeDto.getChangedBaseLocation() + "'으로 변경되었습니다.", "/accountInfo/profile");
+                "기본 픽업장소가 '" + baseLocationChangeDto.getChangedBaseLocation() + "'으로 변경되었습니다.", "/accountInfo/selectedTab/profile");
 
-        return "redirect:/accountInfo/profile";
+        return "redirect:/accountInfo/selectedTab/profile";
     }
 
 
