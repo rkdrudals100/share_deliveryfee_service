@@ -21,30 +21,6 @@
 
 
 <!--네비게이터-->
-<!--<div>-->
-<!--    <nav th:fragment="navigatorOri(login)" class="container-fluid fixed-top border-bottom py-3 bg-white shadow-sm">-->
-<!--        <header class="nav d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">-->
-<!--            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none px-4">-->
-<!--                <img src="/img/deliveryIcon.PNG" alt="로고" width="60" height="48">-->
-<!--            </a>-->
-
-<!--            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">-->
-<!--                <li><a href="#" class="nav-link px-3 text-dark h3">소개</a></li>-->
-<!--                <li><a th:href="@{/searchParty}" class="nav-link px-3 text-dark h3">검색</a></li>-->
-<!--                <li><a href="#" class="nav-link px-3 text-dark h3">MY정보</a></li>-->
-<!--&lt;!&ndash;                <li th:text="${login}"></li>&ndash;&gt;-->
-<!--            </ul>-->
-
-<!--            <ul class="nav justify-content-center px-5">-->
-<!--                <li><a th:href="@{/login}" class="nav-link px-2 text-dark h4">로그인</a></li>-->
-<!--                <li><a th:href="@{/signUp}" class="nav-link px-2 text-dark h4">회원가입</a></li>-->
-<!--            </ul>-->
-<!--        </header>-->
-<!--    </nav>-->
-<!--</div>-->
-
-
-<!--네비게이터-->
 <div>
     <nav th:fragment="navigator(login)" class="fixed-top">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-white px-5 shadow-sm">
@@ -55,8 +31,8 @@
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li><a th:href="@{/}" class="nav-link px-2 link-dark" style="font-size: 1.5em">소개</a></li>
-                <li><a th:href="@{/searchParty}" class="nav-link px-2 link-dark" style="font-size: 1.5em">검색</a></li>
-                <li><a th:href="@{/makeParty}" class="nav-link px-2 link-dark" style="font-size: 1.5em">모집</a></li>
+                <li><a th:href="@{/search}" class="nav-link px-2 link-dark" style="font-size: 1.5em">검색</a></li>
+                <li><a th:href="@{/newParty}" class="nav-link px-2 link-dark" style="font-size: 1.5em">모집</a></li>
                 <li><a th:href="@{/accountInfo/selectedTab/myParties}" class="nav-link px-2 link-dark" style="font-size: 1.5em">MY정보</a></li>
             </ul>
 
@@ -161,7 +137,7 @@
                         </div>
                         <div class="col-3 px-3 my-2 d-flex flex-column position-static">
                             <!--                            <a href="#" class="stretched-link">모집인원</a>-->
-                            <strong><a th:href="@{/partyDetails/{partyId}(partyId=${parties[num].id})}" th:id="partyMembersNum + ${num}" th:text="${parties[num].membersNum} + '/' + ${parties[num].maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                            <strong><a th:href="@{/party/{partyId}(partyId=${parties[num].id})}" th:id="partyMembersNum + ${num}" th:text="${parties[num].membersNum} + '/' + ${parties[num].maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
                         </div>
                         <div th:if="${basePickupLocationRegister}" class="col-3 pl-3 my-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 20 20" style="color: #007bff; width: 24px; height: 24px">

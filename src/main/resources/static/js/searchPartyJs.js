@@ -45,9 +45,8 @@ function searchByWord() {
     var httpRequest;
 
     var searchWord = document.getElementById("searchWord").value;
-    var reqJson = new Object();
-    reqJson.getSearchWord = searchWord;
-    console.log('검색어: ' + reqJson.getSearchWord);
+
+    console.log('검색어: ' + searchWord);
     httpRequest = new XMLHttpRequest();
 
     httpRequest.onreadystatechange = () => {
@@ -80,10 +79,9 @@ function searchByWord() {
         }
     };
     //Post 방식, 응답은 json, 요청헤더 json
-    httpRequest.open('POST', '/searchParty/search', true);
+    httpRequest.open('GET', '/search/party?keyWord=' + searchWord);
     httpRequest.responseType = "text";
-    httpRequest.setRequestHeader('Content-Type', 'application/json');
-    httpRequest.send(JSON.stringify(reqJson));
+    httpRequest.send();
 }
 
 
@@ -95,10 +93,9 @@ function changePageCards(whichBtn){
 
     var httpRequest;
 
-    var reqJson = new Object();
-    reqJson.getCurrentPageNum = document.getElementById("currentPage").innerText;
-    reqJson.getTotalPageNum = document.getElementById("totalCardNum").innerText;
-    reqJson.whichBtn = whichBtn;
+    var getCurrentPageNum = document.getElementById("currentPage").innerText;
+    var getTotalPageNum = document.getElementById("totalCardNum").innerText;
+
     httpRequest = new XMLHttpRequest();
 
     httpRequest.onreadystatechange = () => {
@@ -109,22 +106,22 @@ function changePageCards(whichBtn){
 
                 if (whichBtn == "right"){
                     for (var i = 0; i < 6; i++){
-                        document.getElementById("partyNum" + String(((reqJson.getCurrentPageNum - 1) * 6) - i - 1)).style.display = 'none';
+                        document.getElementById("partyNum" + String(((getCurrentPageNum - 1) * 6) - i - 1)).style.display = 'none';
                     }
                     for (i = 0; i < result.printCardNum; i++){
-                        document.getElementById("partyNum" + String(((reqJson.getCurrentPageNum - 1) * 6) + i)).style.display = '';
+                        document.getElementById("partyNum" + String(((getCurrentPageNum - 1) * 6) + i)).style.display = '';
                     }
                 } else {
                     for (var i = 0; i < result.printCardNum; i++){
-                        document.getElementById("partyNum" + String(((reqJson.getCurrentPageNum - 1) * 6) + i)).style.display = '';
+                        document.getElementById("partyNum" + String(((getCurrentPageNum - 1) * 6) + i)).style.display = '';
                     }
-                    if ((parseInt(reqJson.getCurrentPageNum) + 1) * 6 >= parseInt(reqJson.getTotalPageNum)){
-                        for (i = 0; i < parseInt(reqJson.getTotalPageNum) - (parseInt(reqJson.getCurrentPageNum) * 6); i++){
-                            document.getElementById("partyNum" + String((reqJson.getCurrentPageNum * 6) + i)).style.display = 'none';
+                    if ((getCurrentPageNum + 1) * 6 >= getTotalPageNum){
+                        for (i = 0; i < getTotalPageNum - (getCurrentPageNum * 6); i++){
+                            document.getElementById("partyNum" + String((getCurrentPageNum * 6) + i)).style.display = 'none';
                         }
                     } else{
                         for (var i = 0; i < 6; i++){
-                            document.getElementById("partyNum" + String((reqJson.getCurrentPageNum * 6) + i)).style.display = 'none';
+                            document.getElementById("partyNum" + String((getCurrentPageNum * 6) + i)).style.display = 'none';
                         }
                     }
                 }
@@ -135,11 +132,10 @@ function changePageCards(whichBtn){
             }
         }
     };
-    //Post 방식, 응답은 json, 요청헤더 json
-    httpRequest.open('POST', 'changePageCards', true);
+
+    httpRequest.open('GET', 'search/party/page/' + getCurrentPageNum + '?totalPageNum=' + getTotalPageNum + '&whichBtn=' + whichBtn);
     httpRequest.responseType = "json";
-    httpRequest.setRequestHeader('Content-Type', 'application/json');
-    httpRequest.send(JSON.stringify(reqJson));
+    httpRequest.send();
 }
 
 

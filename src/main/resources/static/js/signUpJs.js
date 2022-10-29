@@ -92,8 +92,7 @@ window.onload = function() {
     document.getElementById("idDupCheck").addEventListener('click', () => {
 
         var memberId = document.getElementById("memberId").value;
-        // var reqJson = new Object();
-        // reqJson.getMemberId = memberId;
+
         httpRequest2 = new XMLHttpRequest();
 
         httpRequest2.onreadystatechange = () => {

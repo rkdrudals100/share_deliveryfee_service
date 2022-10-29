@@ -50,7 +50,7 @@ public class timeScheduler {
             for (MemberParty eachMemberParty : eachParty.getMemberParties()) {
                 notificationLogService.newNotificationLog(eachMemberParty.getMember(),
                         "모집시간이 끝나서 '" + eachParty.getTitle() + "' " + "파티 상태가 '모집 완료' 로 변경되었습니다.",
-                        "/partyDetails/" + eachParty.getId());
+                        "/party/" + eachParty.getId());
             }
         }
     }

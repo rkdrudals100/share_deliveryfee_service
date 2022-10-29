@@ -31,7 +31,7 @@
 
     <div class="row">
       <div class="col">
-        <form class="needs-validation" th:action="@{/makeParty}" method="post" th:object="${partyRegisterDto}" novalidate>
+        <form class="needs-validation" th:action="@{/newParty}" method="post" th:object="${partyRegisterDto}" novalidate>
           <div id="globalErr" th:if="${#fields.hasGlobalErrors()}" style="display: block">
               <p class="offset-3 col-6 alert alert-danger field-error text-center" th:each="err : ${#fields.globalErrors()}"
                  th:text="${err}">글로벌 오류 메시지</p>

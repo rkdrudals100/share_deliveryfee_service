@@ -229,7 +229,7 @@ public class MemberController {
 
 
 
-    @PutMapping("/accountInfo/selectedTab/profile/basePickupLocation")
+    @PatchMapping("/accountInfo/selectedTab/profile/basePickupLocation")
     public String ChangeBasePickupLocation(@Validated @ModelAttribute BaseLocationChangeDto baseLocationChangeDto, BindingResult bindingResult, Principal principal, Model model){
 
         Member member = memberRepository.findByUsername(principal.getName());

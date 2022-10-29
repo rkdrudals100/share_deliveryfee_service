@@ -59,7 +59,7 @@
                                     <div class="mb-1 text-muted" th:text="'[' + ${party.limitTime} + ']까지 모집 중'">모집 시간</div>
                                 </div>
                                 <div class="col-3 px-3 my-2 d-flex flex-column position-static">
-                                    <strong><a th:href="@{/partyDetails/{partyId}(partyId=${party.id})}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
+                                    <strong><a th:href="@{/party/{partyId}(partyId=${party.id})}" th:text="${party.membersNum} + '/' + ${party.maxMemberNum} + '명'" class="stretched-link text-decoration-none text-muted">모집 인원</a></strong>
                                 </div>
                                 <div th:if="${basePickupLocationRegister}" class="col-3 pl-3 my-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 20 20" style="color: #007bff; width: 24px; height: 24px">

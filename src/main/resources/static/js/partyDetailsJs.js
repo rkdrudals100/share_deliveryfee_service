@@ -14,14 +14,14 @@ function aboutjoinPartyResponse(messageId, choice) {
             if (httpRequest.status === 200) {
                 var result = httpRequest.response;
 
-                window.location.replace('/partyDetails/' + partyId);
+                window.location.replace('/party/' + partyId);
             } else {
                 alert('ajax Request Error!');
             }
         }
     };
     //Post 방식, 응답은 json, 요청헤더 json
-    httpRequest.open('POST', '/partyDetails/' + partyId +'/PartyJoin', true);
+    httpRequest.open('POST', '/party/' + partyId +'/joined/user', true);
     httpRequest.responseType = "json";
     httpRequest.setRequestHeader('Content-Type', 'application/json');
     httpRequest.send(JSON.stringify(reqJson));
@@ -75,7 +75,7 @@ function partyStatusChangeApply() {
         }
     };
     //Post 방식, 응답은 json, 요청헤더 json
-    httpRequest.open('POST', '/partyDetails/' + partyId +'/partyStatusChange', true);
+    httpRequest.open('PATCH', '/party/' + partyId +'/partyStatus', true);
     httpRequest.responseType = "json";
     httpRequest.setRequestHeader('Content-Type', 'application/json');
     httpRequest.send(JSON.stringify(reqJson));

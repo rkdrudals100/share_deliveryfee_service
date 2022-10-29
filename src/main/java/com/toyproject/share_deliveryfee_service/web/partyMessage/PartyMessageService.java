@@ -107,13 +107,13 @@ public class PartyMessageService {
 
                 notificationLogService.newNotificationLog(member,
                         "'" + party.getTitle() + "' " + "파티에 가입하셨습니다.",
-                        "/partyDetails/" + party.getId());
+                        "/party/" + party.getId());
 
                 for (MemberParty eachMemberParty : party.getMemberParties()) {
                     if (eachMemberParty.getMember() != member) {
                         notificationLogService.newNotificationLog(eachMemberParty.getMember(),
                                 "'" + member.getUsername() + "'님의 '" + party.getTitle() + "' " + "파티가입요청이 수락되었습니다.",
-                                "/partyDetails/" + party.getId());
+                                "/party/" + party.getId());
                     }
                 }
 
@@ -126,7 +126,7 @@ public class PartyMessageService {
                     for (MemberParty eachMemberParty : party.getMemberParties()) {
                         notificationLogService.newNotificationLog(eachMemberParty.getMember(),
                                 "'" + party.getTitle() + "' " + "파티 상태가 '모집 완료'으로 변경되었습니다.",
-                                "/partyDetails/" + party.getId());
+                                "/party/" + party.getId());
                     }
 
                 }
@@ -134,7 +134,7 @@ public class PartyMessageService {
                 log.info("파티 인원 초과");
                 notificationLogService.newNotificationLog(member,
                         "'" + party.getTitle() + "' " + "파티 인원이 초과되어 가입이 거절되었습니다.",
-                        "/partyDetails/" + party.getId());
+                        "/party/" + party.getId());
                 return "overcrowding";
             }
         } else if (choice.equals("no")){
@@ -143,11 +143,11 @@ public class PartyMessageService {
 
             notificationLogService.newNotificationLog(member,
                     "'" + party.getTitle() + "' " + "파티가입요청이 거절되었습니다.",
-                    "/partyDetails/" + party.getId());
+                    "/party/" + party.getId());
 
             notificationLogService.newNotificationLog(party.getOrganizer(),
                     "'" + member.getUsername() + "'님의 '" + party.getTitle() + "' " + "파티가입요청을 거절하셨습니다.",
-                    "/partyDetails/" + party.getId());
+                    "/party/" + party.getId());
         }
         return "success";
     }

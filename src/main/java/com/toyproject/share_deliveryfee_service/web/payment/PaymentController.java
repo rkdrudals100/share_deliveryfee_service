@@ -64,10 +64,10 @@ public class PaymentController {
 
         notificationLogService.newNotificationLog(memberRepository.findByUsername(party.getOrganizer().getUsername()),
                 "'" + principal.getName() + "' " + "님이 '" + party.getTitle() + "' 파티에 가입을 신청하셨습니다.",
-                "/partyDetails/" + party.getId());
+                "/party/" + party.getId());
 
         // 리턴값 returnMap으로 변경 요망
-        return "redirect:/partyDetails/" + party.getId();
+        return "redirect:/party/" + party.getId();
     }
 
 

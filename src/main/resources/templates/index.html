@@ -19,7 +19,7 @@
       <img class="foodImages" src="/img/foodImage2.PNG" alt="foodImage">
       <img class="platformLogos" src="/img/platformlogosImage.PNG" alt="platformLogos">
       <div class="title1" id="word">부담스러운 배달비 이제 나눠서 내자!</div>
-      <button class="btn btn-lg btn-primary serviceStartBtn" id="serviceStartBtn" th:onclick="|location.href = '@{/searchParty}'|" type="button">서비스 시작하기</button>
+      <button class="btn btn-lg btn-primary serviceStartBtn" id="serviceStartBtn" th:onclick="|location.href = '@{/search}'|" type="button">서비스 시작하기</button>
     </section>
 
 
@@ -92,7 +92,7 @@
       <div class="title3Sub1" id="title3Sub1">
         지역과 주문할 지점으로 검색해서 조건에 맞는 사람을 검색하세요.
       </div>
-      <button class="btn btn-lg btn-primary serviceStartBtn" id="serviceStartBtn2" th:onclick="|location.href = '@{/searchParty}'|" type="button" style="top: 520px">서비스 시작하기</button>
+      <button class="btn btn-lg btn-primary serviceStartBtn" id="serviceStartBtn2" th:onclick="|location.href = '@{/search}'|" type="button" style="top: 520px">서비스 시작하기</button>
     </section>
 
 
@@ -166,7 +166,7 @@
         <br>
         조건에 맞는 파티를 직접 만들 수 있습니다.
       </div>
-      <button class="btn btn-lg btn-primary makePartyBtn" id="makePartyBtn" th:onclick="|location.href = '@{/makeParty}'|" type="button" style="top: 450px">파티 모집하기</button>
+      <button class="btn btn-lg btn-primary makePartyBtn" id="makePartyBtn" th:onclick="|location.href = '@{/newParty}'|" type="button" style="top: 450px">파티 모집하기</button>
     </section>
   </div>
 

@@ -27,7 +27,6 @@ function DropdownSwitch(pressedDropdownBtn){
 
 
 function notificationReadStatusChange(notificationLogId, url) {
-    console.log('hihi');
     var httpRequest;
 
     var reqJson = new Object();
@@ -47,7 +46,7 @@ function notificationReadStatusChange(notificationLogId, url) {
         }
     };
     //Post 방식, 응답은 json, 요청헤더 json
-    httpRequest.open('PUT', '/userInfo/selectedTab/notification/notificationLog/' + reqJson.getNotificationLogId, true);
+    httpRequest.open('PATCH', '/userInfo/selectedTab/notification/notificationLog/' + reqJson.getNotificationLogId, true);
     httpRequest.responseType = "json";
     httpRequest.setRequestHeader('Content-Type', 'application/json');
     httpRequest.send(JSON.stringify(reqJson));

@@ -50,9 +50,9 @@ public class PartyController {
 
 
 
-    //  2022-05-09 강경민
-    //  파티 모집글 등록 기능 수정
-    @GetMapping("/makeParty")
+
+
+    @GetMapping("/newParty")
     public String makeParty(Model model){
 
         model.addAttribute("partyRegisterDto", new PartyRegisterDto());
@@ -61,18 +61,10 @@ public class PartyController {
 
 
 
-//    @GetMapping("/test")
-//    public String test(){
-//        paymentService.cancelPayments(paymentsRepository.findPaymentsById(1L));
-//
-//        return "index";
-//    }
 
 
 
-
-
-    @PostMapping("/makeParty")
+    @PostMapping("/newParty")
     public String registerParty(@Validated @ModelAttribute PartyRegisterDto partyRegisterDto, BindingResult bindingResult, Principal principal){
 
         partyRegisterValidator.validate(partyRegisterDto, bindingResult);
@@ -89,7 +81,7 @@ public class PartyController {
 
         notificationLogService.newNotificationLog(memberRepository.findByUsername(principal.getName()),
                 "'" + saveParty.getTitle() + "' " + "파티가 생성되었습니다.",
-                "/partyDetails/" + saveParty.getId());
+                "/party/" + saveParty.getId());
 
         return "redirect:/";
     }
@@ -99,9 +91,8 @@ public class PartyController {
 
 
 
-    @PostMapping("/searchParty/search")
-    public String getContent2(@RequestBody Map<String, Object> inputMap, Model model, Principal principal) {
-        String keyWord = (String)inputMap.get("getSearchWord");
+    @GetMapping("/search/party")
+    public String getContent2(@RequestParam String keyWord, Model model, Principal principal) {
 
         List<Party> parties = partyService.searchPartyByKeywords(keyWord);
 
@@ -134,7 +125,7 @@ public class PartyController {
 
 
 
-    @GetMapping("/searchParty")
+    @GetMapping("/search")
     public String searchParty(Model model, Principal principal){
 
         List<Party> parties = partyRepository.findByPartyStatus(PartyStatus.RECRUITING, Sort.by(Sort.Direction.ASC, "pickUpLocation"));
@@ -158,13 +149,13 @@ public class PartyController {
 
 
 
-    @PostMapping("/changePageCards")
+    @GetMapping("/search/party/page/{currentPageNum}")
     @ResponseBody
-    public Map<String, String> changePageCards(@RequestBody Map<String, Object> inputMap){
+    public Map<String, String> changePageCards(@PathVariable int currentPageNum, @RequestParam int totalPageNum, @RequestParam String whichBtn){
+
         Map<String, String> returnMap = new HashMap<>();
 
-        int printCardNum = partyService.changePageContents(Integer.parseInt((String)inputMap.get("getCurrentPageNum")),
-                Integer.parseInt((String)inputMap.get("getTotalPageNum")), (String)inputMap.get("whichBtn"));
+        int printCardNum = partyService.changePageContents(currentPageNum, totalPageNum, whichBtn);
 
         returnMap.put("printCardNum", String.valueOf(printCardNum));
 
@@ -175,7 +166,7 @@ public class PartyController {
 
 
 
-    @GetMapping("/partyDetails/{partyId}")
+    @GetMapping("/party/{partyId}")
     public String detail(@PathVariable Long partyId, Model model, Principal principal){
 
         Party getParty = partyRepository.findPartyById(partyId);
@@ -205,7 +196,7 @@ public class PartyController {
 
 
 
-    @PostMapping("/partyDetails/{partyId}/PartyJoin")
+    @PostMapping("/party/{partyId}/joined/user")
     public String PartyJoin(@PathVariable Long partyId, @RequestBody Map<String, String> inputMap){
 
         Long partyMessageId = Long.valueOf(inputMap.get("getPartyMessageId"));
@@ -218,7 +209,7 @@ public class PartyController {
 
 
         
-        return "redirect:/partyDetails/" + partyId;
+        return "redirect:/party/" + partyId;
     }
 
 
@@ -229,7 +220,7 @@ public class PartyController {
 
 
 
-    @PostMapping("/partyDetails/{partyId}/partyStatusChange")
+    @PatchMapping("/party/{partyId}/partyStatus")
     @ResponseBody
     public Map<String, String> changePartyStatus(@PathVariable Long partyId, @RequestBody Map<String, String> inputMap, Principal principal){
 
@@ -248,11 +239,11 @@ public class PartyController {
             if (eachMemberParty.getMember() != member) {
                 notificationLogService.newNotificationLog(eachMemberParty.getMember(),
                         "'" + party.getTitle() + "' " + "파티 상태가 '" + getClickedBtn + "'으로 변경되었습니다.",
-                        "/partyDetails/" + party.getId());
+                        "/party/" + party.getId());
             } else {
                 notificationLogService.newNotificationLog(eachMemberParty.getMember(),
                         "'" + party.getTitle() + "' " + "파티 상태를 '" + getClickedBtn + "'으로 변경하였습니다.",
-                        "/partyDetails/" + party.getId());
+                        "/party/" + party.getId());
             }
         }
 

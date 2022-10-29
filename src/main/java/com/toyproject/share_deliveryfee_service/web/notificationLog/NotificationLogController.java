@@ -7,10 +7,7 @@ import com.toyproject.share_deliveryfee_service.web.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -29,7 +26,7 @@ public class NotificationLogController {
 
 
 
-    @PutMapping("/userInfo/selectedTab/notification/notificationLog/{notificationLogId}")
+    @PatchMapping("/userInfo/selectedTab/notification/notificationLog/{notificationLogId}")
     @ResponseBody
     public Map<String, String> alertClicked(@RequestBody Map<String, Object> inputMap){
 
@@ -43,7 +40,7 @@ public class NotificationLogController {
 
 
 
-    @PutMapping("/userInfo/selectedTab/notification/notificationLog")
+    @PatchMapping("/userInfo/selectedTab/notification/notificationLog")
     public String readStatusAllChange(Principal principal){
 
         Member member = memberRepository.findByUsername(principal.getName());
