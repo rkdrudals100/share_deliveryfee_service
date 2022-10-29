@@ -224,6 +224,7 @@ public class PartyController {
     @ResponseBody
     public Map<String, String> changePartyStatus(@PathVariable Long partyId, @RequestBody Map<String, String> inputMap, Principal principal){
 
+        // 수정을 요구한 사용자가 파티의 주최자가 맞는지, 맞다면 inputMap.get("getClickedBtn") 이 4가지 파티 상태 중 있는지 검증 추가
         Map<String, String> returnMap = new HashMap<>();
 
         String getClickedBtn = inputMap.get("getClickedBtn");
