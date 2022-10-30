@@ -4,6 +4,7 @@ import com.toyproject.share_deliveryfee_service.web.domain.MemberParty;
 import com.toyproject.share_deliveryfee_service.web.domain.Party;
 import com.toyproject.share_deliveryfee_service.web.domain.enums.PartyStatus;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +17,7 @@ public interface PartyRepository extends JpaRepository<Party, Long> {
 
 //    Optional<Party> findById(Long id);
 
+    @EntityGraph(attributePaths = {"memberParties"})
     Party findPartyById(Long id);
 
 
@@ -30,10 +32,8 @@ public interface PartyRepository extends JpaRepository<Party, Long> {
 
 
 
-
     @Query("select p from Party p where p.partyStatus = :partyStatus")
     List<Party> findByPartyStatus(@Param("partyStatus") PartyStatus partyStatus, Sort sort);
-
 
 
 
